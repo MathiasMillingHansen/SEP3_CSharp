@@ -1,11 +1,19 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿<!-- Vertical Navbar (Top) -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">BlazorApp</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+        <a class="navbar-brand" href="">BlazingTopMenu</a>
+        <button class="navbar-toggler @NavButtonCssClass" type="button" aria-controls="navbarCollapse"
+            aria-label="Toggle navigation" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse @NavBarCssClass" id="navbarCollapse" @onclick="ToggleNavMenu">
+            
+        </div>
     </div>
-</div>
+</nav>
+
+<!-- Horizontal Navbar -->
+
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
@@ -15,8 +23,8 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="bookcatalog">
+                <span class="oi oi-plus" aria-hidden="true"></span> Køb bøger
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -28,6 +36,9 @@
 </div>
 
 @code {
+    private string? NavBarCssClass => collapseNavMenu ? null : "show";
+    private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
+    
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
