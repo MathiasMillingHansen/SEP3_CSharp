@@ -1,4 +1,4 @@
-﻿<!-- Vertical Navbar (Top) -->
+﻿<!-- Horizontal Navbar -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BlazingTopMenu</a>
@@ -12,11 +12,10 @@
     </div>
 </nav>
 
-<!-- Horizontal Navbar -->
-
+<!-- Vertical Navbar -->
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
+    <nav class="container-fluid flex-md-column align-items-md-start ms-2">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
