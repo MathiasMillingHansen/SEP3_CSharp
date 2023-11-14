@@ -1,29 +1,22 @@
-﻿<!-- Horizontal Navbar -->
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">BlazingTopMenu</a>
-        <button class="navbar-toggler @NavButtonCssClass" type="button" aria-controls="navbarCollapse"
-            aria-label="Toggle navigation" @onclick="ToggleNavMenu">
+        <a class="navbar-brand" href="">SU'ens mange sider</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse @NavBarCssClass" id="navbarCollapse" @onclick="ToggleNavMenu">
-            
-        </div>
     </div>
-</nav>
-
-<!-- Vertical Navbar -->
+</div>
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="container-fluid flex-md-column align-items-md-start ms-2">
+    <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="bookcatalog">
-                <span class="oi oi-plus" aria-hidden="true"></span> Køb bøger
+            <NavLink class="nav-link" href="BookCatalog">
+                <span class="oi oi-plus" aria-hidden="true"></span> Bog katalog
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -35,9 +28,6 @@
 </div>
 
 @code {
-    private string? NavBarCssClass => collapseNavMenu ? null : "show";
-    private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
-    
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;

@@ -1,6 +1,24 @@
 ﻿@inherits LayoutComponentBase
-<NavMenu />
 
-<main class="container">
-    @Body
-</main>
+<PageTitle>BlazorApp1</PageTitle>
+
+
+<div class="page">
+    
+    <!-- side nav bar lodret -->
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+
+    <!-- top nav bar vandret -->
+    <main>
+        <div class="top-row px-4" style="background-color: RGB(0, 70, 32)">
+
+        </div>
+
+        <!-- Body (page) -->
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
