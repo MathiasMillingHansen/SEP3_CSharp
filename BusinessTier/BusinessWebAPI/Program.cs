@@ -1,7 +1,7 @@
+using Application.Logic;
 using BusinessWebAPI.Application.DaoImplementation;
 using BusinessWebAPI.Application.DaoInterface;
-using Logic.Implementations;
-using Logic.Interface;
+using Logic.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +17,8 @@ builder.Services.AddScoped(
     {
         BaseAddress = new Uri("https://localhost:7129/")
     });
-builder.Services.AddScoped<IUserDao, UserDao>();
-builder.Services.AddScoped<IUserLogic, UserLogic>();
+builder.Services.AddScoped<IBookDao, BookDao>();
+builder.Services.AddScoped<IBookLogic, BookLogic>();
 
 var app = builder.Build();
 

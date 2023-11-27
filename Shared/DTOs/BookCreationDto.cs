@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace Shared.DTOs;
 
-namespace Shared.Domain;
-
-public class Book
+public class BookCreationDto
 {
-    [Key]
     public int Isbn { get; set; }
     
     public string BookTitle { get; set; }
@@ -15,7 +12,6 @@ public class Book
     
     public int? PageCount { get; set; }
     
-    [Key]
     public string Owner { get; set; }
     
     public string Condition { get; set; }
@@ -24,10 +20,10 @@ public class Book
     
     public string? Category { get; set; }
     
-    public decimal? Price { get; set; }
+    public int? Price { get; set; }
 
-    public Book(int isbn, string bookTitle, string author, string edition,
-        int? pageCount, string owner, string condition, string? comment, string? category, decimal? price)
+    public BookCreationDto(int isbn, string bookTitle, string author, string edition, int? pageCount, 
+        string owner, string condition, string? comment, string? category, int? price)
     {
         Isbn = isbn;
         BookTitle = bookTitle;
@@ -40,6 +36,4 @@ public class Book
         Category = category;
         Price = price;
     }
-    
-    private Book() {}
 }
