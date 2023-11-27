@@ -4,5 +4,5 @@ namespace BusinessWebAPI.Application.DaoInterface;
 
 public interface IBookDao
 {
-    public Task<Book> PostBookAsync();
+    public Task<Book> CreateAsync(Book book);
 }

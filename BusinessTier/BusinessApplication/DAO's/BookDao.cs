@@ -2,6 +2,7 @@ using System.Security.AccessControl;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using BusinessWebAPI.Application.DaoInterface;
+using Shared.Domain;
 using Shared.DTO_s;
 
 namespace BusinessWebAPI.Application.DaoImplementation;
@@ -16,7 +17,7 @@ public class BookDao : IBookDao
         this.client = client;
     }
     
-    public async Task<ICollection<GetUserDto>> PostBookAsync()
+    public async Task<Book> CreateAsync(Book book)
     {
         // HttpResponseMessage httpResponseMessage = await client.GetAsync("User");
         // String response = await httpResponseMessage.Content.ReadAsStringAsync();
@@ -36,4 +37,5 @@ public class BookDao : IBookDao
 
         throw new NotImplementedException();
     }
+
 }

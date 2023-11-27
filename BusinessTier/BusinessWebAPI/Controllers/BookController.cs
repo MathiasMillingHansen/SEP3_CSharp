@@ -16,8 +16,8 @@ public class BookController
     }
     
     [HttpPost]
-    public async Task<ActionResult<Book>> PostBookAsync()
+    public async Task<ActionResult<Book>> CreateAsync(Book book)
     {
-        return await _bookLogic.PostBookAsync();
+        return await _bookLogic.CreateAsync(book);
     }
 }
