@@ -6,7 +6,7 @@ public class BookCreationDto
     
     public string BookTitle { get; set; }
     
-    public string Author { get; set; }
+    public ICollection<AuthorDto> Authors { get; set; }
     
     public string Edition { get; set; }
     
@@ -20,14 +20,14 @@ public class BookCreationDto
     
     public string? Category { get; set; }
     
-    public int? Price { get; set; }
+    public decimal? Price { get; set; }
 
-    public BookCreationDto(int isbn, string bookTitle, string author, string edition, int? pageCount, 
+    public BookCreationDto(int isbn, string bookTitle, ICollection<AuthorDto> authors, string edition, int? pageCount, 
         string owner, string condition, string? comment, string? category, int? price)
     {
         Isbn = isbn;
         BookTitle = bookTitle;
-        Author = author;
+        Authors = authors;
         Edition = edition;
         PageCount = pageCount;
         Owner = owner;
@@ -35,5 +35,9 @@ public class BookCreationDto
         Comment = comment;
         Category = category;
         Price = price;
+    }
+
+    public BookCreationDto()
+    {
     }
 }

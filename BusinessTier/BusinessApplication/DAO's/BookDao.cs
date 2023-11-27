@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using System.Security.AccessControl;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -18,23 +19,21 @@ public class BookDao : IBookDao
     
     public async Task<Book> CreateAsync(Book book)
     {
-        // HttpResponseMessage httpResponseMessage = await client.GetAsync("User");
-        // String response = await httpResponseMessage.Content.ReadAsStringAsync();
-        // Console.WriteLine(response + "is the response message");
-        // ICollection<GetUserDto> users = JsonSerializer.Deserialize<ICollection<GetUserDto>>(response, new JsonSerializerOptions
-        // {
-        //     WriteIndented = true,
-        //     PropertyNameCaseInsensitive = true
-        //     
-        //     
-        // });
-        // foreach (var user in users)
-        // {
-        //     Console.WriteLine(user.Username);
-        // }
-        // return users;
+        HttpResponseMessage response = await client.PostAsJsonAsync("/BookDB", book);
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        Book created = JsonSerializer.Deserialize<Book>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return created;
 
-        throw new NotImplementedException();
     }
 
 }

@@ -16,7 +16,7 @@ public class BookLogic : IBookLogic
     
     public async Task<Book> CreateAsync(BookCreationDto dto)
     {
-        Book book = new Book(dto.Isbn, dto.BookTitle, dto.Author, dto.Edition, dto.PageCount, dto.Owner, dto.Condition, dto.Comment, 
+        Book book = new Book(dto.Isbn, dto.BookTitle, dto.Authors, dto.Edition, dto.PageCount, dto.Owner, dto.Condition, dto.Comment, 
             dto.Category, dto.Price);
         ValidateBook(book);
         Book created = await _bookDao.CreateAsync(book);
@@ -45,7 +45,7 @@ public class BookLogic : IBookLogic
         {
             throw new ArgumentException("Book title cannot be null, empty or whitespace");
         }
-        if (string.IsNullOrEmpty(dto.Author) || string.IsNullOrWhiteSpace(dto.Author))
+        if (string.IsNullOrEmpty(dto.Authors.ToString()) || string.IsNullOrWhiteSpace(dto.Authors.ToString()))
         {
             throw new ArgumentException("Author cannot be null, empty or whitespace");
         }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Shared.DTOs;
 
 namespace Shared.Domain;
 
@@ -9,7 +10,7 @@ public class Book
     
     public string BookTitle { get; set; }
     
-    public string Author { get; set; }
+    public ICollection<AuthorDto> Authors { get; set; }
     
     public string Edition { get; set; }
     
@@ -26,12 +27,12 @@ public class Book
     
     public decimal? Price { get; set; }
 
-    public Book(int isbn, string bookTitle, string author, string edition,
+    public Book(int isbn, string bookTitle, ICollection<AuthorDto> authors, string edition,
         int? pageCount, string owner, string condition, string? comment, string? category, decimal? price)
     {
         Isbn = isbn;
         BookTitle = bookTitle;
-        Author = author;
+        Authors = authors;
         Edition = edition;
         PageCount = pageCount;
         Owner = owner;
@@ -41,5 +42,5 @@ public class Book
         Price = price;
     }
     
-    private Book() {}
+    public Book() {}
 }

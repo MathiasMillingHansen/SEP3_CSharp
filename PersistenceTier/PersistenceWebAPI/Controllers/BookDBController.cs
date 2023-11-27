@@ -7,11 +7,11 @@ namespace PersistenceWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BookController
+public class BookDBController
 {
     private readonly IBookLogic _bookLogic;
     
-    public BookController(IBookLogic bookLogic)
+    public BookDBController(IBookLogic bookLogic)
     {
         this._bookLogic = bookLogic;
     }

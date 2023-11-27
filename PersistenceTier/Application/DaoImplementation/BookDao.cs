@@ -6,12 +6,16 @@ namespace Application.DaoImplementation;
 public class BookDao : IBookDao
 {
     
+    //TODO REMOVE
+    private ICollection<Book> books = new List<Book>();
+    
     public BookDao()
     {
     }
 
     public Task<Book> CreateAsync(Book book)
     {
-        throw new NotImplementedException();
+        books.Add(book);
+        return Task.FromResult(book);
     }
 }
