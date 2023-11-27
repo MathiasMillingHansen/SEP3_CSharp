@@ -1,7 +1,46 @@
 @page "/SellBook"
+@using global::Shared.DTO_s
 
 <h3>SellBook</h3>
 
+<div Class="rz-p-0 rz-p-md-12">
+
+    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-12">
+        <RadzenFormField Text="ISBN Number" Variant="@variant">
+            <Start>
+                <RadzenIcon Icon="class" />
+            </Start>
+            <ChildContent>
+                <RadzenTextBox @bind-Value="@_isbn" />
+            </ChildContent>
+            <End>
+                <RadzenIcon Icon="add_circle_outline" IconStyle="IconStyle.Secondary" />
+            </End>
+        </RadzenFormField>
+        <RadzenFormField Text="Book Name" Variant="@variant">
+            <Start>
+                <RadzenIcon Icon="Book Name" />
+            </Start>
+            <ChildContent>
+                <RadzenTextBox @bind-Value="@_bookName" />
+            </ChildContent>
+        </RadzenFormField>
+        <RadzenFormField Text="Author / Authors" Variant="@variant">
+            <ChildContent>
+                
+            </ChildContent>
+        </RadzenFormField>
+    </RadzenStack>
+</div>
+
 @code {
+    private string _isbn = "";
+    private string _bookName = "";
+    private ICollection<AuthorDto> _authorDtos = new List<AuthorDto>();
+    private string _edition = "";
+    private string _pageCount = "";
+    private UserDto owner = new UserDto("");
+    
+    Variant variant = Variant.Outlined;
     
 }
