@@ -17,7 +17,7 @@ public class BookLogic : IBookLogic
     public async Task<Book> CreateAsync(BookCreationDto dto)
     {
         Book book = new Book(dto.Isbn, dto.BookTitle, dto.Author, dto.Edition, dto.PageCount, dto.Owner, dto.Condition, dto.Comment, 
-            dto.Category);
+            dto.Category, dto.Price);
         ValidateBook(book);
         Book created = await _bookDao.CreateAsync(book);
         return created;
