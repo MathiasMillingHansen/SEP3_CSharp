@@ -1,4 +1,4 @@
-﻿namespace Shared.DTO_s;
+﻿namespace Shared.DTOs;
 
 public class BookCreationDto
 {
@@ -10,18 +10,20 @@ public class BookCreationDto
     
     public string Edition { get; set; }
     
-    public int PageCount { get; set; }
+    public int? PageCount { get; set; }
     
     public string Owner { get; set; }
     
     public string Condition { get; set; }
     
-    public string Comment { get; set; }
+    public string? Comment { get; set; }
     
-    public string Category { get; set; }
+    public string? Category { get; set; }
+    
+    public int? Price { get; set; }
 
-    public BookCreationDto(int isbn, string bookTitle, string author, string edition, int pageCount, 
-        string owner, string condition, string comment, string category)
+    public BookCreationDto(int isbn, string bookTitle, string author, string edition, int? pageCount, 
+        string owner, string condition, string? comment, string? category, int? price)
     {
         Isbn = isbn;
         BookTitle = bookTitle;
@@ -32,5 +34,6 @@ public class BookCreationDto
         Condition = condition;
         Comment = comment;
         Category = category;
+        Price = price;
     }
 }

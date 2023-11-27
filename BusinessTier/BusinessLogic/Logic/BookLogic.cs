@@ -1,7 +1,7 @@
 using BusinessWebAPI.Application.DaoInterface;
 using Logic.Interfaces;
 using Shared.Domain;
-using Shared.DTO_s;
+using Shared.DTOs;
 
 namespace Application.Logic;
 
@@ -41,8 +41,29 @@ public class BookLogic : IBookLogic
     
     private void ValidateBook(Book dto)
     {
-        if ((string.IsNullOrEmpty(dto.BookTitle))||(string.IsNullOrEmpty(dto.Author))) throw new Exception("Title and author must contain characters.");
-        // other validation stuff
+        if (string.IsNullOrEmpty(dto.BookTitle) || string.IsNullOrWhiteSpace(dto.BookTitle))
+        {
+            throw new ArgumentException("Book title cannot be null, empty or whitespace");
+        }
+        if (string.IsNullOrEmpty(dto.Author) || string.IsNullOrWhiteSpace(dto.Author))
+        {
+            throw new ArgumentException("Author cannot be null, empty or whitespace");
+        }
+        if (string.IsNullOrEmpty(dto.Edition) || string.IsNullOrWhiteSpace(dto.Edition))
+        {
+            throw new ArgumentException("Edition cannot be null, empty or whitespace");
+        }
+        if (string.IsNullOrEmpty(dto.Isbn.ToString()) || string.IsNullOrWhiteSpace(dto.Isbn.ToString()))
+        {
+            throw new ArgumentException("ISBN cannot be null, empty or whitespace");
+        }
+        // TODO : Change this to validate a JWT token START -------
+        if (string.IsNullOrEmpty(dto.Owner) || string.IsNullOrWhiteSpace(dto.Owner))
+        {
+            throw new ArgumentException("Owner cannot be null, empty or whitespace");
+        }
+        // Change this to validate a JWT token END ----------------
+
     }
 
 }

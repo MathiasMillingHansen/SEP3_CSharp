@@ -1,7 +1,7 @@
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Domain;
-using Shared.DTO_s;
+using Shared.DTOs;
 
 namespace BusinessWebAPI.Controllers;
 

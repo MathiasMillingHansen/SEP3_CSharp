@@ -1,4 +1,4 @@
-namespace Shared.DTO_s;
+namespace Shared.DTOs;
 
 public class AuthorDto
 {
