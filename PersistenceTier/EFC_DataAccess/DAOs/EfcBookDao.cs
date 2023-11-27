@@ -1,6 +1,6 @@
 ﻿namespace EFC_DataAccess.DAOs;
 
-public interface IUserDao
+public class EfcBookDao
 {
     
 }
