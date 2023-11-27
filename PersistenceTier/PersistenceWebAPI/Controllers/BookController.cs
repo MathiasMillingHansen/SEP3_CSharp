@@ -1,9 +1,10 @@
-using Logic.Interfaces;
+using Logic.LogicImplemtation;
+using Logic.LogicInterface;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Domain;
 using Shared.DTO_s;
 
-namespace BusinessWebAPI.Controllers;
+namespace PersistenceWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -15,10 +16,10 @@ public class BookController
     {
         this._bookLogic = bookLogic;
     }
-    
+
     [HttpPost]
-    public async Task<ActionResult<Book>> CreateAsync(BookCreationDto dto)
+    public async Task<ActionResult<Book>> CreateAsync(Book book)
     {
-        return await _bookLogic.CreateAsync(dto);
+        return await _bookLogic.CreateAsync(book);
     }
 }

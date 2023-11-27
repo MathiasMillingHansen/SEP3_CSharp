@@ -1,7 +1,7 @@
 using Application.Logic;
 using BusinessWebAPI.Application.DaoImplementation;
 using BusinessWebAPI.Application.DaoInterface;
-using Logic.Interface;
+using Logic.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);

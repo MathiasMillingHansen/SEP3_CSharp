@@ -1,5 +1,5 @@
 using BusinessWebAPI.Application.DaoInterface;
-using Logic.Interface;
+using Logic.Interfaces;
 using Shared.Domain;
 using Shared.DTO_s;
 
@@ -14,7 +14,7 @@ public class BookLogic : IBookLogic
         _bookDao = bookDao;
     }
     
-    public async Task<Book> CreateAsync(Book dto)
+    public async Task<Book> CreateAsync(BookCreationDto dto)
     {
         Book book = new Book(dto.Isbn, dto.BookTitle, dto.Author, dto.Edition, dto.PageCount, dto.Owner, dto.Condition, dto.Comment, 
             dto.Category);
