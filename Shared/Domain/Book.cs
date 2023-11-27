@@ -1,7 +1,10 @@
-﻿namespace Shared.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shared.Domain;
 
 public class Book
 {
+    [Key]
     public int Isbn { get; set; }
     
     public string BookTitle { get; set; }
@@ -12,6 +15,7 @@ public class Book
     
     public int? PageCount { get; set; }
     
+    [Key]
     public string Owner { get; set; }
     
     public string Condition { get; set; }
@@ -19,9 +23,11 @@ public class Book
     public string? Comment { get; set; }
     
     public string? Category { get; set; }
+    
+    public decimal? Price { get; set; }
 
     public Book(int isbn, string bookTitle, string author, string edition,
-        int? pageCount, string owner, string condition, string? comment, string? category)
+        int? pageCount, string owner, string condition, string? comment, string? category, decimal? price)
     {
         Isbn = isbn;
         BookTitle = bookTitle;
@@ -32,5 +38,8 @@ public class Book
         Condition = condition;
         Comment = comment;
         Category = category;
+        Price = price;
     }
+    
+    private Book() {}
 }
