@@ -1,19 +1,76 @@
 ﻿@page "/BookCatalog"   
+@using global::Shared.DTO_s
+@using System.Collections
+
 
 <h3>BookCatalog</h3>
 
-//Underline header
 <div class="row">
     <div class="col-auto">
         <p>
-            Her kan du se alle de bøger, som er til salg
+            Here you can see an overview of alle the books there is currently for sale
         </p>
+         <!--Dropdown menu-->
+        <div class="rz-p-sm-12 rz-text-align-center">
+            <RadzenDropDown @bind-Value=@_category Data=@category Style="width: 100%; max-width: 200px;" />
+        </div>
+        
+        <RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-8" Style="max-width: 420px; background-color: RGB(242, 237, 215)" >
+            <RadzenRow RowGap="0">
+                <RadzenColumn SizeSM="4">
+                    
+                    <!--Radzen image-->
+
+                    <!--Text in the card-->
+
+                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Book Title</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body1"><b>@(_bookTitle)</b></RadzenText>
+
+                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Isbn</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body1"><b>@(_isbn)</b></RadzenText>
+
+                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Author</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body1"><b>@(_isbn)</b></RadzenText>
+
+                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Edition</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body1"><b>@(_isbn)</b></RadzenText>
+
+                    <RadzenColumn SizeSM="8">
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Page count</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@(_isbn)</b></RadzenText>
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Owner</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@(_isbn)</b></RadzenText>
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Condition</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@(_isbn)</b></RadzenText>
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Comment</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@(_isbn)</b></RadzenText>
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Category</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@(_isbn)</b></RadzenText>
+                        
+                    </RadzenColumn>
+                </RadzenColumn>
+           </RadzenRow>
+       </RadzenCard>
     </div>
 </div> 
 
-//Dropdown menu that selects which category the user wants
+ <!--Dropdown menu that selects which category the user wants-->
 
 
 @code {
+    IEnumerable<string> category;
+    
+    
+    private string _isbn = "";
+    private string _bookTitle = "";
+    private ICollection<AuthorDto> _authorDtos = new List<AuthorDto>();
+    private string _edition = "";
+    private string _pageCount = "";
+    private UserDto owner = new UserDto("");
+    private string _category = "";
     
 }
