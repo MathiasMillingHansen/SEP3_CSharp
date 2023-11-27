@@ -1,46 +1,132 @@
 @page "/SellBook"
 @using global::Shared.DTO_s
 
-<h3>SellBook</h3>
-
 <div Class="rz-p-0 rz-p-md-12">
+    <RadzenRow class="rz-text-align-center" Gap="1rem">
+        <RadzenColumn>
+            <h3>Sell Book</h3>
+            <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
+                <RadzenFormField Style="min-width: 60%" Text="ISBN Number" Variant="@variant">
+                    <Start>
+                        <RadzenIcon Icon="class"/>
+                    </Start>
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value="@_isbn"/>
+                    </ChildContent>
+                </RadzenFormField>
+                <RadzenFormField Style="min-width: 60%" Text="Book Title" Variant="@variant">
+                    <Start>
+                        <RadzenIcon Icon=""/>
+                    </Start>
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value="@_bookTitle"/>
+                    </ChildContent>
+                </RadzenFormField>
+                <RadzenButton Text="Add Author" Click="AddAuthor" Icon="add" Style="background-color: #0c4128"></RadzenButton>
+                @foreach (var author in _authorDtos)
+                {
+                    <RadzenFormField Style="width: 60%" Text="Author" Variant="@variant">
+                        <ChildContent>
+                            <RadzenTextBox @bind-Value="@author.FullName"/>
+                            <RadzenButton Text="Remove Author" Icon="add" Click="(() => RemoveAuthor(author.FullName))" Style="background-color: #0c4128"></RadzenButton>
+                        </ChildContent>
+                    </RadzenFormField>
+                }
 
-    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-12">
-        <RadzenFormField Text="ISBN Number" Variant="@variant">
-            <Start>
-                <RadzenIcon Icon="class" />
-            </Start>
-            <ChildContent>
-                <RadzenTextBox @bind-Value="@_isbn" />
-            </ChildContent>
-            <End>
-                <RadzenIcon Icon="add_circle_outline" IconStyle="IconStyle.Secondary" />
-            </End>
-        </RadzenFormField>
-        <RadzenFormField Text="Book Name" Variant="@variant">
-            <Start>
-                <RadzenIcon Icon="Book Name" />
-            </Start>
-            <ChildContent>
-                <RadzenTextBox @bind-Value="@_bookName" />
-            </ChildContent>
-        </RadzenFormField>
-        <RadzenFormField Text="Author / Authors" Variant="@variant">
-            <ChildContent>
-                
-            </ChildContent>
-        </RadzenFormField>
-    </RadzenStack>
+                <RadzenFormField Style="width: 60%" Text="Edition" Variant="@variant">
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value="@_edition"/>
+                    </ChildContent>
+                </RadzenFormField>
+
+                <RadzenFormField Style="width: 60%" Text="Page Count" Variant="@variant">
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value="@_pageCount"/>
+                    </ChildContent>
+                </RadzenFormField>
+
+                <RadzenFormField Style="width: 60%" Text="Condition" Variant="@variant">
+                    <ChildContent>
+                        <RadzenDropDown @bind-Value=@_condition Data=@conditions></RadzenDropDown>
+                    </ChildContent>
+                </RadzenFormField>
+
+                <RadzenFormField Style="width: 60%" Text="Course" Variant="@variant">
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value="@_course"/>
+                    </ChildContent>
+                </RadzenFormField>
+
+                <RadzenFormField Style="width: 60%" Text="Price" Variant="@variant">
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value="@_price"/>
+                    </ChildContent>
+                </RadzenFormField>
+            </RadzenStack>
+        </RadzenColumn>
+
+        <RadzenColumn>
+            <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
+                <RadzenFormField Style="width: 60%" Text="Comment" Variant="@variant">
+                    <ChildContent>
+                        <RadzenTextArea Style="resize: unset; min-height: 20em" @bind-Value="@_comment"/>
+                    </ChildContent>
+                </RadzenFormField>
+
+                <RadzenButton Text="Save Changes" Click="SaveChanges" Icon="save" Style="background-color: #0c4128"></RadzenButton>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+</div>
+
+<div class="rz-p-0 rz-p-md-6">
+
 </div>
 
 @code {
     private string _isbn = "";
-    private string _bookName = "";
+    private string _bookTitle = "";
     private ICollection<AuthorDto> _authorDtos = new List<AuthorDto>();
     private string _edition = "";
     private string _pageCount = "";
-    private UserDto owner = new UserDto("");
-    
+    private string _username = "";
+    private string _condition = "";
+    private string _comment = "";
+    private string _course = "";
+    private string _price = "";
+
     Variant variant = Variant.Outlined;
-    
+    ICollection<String> conditions = new List<String>() {"Perfekt", "God", "Brugt", "Meget Brugt"};
+
+    void AddAuthor()
+    {
+        try
+        {
+            _authorDtos.Add(new AuthorDto(""));
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+
+    private void RemoveAuthor(String author)
+    {
+        try
+        {
+            _authorDtos.Remove(_authorDtos.FirstOrDefault(x => x.FullName == author));
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+
+    private void SaveChanges()
+    {
+        throw new NotImplementedException();
+    }
+
 }
