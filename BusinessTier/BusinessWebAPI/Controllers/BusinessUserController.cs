@@ -1,4 +1,4 @@
-using Logic.Interface;
+using Application.LogicInterface;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTO_s;
 

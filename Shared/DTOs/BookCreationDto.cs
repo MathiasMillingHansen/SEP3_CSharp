@@ -1,6 +1,6 @@
-﻿namespace Shared.Domain;
+﻿namespace Shared.DTO_s;
 
-public class Book
+public class BookCreationDto
 {
     public int Isbn { get; set; }
     
@@ -20,7 +20,8 @@ public class Book
     
     public string Category { get; set; }
 
-    public Book(int isbn, string bookTitle, string author, string edition, int pageCount, string owner, string condition, string comment, string category)
+    public BookCreationDto(int isbn, string bookTitle, string author, string edition, int pageCount, 
+        string owner, string condition, string comment, string category)
     {
         Isbn = isbn;
         BookTitle = bookTitle;
