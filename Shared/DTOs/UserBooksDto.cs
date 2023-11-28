@@ -4,5 +4,5 @@ public class UserBooksDto
 {
     public string Username { get; set; }
     
-    public ICollection<Book> Books { get; set; }
+    public ICollection<BookForSale> Books { get; set; }
 }

@@ -14,7 +14,7 @@ public class BookLogic : IBookLogic
         _bookDao = bookDao;
     }
     
-    public async Task<Book> CreateAsync(BookCreationDto dto)
+    public async Task<Book> CreateAsync(BookSaleDto dto)
     {
         //TODO IMPLEMENT LOGIC
         //Book book = new Book(dto.Isbn, dto.BookTitle, ConvertToAuthor(dto.Authors), dto.Edition, dto.PageCount, dto.Owner, dto.Condition, dto.Comment, 

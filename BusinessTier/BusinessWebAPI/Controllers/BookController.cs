@@ -17,7 +17,7 @@ public class BookController
     }
     
     [HttpPost]
-    public async Task<ActionResult<Book>> CreateAsync(BookCreationDto dto)
+    public async Task<ActionResult<Book>> CreateAsync(BookSaleDto dto)
     {
         Console.WriteLine("Book received" + dto.BookTitle);
         return await _bookLogic.CreateAsync(dto);

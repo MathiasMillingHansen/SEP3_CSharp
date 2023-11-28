@@ -5,5 +5,5 @@ namespace HttpClients.ClientInterfaces;
 
 public interface IBookService
 {
-    Task<Book> CreateAsync(BookCreationDto bookCreationDto);
+    Task<Book> CreateAsync(BookSaleDto bookSaleDto);
 }

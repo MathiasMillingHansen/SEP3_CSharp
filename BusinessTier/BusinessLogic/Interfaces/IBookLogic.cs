@@ -5,7 +5,7 @@ namespace Logic.Interfaces;
 
 public interface IBookLogic
 {
-    public Task<Book> CreateAsync(BookCreationDto bookCreationDto);
+    public Task<Book> CreateAsync(BookSaleDto bookSaleDto);
     
     Task<IEnumerable<Book>> GetAllAsync();
 

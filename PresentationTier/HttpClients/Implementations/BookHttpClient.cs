@@ -15,9 +15,9 @@ public class BookHttpClient : IBookService
         _httpClient = httpClient;
     }
     
-    public async Task<Book> CreateAsync(BookCreationDto bookCreationDto)
+    public async Task<Book> CreateAsync(BookSaleDto bookSaleDto)
     {
-        HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/book", bookCreationDto);
+        HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/book", bookSaleDto);
         string result = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

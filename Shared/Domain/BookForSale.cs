@@ -11,4 +11,8 @@ public class BookForSale
     public string Comment { get; set; }
     
     public Book Book { get; set; }
+
+    public BookForSale()
+    {
+    }
 }

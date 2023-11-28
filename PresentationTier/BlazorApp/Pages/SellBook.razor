@@ -128,7 +128,7 @@
 
     public async void SaveChanges()
     {
-        BookCreationDto bookCreationDto = new()
+        BookSaleDto bookSaleDto = new()
         {
             Isbn = Convert.ToInt32(_isbn),
             BookTitle = _bookTitle,
@@ -145,7 +145,7 @@
         try
         {
             
-            await bookService.CreateAsync(bookCreationDto);
+            await bookService.CreateAsync(bookSaleDto);
             Console.WriteLine("Book created");
         }
         catch (Exception e)
