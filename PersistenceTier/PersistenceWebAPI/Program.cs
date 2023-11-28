@@ -1,5 +1,3 @@
-using Application.DaoImplementation;
-using Application.DaoInterface;
 using Logic.LogicImplemtation;
 using Logic.LogicInterface;
 
@@ -11,7 +9,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IUserDAO, UserDao>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 
 
