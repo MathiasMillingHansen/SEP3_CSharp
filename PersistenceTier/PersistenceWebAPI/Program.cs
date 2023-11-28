@@ -1,6 +1,5 @@
-using Application.DaoImplementation;
-using Application.DaoInterface;
-using DummyFileData;
+using EFC_DataAccess;
+using EFC_DataAccess.DAOs;
 using Logic.LogicImplemtation;
 using Logic.LogicInterface;
 
@@ -12,9 +11,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<FileContext>();
-builder.Services.AddScoped<IUserDAO, UserDao>();
-builder.Services.AddScoped<IUserLogic, UserLogic>();
+builder.Services.AddScoped<DatabaseContext>();
+builder.Services.AddScoped<IEfcBookDao, EfcBookDao>();
+builder.Services.AddScoped<IBookLogic, BookLogic>();
 
 
 var app = builder.Build();

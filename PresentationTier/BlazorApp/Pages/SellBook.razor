@@ -1,46 +1,84 @@
 @page "/SellBook"
-@using global::Shared.DTO_s
-
-<h3>SellBook</h3>
+@using global::Shared.DTOs
+@using HttpClients.ClientInterfaces
+@using global::Shared.Domain
+@inject IBookService bookService
 
 <div Class="rz-p-0 rz-p-md-12">
+    <RadzenRow class="rz-text-align-center" Gap="1rem">
+        <RadzenColumn>
+            <h3>Sell Book</h3>
+            <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
 
-    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-12">
-        <RadzenFormField Text="ISBN Number" Variant="@variant">
-            <Start>
-                <RadzenIcon Icon="class" />
-            </Start>
-            <ChildContent>
-                <RadzenTextBox @bind-Value="@_isbn" />
-            </ChildContent>
-            <End>
-                <RadzenIcon Icon="add_circle_outline" IconStyle="IconStyle.Secondary" />
-            </End>
-        </RadzenFormField>
-        <RadzenFormField Text="Book Name" Variant="@variant">
-            <Start>
-                <RadzenIcon Icon="Book Name" />
-            </Start>
-            <ChildContent>
-                <RadzenTextBox @bind-Value="@_bookName" />
-            </ChildContent>
-        </RadzenFormField>
-        <RadzenFormField Text="Author / Authors" Variant="@variant">
-            <ChildContent>
-                
-            </ChildContent>
-        </RadzenFormField>
-    </RadzenStack>
+                <RadzenFormField Style="width: 60%" Text="Condition" Variant="@variant">
+                    <ChildContent>
+                        <RadzenDropDown @bind-Value=@_condition Data=@_conditions></RadzenDropDown>
+                    </ChildContent>
+                </RadzenFormField>
+
+                <RadzenFormField Style="width: 60%" Text="Price" Variant="@variant">
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value="@_price"/>
+                    </ChildContent>
+                </RadzenFormField>
+            </RadzenStack>
+        </RadzenColumn>
+
+        <RadzenColumn>
+            <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
+                <RadzenFormField Style="width: 60%" Text="Comment" Variant="@variant">
+                    <ChildContent>
+                        <RadzenTextArea Style="resize: unset; min-height: 20em" @bind-Value="@_comment"/>
+                    </ChildContent>
+                </RadzenFormField>
+
+                <RadzenButton Text="Save Changes" Click="SaveChanges" Icon="save" Style="background-color: #0c4128"></RadzenButton>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+</div>
+
+<div class="rz-p-0 rz-p-md-6">
+
 </div>
 
 @code {
-    private string _isbn = "";
-    private string _bookName = "";
-    private ICollection<AuthorDto> _authorDtos = new List<AuthorDto>();
-    private string _edition = "";
-    private string _pageCount = "";
-    private UserDto owner = new UserDto("");
-    
+    private string _price = "";
+    private ICollection<Condition> _conditions; 
+    private string _username = "Test"; //TODO: Get username from auth
+    private string _comment = "";
+    private Condition _condition;
+    private ICollection<BooksAvailableDto> _booksAvailable;
+ 
+
     Variant variant = Variant.Outlined;
-    
+
+    public async void SaveChanges()
+    {
+        try
+        {
+            BookSaleDto bookSaleDto = new BookSaleDto()
+            {
+                Isbn = "1234", //TODO get isbn from dropdown
+                BookCondition = _condition, //TODO get condition from dropdown
+                Comment = _comment,
+                Price = Convert.ToDecimal(_price), //TODO only allow decimals
+                Owner = _username //TODO get from jwt
+            };
+            
+            await bookService.SellBookAsync(bookSaleDto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        _booksAvailable = bookService.GetAvailableBooksAsync();
+        _conditions = bookService.GetConditionsAsync();
+    }
+
 }
