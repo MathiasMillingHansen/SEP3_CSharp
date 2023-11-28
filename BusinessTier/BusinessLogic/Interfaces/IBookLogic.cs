@@ -5,11 +5,12 @@ namespace Logic.Interfaces;
 
 public interface IBookLogic
 {
-    public Task<Book> CreateAsync(BookSaleDto bookSaleDto);
+    public Task<Book> SellBookAsync(BookSaleDto bookSaleDto);
     
-    Task<IEnumerable<Book>> GetAllAsync();
+    Task<ICollection<BooksAvailableDto>> GetAllAsync();
 
-    Task<Book> GetByIsbnAsync(int isbn);
+    Task<BookWrapperDto> GetByIsbnAsync(string isbn);
 
     Task<Book> GetByBookTitleAsync(string bookTitle);
+    Task<ICollection<Condition>> GetConditionsAsync();
 }

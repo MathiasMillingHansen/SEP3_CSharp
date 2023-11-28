@@ -1,6 +1,7 @@
 @page "/SellBook"
 @using global::Shared.DTOs
 @using HttpClients.ClientInterfaces
+@using global::Shared.Domain
 @inject IBookService bookService
 
 <div Class="rz-p-0 rz-p-md-12">
@@ -8,54 +9,10 @@
         <RadzenColumn>
             <h3>Sell Book</h3>
             <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
-                <RadzenFormField Style="min-width: 60%" Text="ISBN Number" Variant="@variant">
-                    <Start>
-                        <RadzenIcon Icon="class"/>
-                    </Start>
-                    <ChildContent>
-                        <RadzenTextBox @bind-Value="@_isbn"/>
-                    </ChildContent>
-                </RadzenFormField>
-                <RadzenFormField Style="min-width: 60%" Text="Book Title" Variant="@variant">
-                    <Start>
-                        <RadzenIcon Icon=""/>
-                    </Start>
-                    <ChildContent>
-                        <RadzenTextBox @bind-Value="@_bookTitle"/>
-                    </ChildContent>
-                </RadzenFormField>
-                <RadzenButton Text="Add Author" Click="AddAuthor" Icon="add" Style="background-color: #0c4128"></RadzenButton>
-                @foreach (var author in _authorDtos)
-                {
-                    <RadzenFormField Style="width: 60%" Text="Author" Variant="@variant">
-                        <ChildContent>
-                            <RadzenTextBox @bind-Value="@author.FullName"/>
-                            <RadzenButton Text="Remove Author" Icon="add" Click="(() => RemoveAuthor(author.FullName))" Style="background-color: #0c4128"></RadzenButton>
-                        </ChildContent>
-                    </RadzenFormField>
-                }
-
-                <RadzenFormField Style="width: 60%" Text="Edition" Variant="@variant">
-                    <ChildContent>
-                        <RadzenTextBox @bind-Value="@_edition"/>
-                    </ChildContent>
-                </RadzenFormField>
-
-                <RadzenFormField Style="width: 60%" Text="Page Count" Variant="@variant">
-                    <ChildContent>
-                        <RadzenTextBox @bind-Value="@_pageCount"/>
-                    </ChildContent>
-                </RadzenFormField>
 
                 <RadzenFormField Style="width: 60%" Text="Condition" Variant="@variant">
                     <ChildContent>
-                        <RadzenDropDown @bind-Value=@_condition Data=@conditions></RadzenDropDown>
-                    </ChildContent>
-                </RadzenFormField>
-
-                <RadzenFormField Style="width: 60%" Text="Course" Variant="@variant">
-                    <ChildContent>
-                        <RadzenTextBox @bind-Value="@_course"/>
+                        <RadzenDropDown @bind-Value=@_condition Data=@_conditions></RadzenDropDown>
                     </ChildContent>
                 </RadzenFormField>
 
@@ -86,73 +43,42 @@
 </div>
 
 @code {
-    private string _isbn = "";
-    private string _bookTitle = "";
-    private ICollection<AuthorDto> _authorDtos = new List<AuthorDto>();
-    private string _edition = "";
-    private string _pageCount = "";
-    private string _username = "";
-    private string _condition = "";
-    private string _comment = "";
-    private string _course = "";
     private string _price = "";
+    private ICollection<Condition> _conditions; 
+    private string _username = "Test"; //TODO: Get username from auth
+    private string _comment = "";
+    private Condition _condition;
+    private ICollection<BooksAvailableDto> _booksAvailable;
+ 
 
     Variant variant = Variant.Outlined;
-    ICollection<String> conditions = new List<String>() {"Perfekt", "God", "Brugt", "Meget Brugt"};
-
-    void AddAuthor()
-    {
-        try
-        {
-            _authorDtos.Add(new AuthorDto(""));
-            StateHasChanged();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
-    }
-
-    private void RemoveAuthor(String author)
-    {
-        try
-        {
-            _authorDtos.Remove(_authorDtos.FirstOrDefault(x => x.FullName == author));
-            StateHasChanged();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
-    }
 
     public async void SaveChanges()
     {
-        BookSaleDto bookSaleDto = new()
-        {
-            Isbn = Convert.ToInt32(_isbn),
-            BookTitle = _bookTitle,
-            Authors = _authorDtos,
-            Edition = _edition,
-            PageCount = Convert.ToInt32(_pageCount),
-            Owner = "Test", // TODO: Change to JWT
-            Condition = _condition,
-            Comment = _comment,
-            Category = _course,
-            Price = Convert.ToDecimal(_price)
-        };
-
         try
         {
+            BookSaleDto bookSaleDto = new BookSaleDto()
+            {
+                Isbn = "1234", //TODO get isbn from dropdown
+                BookCondition = _condition, //TODO get condition from dropdown
+                Comment = _comment,
+                Price = Convert.ToDecimal(_price), //TODO only allow decimals
+                Owner = _username //TODO get from jwt
+            };
             
-            await bookService.CreateAsync(bookSaleDto);
-            Console.WriteLine("Book created");
+            await bookService.SellBookAsync(bookSaleDto);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    protected override void OnInitialized()
+    {
+        _booksAvailable = bookService.GetAvailableBooksAsync();
+        _conditions = bookService.GetConditionsAsync();
     }
 
 }

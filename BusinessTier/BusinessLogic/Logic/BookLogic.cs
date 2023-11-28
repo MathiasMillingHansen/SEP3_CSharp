@@ -14,46 +14,47 @@ public class BookLogic : IBookLogic
         _bookDao = bookDao;
     }
     
-    public async Task<Book> CreateAsync(BookSaleDto dto)
+    public async Task<Book> SellBookAsync(BookSaleDto dto)
     {
+        BookWrapperDto bookWrapperDto = await _bookDao.GetByIsbnAsync(dto.Isbn);
         //TODO IMPLEMENT LOGIC
-        //Book book = new Book(dto.Isbn, dto.BookTitle, ConvertToAuthor(dto.Authors), dto.Edition, dto.PageCount, dto.Owner, dto.Condition, dto.Comment, 
-        //    dto.Category, dto.Price); 
-        // ValidateBook(book);
-        // Book created = await _bookDao.CreateAsync(book);
-        // return created;
+        BookForSale bookForSale = new BookForSale()
+        {
+            Owner = dto.Owner,
+            Price = dto.Price,
+            Comment = dto.Comment,
+            Condition = dto.BookCondition,
+            Book = new Book()
+            {
+                
+            }
+            
+        };
         throw new NotImplementedException();
     }
 
-    private ICollection<Author> ConvertToAuthor(ICollection<AuthorDto> dtoAuthors)
+    public async Task<ICollection<BooksAvailableDto>> GetAllAsync()
     {
-        ICollection<Author> authors = new List<Author>();
-        foreach (var author in dtoAuthors)
-        {
-            authors.Add(new Author(author.FullName));
-        }
-        
-
-        return authors;
-    }
-
-    public async Task<IEnumerable<Book>> GetAllAsync()
-    {
-        IEnumerable<Book> books = await _bookDao.GetAllAsync();
+        ICollection<BooksAvailableDto> books = await _bookDao.GetAllAsync();
         return books;
     }
-    
 
-    public async Task<Book> GetByIsbnAsync(int isbn)
+    public async Task<BookWrapperDto> GetByIsbnAsync(string isbn)
     {
-        Book book = await _bookDao.GetByIsbnAsync(isbn);
-        return book;
+        BookWrapperDto bookWrapperDto = await _bookDao.GetByIsbnAsync(isbn);
+        return bookWrapperDto;
     }
 
     public async Task<Book> GetByBookTitleAsync(string bookTitle)
     {
         Book book = await _bookDao.GetByBookTitleAsync(bookTitle);
         return book;
+    }
+
+    public async Task<ICollection<Condition>> GetConditionsAsync()
+    {
+        ICollection<Condition> conditions = await _bookDao.GetConditionsAsync();
+        return conditions;
     }
 
     private void ValidateBook(Book dto)

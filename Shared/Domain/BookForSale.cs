@@ -4,7 +4,7 @@ public class BookForSale
 {
     public string Owner { get; set; }
     
-    public decimal Price { get; set; }
+    public decimal? Price { get; set; }
     
     public Condition Condition { get; set; }
     
