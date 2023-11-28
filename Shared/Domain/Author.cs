@@ -1,15 +1,15 @@
-﻿namespace Shared.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shared.Domain;
 
 public class Author
 {
+    [Key]
     public string Name { get; set; }
-    public int Id { get; set; }
-    public Publisher Publisher { get; set; }
     
-    public Author(string name, Publisher publisher)
+    public Author(string name)
     {
         Name = name;
-        Publisher = publisher;
     } 
     
     private Author()

@@ -49,17 +49,17 @@ public class UserLogic : IUserLogic
     //         throw new Exception("Username must be at least 4 characters.");
     //     }
     // }
-    public Task<UserInformation> CreateAsync(UserCreationDTO dto)
+    public Task<UserBooksDto> CreateAsync(UserCreationDTO dto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<UserInformation> GetByUsernameAsync(string username)
+    public Task<UserBooksDto> GetByUsernameAsync(string username)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<UserInformation>> GetAllAsync()
+    public Task<IEnumerable<UserBooksDto>> GetAllAsync()
     {
         throw new NotImplementedException();
     }

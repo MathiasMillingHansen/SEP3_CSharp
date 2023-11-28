@@ -5,9 +5,9 @@ namespace Logic.Interfaces;
 
 public interface IUserLogic
 {
-    public Task<UserInformation> CreateAsync(UserCreationDTO dto);
+    public Task<UserBooksDto> CreateAsync(UserCreationDTO dto);
 
-    public Task<UserInformation> GetByUsernameAsync(string username);
+    public Task<UserBooksDto> GetByUsernameAsync(string username);
 
-    Task<IEnumerable<UserInformation>> GetAllAsync();
+    Task<IEnumerable<UserBooksDto>> GetAllAsync();
 }

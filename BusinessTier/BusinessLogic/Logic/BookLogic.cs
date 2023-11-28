@@ -16,11 +16,25 @@ public class BookLogic : IBookLogic
     
     public async Task<Book> CreateAsync(BookCreationDto dto)
     {
-        Book book = new Book(dto.Isbn, dto.BookTitle, dto.Authors, dto.Edition, dto.PageCount, dto.Owner, dto.Condition, dto.Comment, 
-            dto.Category, dto.Price);
-        ValidateBook(book);
-        Book created = await _bookDao.CreateAsync(book);
-        return created;
+        //TODO IMPLEMENT LOGIC
+        //Book book = new Book(dto.Isbn, dto.BookTitle, ConvertToAuthor(dto.Authors), dto.Edition, dto.PageCount, dto.Owner, dto.Condition, dto.Comment, 
+        //    dto.Category, dto.Price); 
+        // ValidateBook(book);
+        // Book created = await _bookDao.CreateAsync(book);
+        // return created;
+        throw new NotImplementedException();
+    }
+
+    private ICollection<Author> ConvertToAuthor(ICollection<AuthorDto> dtoAuthors)
+    {
+        ICollection<Author> authors = new List<Author>();
+        foreach (var author in dtoAuthors)
+        {
+            authors.Add(new Author(author.FullName));
+        }
+        
+
+        return authors;
     }
 
     public async Task<IEnumerable<Book>> GetAllAsync()
@@ -44,27 +58,8 @@ public class BookLogic : IBookLogic
 
     private void ValidateBook(Book dto)
     {
-        if (string.IsNullOrEmpty(dto.BookTitle) || string.IsNullOrWhiteSpace(dto.BookTitle))
-        {
-            throw new ArgumentException("Book title cannot be null, empty or whitespace");
-        }
-        if (string.IsNullOrEmpty(dto.Authors.ToString()) || string.IsNullOrWhiteSpace(dto.Authors.ToString()))
-        {
-            throw new ArgumentException("Author cannot be null, empty or whitespace");
-        }
-        if (string.IsNullOrEmpty(dto.Edition) || string.IsNullOrWhiteSpace(dto.Edition))
-        {
-            throw new ArgumentException("Edition cannot be null, empty or whitespace");
-        }
-        if (string.IsNullOrEmpty(dto.Isbn.ToString()) || string.IsNullOrWhiteSpace(dto.Isbn.ToString()))
-        {
-            throw new ArgumentException("ISBN cannot be null, empty or whitespace");
-        }
         // TODO : Change this to validate a JWT token START -------
-        if (string.IsNullOrEmpty(dto.Owner) || string.IsNullOrWhiteSpace(dto.Owner))
-        {
-            throw new ArgumentException("Owner cannot be null, empty or whitespace");
-        }
+
         // Change this to validate a JWT token END ----------------
 
     }

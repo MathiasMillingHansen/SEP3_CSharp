@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shared.Domain;
+using Shared.DTOs;
 
 namespace EFC_DataAccess;
 
@@ -7,9 +8,8 @@ public class DatabaseContext : DbContext
 {
     public DbSet<Book> books { get; set; }
     public DbSet<Author> authors { get; set; }
-    public DbSet<Publisher> publishers { get; set; }
     
-    private readonly string connectionString = "Host=localhost;Database=postgres;Username=postgres;Password=1234";
+    private readonly string connectionString = "Host=cornelius.db.elephantsql.com;Database=pexjxujf;Username=pexjxujf;Password=VEu6worirTNw0TWGnTniNrx2C0iYYB2-";
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -19,7 +19,7 @@ public class DatabaseContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Book>()
-            .HasKey(book => new { book.Isbn, book.Owner });
+        modelBuilder.Entity<Book>().HasKey(b => b.Isbn);
+
     }
 }

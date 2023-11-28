@@ -1,6 +1,6 @@
 ﻿namespace Shared.Domain;
 
-public class UserInformation
+public class UserBooksDto
 {
     public string Username { get; set; }
     
