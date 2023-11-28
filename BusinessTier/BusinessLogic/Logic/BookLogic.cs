@@ -23,22 +23,25 @@ public class BookLogic : IBookLogic
         return created;
     }
 
-    public Task<IEnumerable<Book>> GetAllAsync()
+    public async Task<IEnumerable<Book>> GetAllAsync()
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Book> GetByNameAsync(string bookName)
-    {
-        throw new NotImplementedException();
+        IEnumerable<Book> books = await _bookDao.GetAllAsync();
+        return books;
     }
     
 
-    public Task<Book> GetByIsbnAsync(int isbn)
+    public async Task<Book> GetByIsbnAsync(int isbn)
     {
-        throw new NotImplementedException();
+        Book book = await _bookDao.GetByIsbnAsync(isbn);
+        return book;
     }
-    
+
+    public async Task<Book> GetByBookTitleAsync(string bookTitle)
+    {
+        Book book = await _bookDao.GetByBookTitleAsync(bookTitle);
+        return book;
+    }
+
     private void ValidateBook(Book dto)
     {
         if (string.IsNullOrEmpty(dto.BookTitle) || string.IsNullOrWhiteSpace(dto.BookTitle))

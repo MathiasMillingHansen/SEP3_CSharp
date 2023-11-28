@@ -36,4 +36,18 @@ public class BookDao : IBookDao
 
     }
 
+    public Task<IEnumerable<Book>> GetAllAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Book> GetByIsbnAsync(int isbn)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Book> GetByBookTitleAsync(string bookTitle)
+    {
+        throw new NotImplementedException();
+    }
 }
