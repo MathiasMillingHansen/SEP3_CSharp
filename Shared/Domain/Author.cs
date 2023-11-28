@@ -4,8 +4,8 @@ namespace Shared.Domain;
 
 public class Author
 {
-    [Key]
     public string Name { get; set; }
+    public int Id { get; set; }
     
     private Author()
     {

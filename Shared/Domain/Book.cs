@@ -10,7 +10,7 @@ public class Book
     public string BookTitle { get; set; }
     public ICollection<Author> Authors { get; set; }
     public string Edition { get; set; }
-    public ICollection<Course> courses;
+    public ICollection<Course> courses { get; set; }
 
     public Book() {}
 }

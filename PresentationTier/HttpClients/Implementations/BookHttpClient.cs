@@ -14,24 +14,6 @@ public class BookHttpClient : IBookService
     {
         _httpClient = httpClient;
     }
-    
-    public async Task<Book> CreateAsync(BookSaleDto bookSaleDto)
-    {
-        HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/book", bookSaleDto);
-        string result = await response.Content.ReadAsStringAsync();
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception(result);
-        }
-        
-        Book book = JsonSerializer.Deserialize<Book>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-
-        return book;
-    }
 
     public ICollection<BooksAvailableDto> GetAvailableBooksAsync()
     {

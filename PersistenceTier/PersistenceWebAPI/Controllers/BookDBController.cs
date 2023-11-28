@@ -16,12 +16,6 @@ public class BookDBController
     {
         this._bookLogic = bookLogic;
     }
-
-    [HttpPost]
-    public async Task<ActionResult<Book>> CreateAsync(Book book)
-    {
-        return await _bookLogic.CreateAsync(book);
-    }
     
     [HttpGet]
     public async Task<ActionResult<ICollection<BooksAvailableDto>>> GetAllAsync()

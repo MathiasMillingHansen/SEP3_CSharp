@@ -17,8 +17,8 @@ builder.Services.AddScoped(
     {
         BaseAddress = new Uri("https://localhost:7129/")
     });
-builder.Services.AddScoped<IBookDao, BookDao>();
-builder.Services.AddScoped<IBookLogic, BookLogic>();
+builder.Services.AddScoped<ISellDao, SellDao>();
+builder.Services.AddScoped<ISellLogic, SellLogic>();
 
 var app = builder.Build();
 

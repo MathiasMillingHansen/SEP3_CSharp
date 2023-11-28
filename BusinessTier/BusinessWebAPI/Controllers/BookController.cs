@@ -10,17 +10,17 @@ namespace BusinessWebAPI.Controllers;
 [Route("[controller]")]
 public class BookController
 {
-    private readonly IBookLogic _bookLogic;
+    private readonly ISellLogic _sellLogic;
     
-    public BookController(IBookLogic bookLogic)
+    public BookController(ISellLogic sellLogic)
     {
-        this._bookLogic = bookLogic;
+        this._sellLogic = sellLogic;
     }
     
     [HttpPost]
     public async Task<ActionResult<Book>> SellBookAsync(BookSaleDto dto)
     {
-        return await _bookLogic.SellBookAsync(dto);
+        return await _sellLogic.SellBookAsync(dto);
     }
     
     [HttpGet]
@@ -28,7 +28,7 @@ public class BookController
     {
         try
         {
-            ICollection<BooksAvailableDto> books = await _bookLogic.GetAllAsync();
+            ICollection<BooksAvailableDto> books = await _sellLogic.GetAllAsync();
             return new OkObjectResult(books);
         }
         catch (Exception e)
@@ -43,7 +43,7 @@ public class BookController
     {
         try
         {
-            ICollection<Condition> conditions = await _bookLogic.GetConditionsAsync();
+            ICollection<Condition> conditions = await _sellLogic.GetConditionsAsync();
             return new OkObjectResult(conditions);
         }
         catch (Exception e)

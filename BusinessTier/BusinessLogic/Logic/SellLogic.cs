@@ -5,18 +5,18 @@ using Shared.DTOs;
 
 namespace Application.Logic;
 
-public class BookLogic : IBookLogic
+public class SellLogic : ISellLogic
 {
-    private readonly IBookDao _bookDao;
+    private readonly ISellDao _sellDao;
 
-    public BookLogic(IBookDao bookDao)
+    public SellLogic(ISellDao sellDao)
     {
-        _bookDao = bookDao;
+        _sellDao = sellDao;
     }
     
     public async Task<Book> SellBookAsync(BookSaleDto dto)
     {
-        BookWrapperDto bookWrapperDto = await _bookDao.GetByIsbnAsync(dto.Isbn);
+        BookWrapperDto bookWrapperDto = await _sellDao.GetByIsbnAsync(dto.Isbn);
         //TODO IMPLEMENT LOGIC
         BookForSale bookForSale = new BookForSale()
         {
@@ -24,45 +24,35 @@ public class BookLogic : IBookLogic
             Price = dto.Price,
             Comment = dto.Comment,
             Condition = dto.BookCondition,
-            Book = new Book()
-            {
-                
-            }
-            
+            Book = bookWrapperDto.book
         };
-        throw new NotImplementedException();
+
+        throw new NotImplementedException(); // TODO Missing logic.
     }
 
     public async Task<ICollection<BooksAvailableDto>> GetAllAsync()
     {
-        ICollection<BooksAvailableDto> books = await _bookDao.GetAllAsync();
+        ICollection<BooksAvailableDto> books = await _sellDao.GetAllAsync();
         return books;
     }
 
-    public async Task<BookWrapperDto> GetByIsbnAsync(string isbn)
-    {
-        BookWrapperDto bookWrapperDto = await _bookDao.GetByIsbnAsync(isbn);
-        return bookWrapperDto;
-    }
-
-    public async Task<Book> GetByBookTitleAsync(string bookTitle)
-    {
-        Book book = await _bookDao.GetByBookTitleAsync(bookTitle);
-        return book;
-    }
+    // TODO Simones template.
+    // private async Task<BookWrapperDto> GetByIsbnAsync(string isbn)
+    // {
+    //     BookWrapperDto bookWrapperDto = await _sellDao.GetByIsbnAsync(isbn);
+    //     return bookWrapperDto;
+    // }
 
     public async Task<ICollection<Condition>> GetConditionsAsync()
     {
-        ICollection<Condition> conditions = await _bookDao.GetConditionsAsync();
+        ICollection<Condition> conditions = await _sellDao.GetConditionsAsync();
         return conditions;
     }
 
     private void ValidateBook(Book dto)
     {
         // TODO : Change this to validate a JWT token START -------
-
         // Change this to validate a JWT token END ----------------
-
     }
 
 }

@@ -8,33 +8,14 @@ using Shared.DTOs;
 
 namespace BusinessWebAPI.Application.DaoImplementation;
 
-public class BookDao : IBookDao
+public class SellDao : ISellDao
 {
     
     HttpClient client;
     
-    public BookDao(HttpClient client)
+    public SellDao(HttpClient client)
     {
         this.client = client;
-    }
-    
-    public async Task<Book> CreateAsync(Book book)
-    {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/BookDB", book);
-        string result = await response.Content.ReadAsStringAsync();
-        
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception(result);
-        }
-        
-        Book created = JsonSerializer.Deserialize<Book>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-        
-        return created;
-
     }
 
     public async Task<ICollection<BooksAvailableDto>> GetAllAsync()
@@ -71,11 +52,6 @@ public class BookDao : IBookDao
         })!;
         
         return bookWrapperDto;
-    }
-
-    public Task<Book> GetByBookTitleAsync(string bookTitle)
-    {
-        throw new NotImplementedException();
     }
 
     public async Task<ICollection<Condition>> GetConditionsAsync()
