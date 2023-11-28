@@ -11,8 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IBookDao, BookDao>();
-builder.Services.AddScoped<IBookLogic, BookLogic>();
+builder.Services.AddScoped<IUserLogic, UserLogic>();
 
 
 var app = builder.Build();
