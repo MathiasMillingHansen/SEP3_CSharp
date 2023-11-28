@@ -5,6 +5,7 @@ namespace EFC_DataAccess.DAOs;
 
 public class EfcAuthorDao : IEfcAuthorDao
 {
+    
     private readonly DatabaseContext context;
     
     
