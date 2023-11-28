@@ -1,5 +1,5 @@
 ﻿using Shared.Domain;
-using Shared.DTO_s;
+using Shared.DTOs;
 
 namespace Logic.Interfaces;
 

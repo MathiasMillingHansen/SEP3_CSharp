@@ -1,7 +1,7 @@
 ﻿using Shared.Domain;
-using Shared.DTO_s;
+using Shared.DTOs;
 
-namespace BusinessWebAPI.Application.DaoInterface;
+namespace Application.DAOInterfaces;
 
 public interface IUserDao
 {

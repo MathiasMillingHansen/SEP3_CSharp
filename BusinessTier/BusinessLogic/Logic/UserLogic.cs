@@ -1,7 +1,8 @@
-﻿using BusinessWebAPI.Application.DaoInterface;
+﻿using Application.DAOInterfaces;
+using BusinessWebAPI.Application.DaoInterface;
 using Logic.Interfaces;
 using Shared.Domain;
-using Shared.DTO_s;
+using Shared.DTOs;
 
 namespace Application.Logic;
 
