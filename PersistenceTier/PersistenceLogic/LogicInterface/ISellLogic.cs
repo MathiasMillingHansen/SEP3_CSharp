@@ -3,10 +3,8 @@ using Shared.DTOs;
 
 namespace Logic.LogicInterface;
 
-public interface IBookLogic
+public interface ISellLogic
 {
-    public Task<Book> CreateAsync(Book book);
-
     Task<ICollection<BooksAvailableDto>> GetAllAsync();
     Task<ICollection<Condition>> GetConditionsAsync();
     Task<BookWrapperDto> GetByIsbnAsync(string isbn);
