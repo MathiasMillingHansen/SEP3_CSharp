@@ -2,17 +2,35 @@
 @using global::Shared.DTOs
 @using HttpClients.ClientInterfaces
 @using global::Shared.Domain
+@using System.Collections
 @inject IBookService bookService
 
 <div Class="rz-p-0 rz-p-md-12">
-    <RadzenRow class="rz-text-align-center" Gap="1rem">
+    <RadzenRow class="rz-text-align-center" Gap="0.25rem">
         <RadzenColumn>
             <h3>Sell Book</h3>
             <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
-
+                <RadzenDataGrid FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="5"
+                                class="rz-border-radius-3 rz-shadow-2"
+                                Data="@_booksAvailable" TItem="BooksAvailableDto" ColumnWidth="200px"
+                                SelectionMode="DataGridSelectionMode.Single" @bind-Value=@_selectedBook>
+                    <Columns>
+                        <RadzenDataGridColumn TItem="BooksAvailableDto" Property="Title" Title="Title" Sortable="false" Filterable="false"/>
+                        <RadzenDataGridColumn TItem="BooksAvailableDto" Property="Edition" Title="Edition"/>
+                    </Columns>
+                </RadzenDataGrid>
+                <div style="display: flex; align-items: center; margin-bottom: 16px">
+                    <RadzenButton Click="@ClearSelection" Text="Clear Selected Book" Style="background-color: #0c4128"/>
+                    @if (_selectedBook?.Any() == true)
+                    {
+                        <div style="margin-left: 16px">
+                            Selected Book: @_selectedBook[0].Title @_selectedBook[0].Edition
+                        </div>
+                    }
+                </div>
                 <RadzenFormField Style="width: 60%" Text="Condition" Variant="@variant">
                     <ChildContent>
-                        <RadzenDropDown @bind-Value=@_condition Data=@_conditions></RadzenDropDown>
+                        <RadzenDropDown @bind-Value=@_condition Data=@GetConditions(_conditions)></RadzenDropDown>
                     </ChildContent>
                 </RadzenFormField>
 
@@ -33,6 +51,7 @@
                 </RadzenFormField>
 
                 <RadzenButton Text="Save Changes" Click="SaveChanges" Icon="save" Style="background-color: #0c4128"></RadzenButton>
+
             </RadzenStack>
         </RadzenColumn>
     </RadzenRow>
@@ -44,12 +63,13 @@
 
 @code {
     private string _price = "";
-    private ICollection<Condition> _conditions; 
+    private ICollection<Condition> _conditions;
     private string _username = "Test"; //TODO: Get username from auth
     private string _comment = "";
-    private Condition _condition;
+    private string _condition;
     private ICollection<BooksAvailableDto> _booksAvailable;
- 
+    private IList<BooksAvailableDto> _selectedBook;
+
 
     Variant variant = Variant.Outlined;
 
@@ -60,12 +80,12 @@
             BookSaleDto bookSaleDto = new BookSaleDto()
             {
                 Isbn = "1234", //TODO get isbn from dropdown
-                BookCondition = _condition, //TODO get condition from dropdown
+                BookCondition = new Condition(_condition), //TODO get condition from dropdown
                 Comment = _comment,
                 Price = Convert.ToDecimal(_price), //TODO only allow decimals
                 Owner = _username //TODO get from jwt
             };
-            
+
             await bookService.SellBookAsync(bookSaleDto);
         }
         catch (Exception e)
@@ -79,6 +99,24 @@
     {
         _booksAvailable = bookService.GetAvailableBooksAsync();
         _conditions = bookService.GetConditionsAsync();
+    }
+
+
+    private IEnumerable GetConditions(ICollection<Condition> conditions)
+    {
+        List<string> conditionNames = new List<string>();
+
+        foreach (Condition condition in _conditions)
+        {
+            conditionNames.Add(condition.condition);
+        }
+
+        return conditionNames;
+    }
+
+    private void ClearSelection()
+    {
+        _selectedBook = null;
     }
 
 }

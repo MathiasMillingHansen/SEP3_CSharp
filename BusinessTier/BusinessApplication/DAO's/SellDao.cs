@@ -21,7 +21,7 @@ public class SellDao : ISellDao
     public async Task<ICollection<BooksAvailableDto>> GetAllAsync()
     {
         HttpResponseMessage response = await client.GetAsync("/BookDB");
-        string result = response.Content.ReadAsStringAsync().Result;
+        string result = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)
         {

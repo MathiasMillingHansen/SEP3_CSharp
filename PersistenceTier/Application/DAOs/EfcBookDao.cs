@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Shared.Domain;
 using Shared.DTOs;
 
@@ -22,14 +23,14 @@ public class EfcBookDao : IEfcBookDao
         return newBook.Entity;
     }
 
-    public Task<ICollection<BooksAvailableDto>> GetAllAsync()
+    public async Task<List<Book>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await context.books.ToListAsync();
     }
 
-    public Task<ICollection<Condition>> GetConditionsAsync()
+    public async Task<ICollection<Condition>> GetConditionsAsync()
     {
-        throw new NotImplementedException();
+        return await context.conditions.ToListAsync();
     }
 
     public Task<BookWrapperDto> GetByIsbnAsync(string isbn)

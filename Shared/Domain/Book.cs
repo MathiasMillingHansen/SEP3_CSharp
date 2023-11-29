@@ -13,4 +13,13 @@ public class Book
     public ICollection<Course> courses { get; set; }
 
     public Book() {}
+    
+    public Book(string isbn, string bookTitle, ICollection<Author> authors, string edition, ICollection<Course> courses)
+    {
+        Isbn = isbn;
+        BookTitle = bookTitle;
+        Authors = authors;
+        Edition = edition;
+        this.courses = courses;
+    }
 }

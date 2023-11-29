@@ -1,3 +1,4 @@
+using System.Collections;
 using EFC_DataAccess.DAOs;
 using Logic.LogicInterface;
 using Shared.Domain;
@@ -5,24 +6,24 @@ using Shared.DTOs;
 
 namespace Logic.LogicImplemtation;
 
-public class BookLogic : IBookLogic
+public class SellLogic : ISellLogic
 {
-    
     IEfcBookDao _bookDao;
-    
-    public BookLogic(IEfcBookDao bookDao)
+
+    public SellLogic(IEfcBookDao bookDao)
     {
         this._bookDao = bookDao;
-    }
-    
-    public async Task<Book> CreateAsync(Book book)
-    {
-        return await _bookDao.InsertAsync(book);        
     }
 
     public async Task<ICollection<BooksAvailableDto>> GetAllAsync()
     {
-        return await _bookDao.GetAllAsync();
+        ICollection<BooksAvailableDto> books = new List<BooksAvailableDto>();
+        foreach (Book book in await _bookDao.GetAllAsync())
+        {
+            books.Add(new BooksAvailableDto(book));
+        }
+
+        return books;
     }
 
     public async Task<ICollection<Condition>> GetConditionsAsync()

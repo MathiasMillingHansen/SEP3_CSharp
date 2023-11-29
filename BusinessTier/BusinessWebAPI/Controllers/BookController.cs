@@ -28,8 +28,7 @@ public class BookController
     {
         try
         {
-            ICollection<BooksAvailableDto> books = await _sellLogic.GetAllAsync();
-            return new OkObjectResult(books);
+            return new OkObjectResult(await _sellLogic.GetAllAsync());
         }
         catch (Exception e)
         {
@@ -38,7 +37,7 @@ public class BookController
         }
     }
     
-    [HttpGet("{conditions}")]
+    [HttpGet("conditions")]
     public async Task<ActionResult<ICollection<Condition>>> GetConditionsAsync()
     {
         try

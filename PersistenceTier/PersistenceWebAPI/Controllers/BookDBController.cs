@@ -10,11 +10,11 @@ namespace PersistenceWebAPI.Controllers;
 [Route("[controller]")]
 public class BookDBController
 {
-    private readonly IBookLogic _bookLogic;
+    private readonly ISellLogic _sellLogic;
     
-    public BookDBController(IBookLogic bookLogic)
+    public BookDBController(ISellLogic sellLogic)
     {
-        this._bookLogic = bookLogic;
+        this._sellLogic = sellLogic;
     }
     
     [HttpGet]
@@ -22,7 +22,7 @@ public class BookDBController
     {
         try
         {
-            ICollection<BooksAvailableDto> books = await _bookLogic.GetAllAsync();
+            ICollection<BooksAvailableDto> books = await _sellLogic.GetAllAsync();
             return new OkObjectResult(books);
         }
         catch (Exception e)
@@ -37,7 +37,7 @@ public class BookDBController
     {
         try
         {
-            BookWrapperDto bookWrapperDto = await _bookLogic.GetByIsbnAsync(isbn);
+            BookWrapperDto bookWrapperDto = await _sellLogic.GetByIsbnAsync(isbn);
             return new OkObjectResult(bookWrapperDto);
         }
         catch (Exception e)
@@ -47,12 +47,12 @@ public class BookDBController
         }
     }
     
-    [HttpGet("{conditions}")]
+    [HttpGet("conditions")]
     public async Task<ActionResult<ICollection<Condition>>> GetConditionsAsync()
     {
         try
         {
-            ICollection<Condition> conditions = await _bookLogic.GetConditionsAsync();
+            ICollection<Condition> conditions = await _sellLogic.GetConditionsAsync();
             return new OkObjectResult(conditions);
         }
         catch (Exception e)
