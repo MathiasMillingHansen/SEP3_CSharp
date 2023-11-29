@@ -6,13 +6,13 @@
 @inject IBookService bookService
 
 <div Class="rz-p-0 rz-p-md-12">
-    <RadzenRow class="rz-text-align-center" Gap="1rem">
+    <RadzenRow class="rz-text-align-center" Gap="0.25rem">
         <RadzenColumn>
             <h3>Sell Book</h3>
             <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
-                <RadzenDataGrid AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="5"
+                <RadzenDataGrid FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="5"
                                 class="rz-border-radius-3 rz-shadow-2"
-                                AllowSorting="true" Data="@_booksAvailable" TItem="BooksAvailableDto" ColumnWidth="200px"
+                                Data="@_booksAvailable" TItem="BooksAvailableDto" ColumnWidth="200px"
                                 SelectionMode="DataGridSelectionMode.Single" @bind-Value=@_selectedBook>
                     <Columns>
                         <RadzenDataGridColumn TItem="BooksAvailableDto" Property="Title" Title="Title" Sortable="false" Filterable="false"/>
@@ -98,13 +98,7 @@
     protected override void OnInitialized()
     {
         _booksAvailable = bookService.GetAvailableBooksAsync();
-    //_conditions = bookService.GetConditionsAsync();
-        _conditions = new List<Condition>()
-        {
-            new Condition("New"),
-            new Condition("Used"),
-            new Condition("Damaged")
-        };
+        _conditions = bookService.GetConditionsAsync();
     }
 
 

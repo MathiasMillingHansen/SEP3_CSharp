@@ -47,7 +47,7 @@ public class BookDBController
         }
     }
     
-    [HttpGet("{conditions}")]
+    [HttpGet("conditions")]
     public async Task<ActionResult<ICollection<Condition>>> GetConditionsAsync()
     {
         try

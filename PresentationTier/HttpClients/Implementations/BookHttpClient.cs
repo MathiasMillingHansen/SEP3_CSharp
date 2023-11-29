@@ -35,7 +35,7 @@ public class BookHttpClient : IBookService
 
     public ICollection<Condition> GetConditionsAsync()
     {
-        HttpResponseMessage response = _httpClient.GetAsync("/conditions").Result;
+        HttpResponseMessage response = _httpClient.GetAsync("/book/conditions").Result;
         string result = response.Content.ReadAsStringAsync().Result;
         
         if (!response.IsSuccessStatusCode)

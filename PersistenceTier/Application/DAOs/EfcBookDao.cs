@@ -28,9 +28,9 @@ public class EfcBookDao : IEfcBookDao
         return await context.books.ToListAsync();
     }
 
-    public Task<ICollection<Condition>> GetConditionsAsync()
+    public async Task<ICollection<Condition>> GetConditionsAsync()
     {
-        throw new NotImplementedException();
+        return await context.conditions.ToListAsync();
     }
 
     public Task<BookWrapperDto> GetByIsbnAsync(string isbn)
