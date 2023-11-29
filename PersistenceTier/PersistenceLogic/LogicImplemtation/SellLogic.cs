@@ -5,19 +5,14 @@ using Shared.DTOs;
 
 namespace Logic.LogicImplemtation;
 
-public class BookLogic : IBookLogic
+public class SellLogic : ISellLogic
 {
     
     IEfcBookDao _bookDao;
     
-    public BookLogic(IEfcBookDao bookDao)
+    public SellLogic(IEfcBookDao bookDao)
     {
         this._bookDao = bookDao;
-    }
-    
-    public async Task<Book> CreateAsync(Book book)
-    {
-        return await _bookDao.InsertAsync(book);        
     }
 
     public async Task<ICollection<BooksAvailableDto>> GetAllAsync()

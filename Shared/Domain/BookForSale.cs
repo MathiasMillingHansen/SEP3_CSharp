@@ -2,6 +2,7 @@ namespace Shared.Domain;
 
 public class BookForSale
 {
+    public int Id { get; set; }
     public string Owner { get; set; }
     
     public decimal? Price { get; set; }

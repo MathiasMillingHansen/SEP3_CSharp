@@ -13,10 +13,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<DatabaseContext>();
 builder.Services.AddScoped<IEfcBookDao, EfcBookDao>();
-builder.Services.AddScoped<IBookLogic, BookLogic>();
+builder.Services.AddScoped<ISellLogic, SellLogic>();
+builder.Services.AddScoped<IEfcBookForSaleDao, EfcBookForSaleDao>();
+
 
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

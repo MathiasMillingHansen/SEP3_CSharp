@@ -1,12 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Shared.Domain;
 
 public class Course
 {
-    public string course { get; set; }
+    [Key]
+    public string CourseName { get; set; }
+    
+    public ICollection<Book> Books { get; set; }
 
     public Course(string course)
     {
-        this.course = course;
+        this.CourseName = course;
     }
     
     private Course()
