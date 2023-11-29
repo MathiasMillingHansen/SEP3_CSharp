@@ -1,3 +1,5 @@
+using Shared.Domain;
+
 namespace Shared.DTOs;
 
 public class BooksAvailableDto
@@ -8,5 +10,12 @@ public class BooksAvailableDto
 
     public BooksAvailableDto()
     {
+    }
+
+    public BooksAvailableDto(Book book)
+    {
+        Title = book.BookTitle;
+        Edition = book.Edition;
+        Isbn = book.Isbn;
     }
 }

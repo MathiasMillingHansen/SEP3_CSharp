@@ -11,4 +11,8 @@
       <ProjectReference Include="..\EFC_DataAccess\EFC_DataAccess.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="obj\Debug\net8.0\" />
+    </ItemGroup>
+
 </Project>

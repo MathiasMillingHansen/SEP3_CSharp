@@ -98,8 +98,15 @@
     protected override void OnInitialized()
     {
         _booksAvailable = bookService.GetAvailableBooksAsync();
-        _conditions = bookService.GetConditionsAsync();
+    //_conditions = bookService.GetConditionsAsync();
+        _conditions = new List<Condition>()
+        {
+            new Condition("New"),
+            new Condition("Used"),
+            new Condition("Damaged")
+        };
     }
+
 
     private IEnumerable GetConditions(ICollection<Condition> conditions)
     {

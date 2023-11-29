@@ -17,7 +17,7 @@ public class BookHttpClient : IBookService
 
     public ICollection<BooksAvailableDto> GetAvailableBooksAsync()
     {
-        HttpResponseMessage response = _httpClient.GetAsync("/books").Result;
+        HttpResponseMessage response = _httpClient.GetAsync("/book").Result;
         string result = response.Content.ReadAsStringAsync().Result;
         
         if (!response.IsSuccessStatusCode)

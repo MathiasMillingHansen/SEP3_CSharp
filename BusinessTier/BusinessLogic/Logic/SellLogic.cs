@@ -32,8 +32,7 @@ public class SellLogic : ISellLogic
 
     public async Task<ICollection<BooksAvailableDto>> GetAllAsync()
     {
-        ICollection<BooksAvailableDto> books = await _sellDao.GetAllAsync();
-        return books;
+        return await _sellDao.GetAllAsync();
     }
 
     // TODO Simones template.

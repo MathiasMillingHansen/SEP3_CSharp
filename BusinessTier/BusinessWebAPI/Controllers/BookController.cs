@@ -28,8 +28,7 @@ public class BookController
     {
         try
         {
-            ICollection<BooksAvailableDto> books = await _sellLogic.GetAllAsync();
-            return new OkObjectResult(books);
+            return new OkObjectResult(await _sellLogic.GetAllAsync());
         }
         catch (Exception e)
         {
