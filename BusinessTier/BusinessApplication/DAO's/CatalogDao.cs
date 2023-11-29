@@ -5,7 +5,7 @@ using Shared.DTOs;
 
 namespace BusinessWebAPI.Application.DaoImplementation;
 
-public class CatalogDao : ICatalogBook
+public class CatalogDao : ICatalogDao
 {
     HttpClient client;
     
@@ -32,7 +32,26 @@ public class CatalogDao : ICatalogBook
         return bookCategoryDto;
     }
 
-    public Task<IEnumerable<Book>> GetAllAsync()
+    public async Task<ICollection<BooksAvailableDto>> GetAllAsync()
+    {
+        HttpResponseMessage response = await client.GetAsync("/BookDB");
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        ICollection<BooksAvailableDto> books = JsonSerializer.Deserialize<ICollection<BooksAvailableDto>>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return books;
+    }
+    
+    
+    public IEnumerable<BooksAvailableDto> SearchBooks(Book searchModel)
     {
         throw new NotImplementedException();
     }

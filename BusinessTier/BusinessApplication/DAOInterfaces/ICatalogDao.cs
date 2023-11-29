@@ -3,11 +3,13 @@ using Shared.DTOs;
 
 namespace BusinessWebAPI.Application.DaoInterface;
 
-public interface ICatalogBook
+public interface ICatalogDao
 {
     Task<BookCategoryDto> GetByCategoryAsync(string category);
     
-    Task<IEnumerable<Book>> GetAllAsync();
+    Task<ICollection<BooksAvailableDto>> GetAllAsync();
+    
+    IEnumerable<BooksAvailableDto> SearchBooks(Book searchModel);
     
     
 }
