@@ -19,6 +19,10 @@ builder.Services.AddScoped(
     });
 builder.Services.AddScoped<ISellDao, SellDao>();
 builder.Services.AddScoped<ISellLogic, SellLogic>();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.IncludeFields = true;
+});
 
 var app = builder.Build();
 

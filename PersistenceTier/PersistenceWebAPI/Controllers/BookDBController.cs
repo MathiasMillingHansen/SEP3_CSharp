@@ -33,12 +33,12 @@ public class BookDBController
     }
     
     [HttpGet("{isbn}")]
-    public async Task<ActionResult<BookWrapperDto>> GetByIsbnAsync(string isbn)
+    public async Task<ActionResult<BookDto>> GetByIsbnAsync(string isbn)
     {
         try
         {
-            BookWrapperDto bookWrapperDto = await _sellLogic.GetByIsbnAsync(isbn);
-            return new OkObjectResult(bookWrapperDto);
+            BookDto bookDto = await _sellLogic.GetByIsbnAsync(isbn);
+            return new OkObjectResult(bookDto);
         }
         catch (Exception e)
         {
@@ -54,6 +54,21 @@ public class BookDBController
         {
             ICollection<Condition> conditions = await _sellLogic.GetConditionsAsync();
             return new OkObjectResult(conditions);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    [HttpPost]
+    public async Task<ActionResult<BookForSale>> SellBookAsync(BookForSale bookForSale)
+    {
+        try
+        {
+            BookForSale result = await _sellLogic.SellBookAsync(bookForSale);
+            return new OkObjectResult(result);
         }
         catch (Exception e)
         {

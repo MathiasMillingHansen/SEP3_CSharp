@@ -36,7 +36,7 @@ public class SellDao : ISellDao
         return books;
     }
 
-    public async Task<BookWrapperDto> GetByIsbnAsync(string isbn)
+    public async Task<BookDto> GetByIsbnAsync(string isbn)
     {
         HttpResponseMessage response = await client.GetAsync("/BookDB/" + isbn);
         string result = response.Content.ReadAsStringAsync().Result;
@@ -46,12 +46,13 @@ public class SellDao : ISellDao
             throw new Exception(result);
         }
         
-        BookWrapperDto bookWrapperDto = JsonSerializer.Deserialize<BookWrapperDto>(result, new JsonSerializerOptions
+        BookDto bookDto = JsonSerializer.Deserialize<BookDto>(result, new JsonSerializerOptions
         {
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
+            IncludeFields = true
         })!;
         
-        return bookWrapperDto;
+        return bookDto;
     }
 
     public async Task<ICollection<Condition>> GetConditionsAsync()
@@ -71,5 +72,19 @@ public class SellDao : ISellDao
         
         return conditions;
         
+    }
+
+    public async Task<string> SellBookAsync(BookForSale bookForSale)
+    {
+        HttpResponseMessage response = await client.PostAsJsonAsync("/BookDB", bookForSale);
+        string result = await response.Content.ReadAsStringAsync();
+        Console.WriteLine("Result is: " + result);
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        return result;
     }
 }

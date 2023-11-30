@@ -14,20 +14,32 @@ public class SellLogic : ISellLogic
         _sellDao = sellDao;
     }
     
-    public async Task<Book> SellBookAsync(BookSaleDto dto)
+    public async Task<BookForSale> SellBookAsync(BookSaleDto dto)
     {
-        BookWrapperDto bookWrapperDto = await _sellDao.GetByIsbnAsync(dto.Isbn);
+        BookDto bookDto = await _sellDao.GetByIsbnAsync(dto.Isbn);
         //TODO IMPLEMENT LOGIC
+
+        Console.WriteLine("BookDtos booktitle is: " + bookDto.Title);
+
         BookForSale bookForSale = new BookForSale()
         {
             Owner = dto.Owner,
             Price = dto.Price,
             Comment = dto.Comment!,
             Condition = dto.BookCondition,
-            Book = bookWrapperDto.book
+            Book = new Book()
+            {
+                Isbn = bookDto.Isbn,
+                BookTitle = bookDto.Title,
+                Authors = bookDto.Authors,
+                Edition = dto.Edition,
+                courses = bookDto.Courses
+            }
         };
 
-        throw new NotImplementedException(); // TODO Missing logic.
+        await _sellDao.SellBookAsync(bookForSale);
+        return bookForSale;
+        
     }
 
     public async Task<ICollection<BooksAvailableDto>> GetAllAsync()

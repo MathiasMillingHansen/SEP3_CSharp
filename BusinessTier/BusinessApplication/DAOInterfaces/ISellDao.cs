@@ -6,6 +6,8 @@ namespace BusinessWebAPI.Application.DaoInterface;
 public interface ISellDao
 {
     Task<ICollection<BooksAvailableDto>> GetAllAsync();
-    Task<BookWrapperDto> GetByIsbnAsync(string isbn);
+    Task<BookDto> GetByIsbnAsync(string isbn);
     Task<ICollection<Condition>> GetConditionsAsync();
+    
+    Task<string> SellBookAsync(BookForSale bookForSale);
 }
