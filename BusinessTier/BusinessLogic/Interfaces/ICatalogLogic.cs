@@ -5,7 +5,7 @@ namespace Logic.Interfaces;
 
 public interface ICatalogLogic
 {
-    Task<BookCategoryDto> GetByCategoryAsync(string category);
+    Task<BookCourseDto> GetByCourseAsync(string course);
     
     Task<ICollection<BooksAvailableDto>> GetAllAsync();
     

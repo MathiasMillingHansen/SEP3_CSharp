@@ -32,8 +32,8 @@ public class CatalogController
         }
     }
     
-    [HttpGet("category")]
-    public async Task<ActionResult<ICollection<Condition>>> GetConditionsAsync()
+    [HttpGet("course")]
+    public async Task<ActionResult<ICollection<Course>>> GetCourseAsync()
     {
         throw new NotImplementedException();
     }

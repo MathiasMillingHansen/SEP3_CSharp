@@ -14,7 +14,7 @@ public class CatalogLogic : ICatalogLogic
         _catalogDao = catalogDao;
     }
     
-    public Task<BookCategoryDto> GetByCategoryAsync(string category)
+    public Task<BookCourseDto> GetByCourseAsync(string course)
     {
         throw new NotImplementedException();
     }

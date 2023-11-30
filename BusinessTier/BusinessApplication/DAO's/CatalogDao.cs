@@ -14,9 +14,9 @@ public class CatalogDao : ICatalogDao
         this.client = client;
     }
     
-    public async Task<BookCategoryDto> GetByCategoryAsync(string category)
+    public async Task<BookCourseDto> GetByCourseAsync(string course)
     {
-        HttpResponseMessage response = await client.GetAsync("/BookDB/" + category);
+        HttpResponseMessage response = await client.GetAsync("/BookDB/" + course);
         string result = response.Content.ReadAsStringAsync().Result;
         
         if (!response.IsSuccessStatusCode)
@@ -24,12 +24,12 @@ public class CatalogDao : ICatalogDao
             throw new Exception(result);
         }
         
-        BookCategoryDto bookCategoryDto = JsonSerializer.Deserialize<BookCategoryDto>(result, new JsonSerializerOptions
+        BookCourseDto bookCourseDto = JsonSerializer.Deserialize<BookCourseDto>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
         
-        return bookCategoryDto;
+        return bookCourseDto;
     }
 
     public async Task<ICollection<BooksAvailableDto>> GetAllAsync()

@@ -2,13 +2,13 @@
 
 namespace Shared.DTOs;
 
-public class BookCategoryDto
+public class BookCourseDto
 {
     public Book book { get; set; }
     
     public string Category { get; set; }
 
-    public BookCategoryDto(string category)
+    public BookCourseDto(string category)
     {
         Category = category;
     }
