@@ -64,9 +64,9 @@ public class BookHttpClient : IBookService
         return result;
     }
     
-    public BooksForSaleDto GetAllBooksForSaleAsync()
+    public ICollection<BookForSale> GetAllBooksForSaleAsync()
     {
-        HttpResponseMessage response = _httpClient.GetAsync("/book").Result;
+        HttpResponseMessage response = _httpClient.GetAsync("/catalog").Result;
         string result = response.Content.ReadAsStringAsync().Result;
         
         if (!response.IsSuccessStatusCode)
@@ -78,7 +78,10 @@ public class BookHttpClient : IBookService
         {
             PropertyNameCaseInsensitive = true
         })!;
+
+        ICollection<BookForSale> booksToReturn = books.BooksForSale;
         
-        return books;
+        
+        return booksToReturn;
     }
 }

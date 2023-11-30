@@ -19,6 +19,8 @@ builder.Services.AddScoped(
     });
 builder.Services.AddScoped<ISellDao, SellDao>();
 builder.Services.AddScoped<ISellLogic, SellLogic>();
+builder.Services.AddScoped<ICatalogLogic, CatalogLogic>();
+builder.Services.AddScoped<ICatalogDao, CatalogDao>();
 
 var app = builder.Build();
 

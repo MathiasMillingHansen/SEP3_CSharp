@@ -36,7 +36,7 @@ public class BookDBController
         }
     }
     
-    [HttpGet]
+    [HttpGet  ("booksForSale")]
     public async Task<ActionResult<BooksForSaleDto>> GetAllBooksForSaleAsync()
     {
         try

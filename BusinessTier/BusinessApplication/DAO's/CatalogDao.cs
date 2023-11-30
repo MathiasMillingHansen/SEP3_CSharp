@@ -35,7 +35,7 @@ public class CatalogDao : ICatalogDao
 
     public async Task<BooksForSaleDto> GetAllBooksForSaleAsync()
     {
-        HttpResponseMessage response = await client.GetAsync("/BookDB");
+        HttpResponseMessage response = await client.GetAsync("/BookDB/booksForSale");
         string result = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)

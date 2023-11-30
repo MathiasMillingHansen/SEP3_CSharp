@@ -1,5 +1,7 @@
+using Application.Logic;
 using EFC_DataAccess;
 using EFC_DataAccess.DAOs;
+using Logic.Interfaces;
 using Logic.LogicImplemtation;
 using Logic.LogicInterface;
 
@@ -15,6 +17,7 @@ builder.Services.AddScoped<DatabaseContext>();
 builder.Services.AddScoped<IEfcBookDao, EfcBookDao>();
 builder.Services.AddScoped<ISellLogic, SellLogic>();
 builder.Services.AddScoped<IEfcBookForSaleDao, EfcBookForSaleDao>();
+builder.Services.AddScoped<ICatalogLogic, CatalogLogic>();
 
 
 

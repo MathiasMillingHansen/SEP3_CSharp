@@ -9,13 +9,9 @@ namespace Application.Logic;
 public class CatalogLogic : ICatalogLogic
 {
     private readonly ICatalogDao _catalogDao;
-
-    private IEfcBookForSaleDao _bookForSaleDao;
-
-    public CatalogLogic(ICatalogDao catalogDao, IEfcBookForSaleDao efcBookForSaleDao)
+    public CatalogLogic(ICatalogDao catalogDao)
     {
         _catalogDao = catalogDao;
-        _bookForSaleDao = efcBookForSaleDao;
     }
     
     public Task<ICollection<BookCourseDto>> GetByCourseAsync()
@@ -25,7 +21,7 @@ public class CatalogLogic : ICatalogLogic
 
     public async Task<BooksForSaleDto> GetAllBooksForSaleAsync()
     {
-        return await _bookForSaleDao.GetAllAsync();
+        return await _catalogDao.GetAllBooksForSaleAsync();
     }
     
     public IEnumerable<BooksAvailableDto> SearchBooks(Book searchModel)

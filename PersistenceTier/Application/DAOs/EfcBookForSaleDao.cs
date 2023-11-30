@@ -28,6 +28,8 @@ public class EfcBookForSaleDao : IEfcBookForSaleDao
     { 
         ICollection<BookForSale> booksforsale = await context.booksForSale
             .Include(bfs => bfs.Book)
+            .Include(b =>b.Book.Authors)
+            .Include(b=> b.Book.courses)
             .Include(bfs => bfs.Condition)
             .ToListAsync();
         BooksForSaleDto booksToReturn = new BooksForSaleDto(booksforsale);
