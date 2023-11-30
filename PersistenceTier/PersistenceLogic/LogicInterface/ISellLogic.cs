@@ -7,5 +7,5 @@ public interface ISellLogic
 {
     Task<ICollection<BooksAvailableDto>> GetAllAsync();
     Task<ICollection<Condition>> GetConditionsAsync();
-    Task<BookWrapperDto> GetByIsbnAsync(string isbn);
+    Task<BookForSale> SellBookAsync(BookForSale dto);
 }

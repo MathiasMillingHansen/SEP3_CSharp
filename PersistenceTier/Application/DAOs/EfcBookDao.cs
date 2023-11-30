@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Shared.Domain;
 using Shared.DTOs;
+using SQLitePCL;
 
 namespace EFC_DataAccess.DAOs;
 
@@ -33,8 +34,5 @@ public class EfcBookDao : IEfcBookDao
         return await context.conditions.ToListAsync();
     }
 
-    public Task<BookWrapperDto> GetByIsbnAsync(string isbn)
-    {
-        throw new NotImplementedException();
-    }
+
 }

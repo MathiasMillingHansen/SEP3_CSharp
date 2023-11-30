@@ -79,8 +79,8 @@
         {
             BookSaleDto bookSaleDto = new BookSaleDto()
             {
-                Isbn = "1234", //TODO get isbn from dropdown
-                BookCondition = new Condition(_condition), //TODO get condition from dropdown
+                Isbn = _selectedBook[0].Isbn,
+                BookCondition = new Condition(_condition),
                 Comment = _comment,
                 Price = Convert.ToDecimal(_price), //TODO only allow decimals
                 Owner = _username //TODO get from jwt

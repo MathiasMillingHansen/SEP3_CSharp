@@ -9,10 +9,12 @@ namespace Logic.LogicImplemtation;
 public class SellLogic : ISellLogic
 {
     IEfcBookDao _bookDao;
+    IEfcBookForSaleDao _bookForSaleDao;
 
-    public SellLogic(IEfcBookDao bookDao)
+    public SellLogic(IEfcBookDao bookDao, IEfcBookForSaleDao bookForSaleDao)
     {
-        this._bookDao = bookDao;
+        _bookDao = bookDao;
+        _bookForSaleDao = bookForSaleDao;
     }
 
     public async Task<ICollection<BooksAvailableDto>> GetAllAsync()
@@ -31,8 +33,8 @@ public class SellLogic : ISellLogic
         return await _bookDao.GetConditionsAsync();
     }
 
-    public async Task<BookWrapperDto> GetByIsbnAsync(string isbn)
+    public async Task<BookForSale> SellBookAsync(BookForSale dto)
     {
-        return await _bookDao.GetByIsbnAsync(isbn);
+        return await _bookForSaleDao.InsertAsync(dto);
     }
 }
