@@ -37,4 +37,9 @@ public class SellLogic : ISellLogic
     {
         return await _bookForSaleDao.InsertAsync(dto);
     }
+    
+    public async Task<ICollection<BookForSale>> testGetAll() //TODO remove
+    {
+        return await _bookForSaleDao.testGetAll();
+    }
 }

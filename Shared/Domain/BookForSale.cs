@@ -7,12 +7,12 @@ public class BookForSale
     
     public decimal? Price { get; set; }
     
-    public Condition Condition { get; set; }
+    public string ConditionState { get; set; }
+    public Condition? Condition { get; set; }
     
     public string Comment { get; set; }
     public string BookIsbn { get; set; }
-    
-    public Book Book { get; set; }
+    public Book? Book { get; set; }
 
     public BookForSale()
     {

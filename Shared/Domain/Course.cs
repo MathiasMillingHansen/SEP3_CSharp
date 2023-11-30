@@ -6,14 +6,13 @@ namespace Shared.Domain;
 public class Course
 {
     [Key]
-    public string CourseName { get; set; }
+    public string Name { get; set; }
     
-    //[JsonIgnore]
     public ICollection<Book> Books { get; set; }
 
     public Course(string course)
     {
-        this.CourseName = course;
+        this.Name = course;
     }
     
     private Course()

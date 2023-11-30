@@ -7,7 +7,6 @@ public class Author
     public string Name { get; set; }
     public int Id { get; set; }
     
-    //[JsonIgnore]
     public ICollection<Book> books { get; set; }
     
     public Author(string name)

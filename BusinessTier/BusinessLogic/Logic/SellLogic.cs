@@ -22,7 +22,7 @@ public class SellLogic : ISellLogic
             Owner = dto.Owner,
             Price = dto.Price,
             Comment = dto.Comment!,
-            Condition = dto.BookCondition,
+            ConditionState = dto.BookCondition.State,
             BookIsbn = dto.Isbn
         };
         

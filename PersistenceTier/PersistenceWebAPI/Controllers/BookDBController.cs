@@ -52,4 +52,20 @@ public class BookDBController
             throw;
         }
     }
+    
+    
+    [HttpGet("test")]
+    public async Task<ActionResult<ICollection<BookForSale>>> testGetAll() //TODO remove
+    {
+        try
+        {
+            ICollection<BookForSale> books = await _sellLogic.testGetAll();
+            return new OkObjectResult(books);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

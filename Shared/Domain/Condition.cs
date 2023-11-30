@@ -5,11 +5,11 @@ namespace Shared.Domain;
 public class Condition
 {
     [Key]
-    public string condition { get; set; }
+    public string State { get; set; }
 
-    public Condition(string condition)
+    public Condition(string state)
     {
-        this.condition = condition;
+        this.State = state;
     }
     
     private Condition()
