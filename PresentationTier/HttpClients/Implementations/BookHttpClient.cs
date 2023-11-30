@@ -63,4 +63,22 @@ public class BookHttpClient : IBookService
         
         return result;
     }
+    
+    public BooksForSaleDto GetAllBooksForSaleAsync()
+    {
+        HttpResponseMessage response = _httpClient.GetAsync("/book").Result;
+        string result = response.Content.ReadAsStringAsync().Result;
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        BooksForSaleDto books = JsonSerializer.Deserialize<BooksForSaleDto>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return books;
+    }
 }

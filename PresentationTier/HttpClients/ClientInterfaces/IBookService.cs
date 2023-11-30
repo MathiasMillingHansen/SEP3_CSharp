@@ -8,4 +8,5 @@ public interface IBookService
     ICollection<BooksAvailableDto> GetAvailableBooksAsync();
     ICollection<Condition> GetConditionsAsync();
     Task<string> SellBookAsync(BookSaleDto bookSaleDto);
+    BooksForSaleDto GetAllBooksForSaleAsync();
 }

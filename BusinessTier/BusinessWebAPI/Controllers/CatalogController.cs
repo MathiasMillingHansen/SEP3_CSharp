@@ -19,11 +19,11 @@ public class CatalogController
     }
     
     [HttpGet]
-    public async Task<ActionResult<ICollection<BooksAvailableDto>>> GetAllAsync()
+    public async Task<ActionResult<BooksForSaleDto>> GetAllBooksForSaleAsync()
     {
         try
         {
-            return new OkObjectResult(await _catalogLogic.GetAllAsync());
+            return new OkObjectResult(await _catalogLogic.GetAllBooksForSaleAsync());
         }
         catch (Exception e)
         {
@@ -35,7 +35,16 @@ public class CatalogController
     [HttpGet("course")]
     public async Task<ActionResult<ICollection<Course>>> GetCourseAsync()
     {
-        throw new NotImplementedException();
+        try
+        {
+            ICollection<BookCourseDto> courses = await _catalogLogic.GetByCourseAsync();
+            return new OkObjectResult(courses);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     
     

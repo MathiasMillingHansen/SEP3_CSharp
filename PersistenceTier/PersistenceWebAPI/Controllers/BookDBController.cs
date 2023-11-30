@@ -1,3 +1,4 @@
+using Logic.Interfaces;
 using Logic.LogicImplemtation;
 using Logic.LogicInterface;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,12 @@ public class BookDBController
 {
     private readonly ISellLogic _sellLogic;
     
-    public BookDBController(ISellLogic sellLogic)
+    private readonly ICatalogLogic _catalogLogic;
+    
+    public BookDBController(ISellLogic sellLogic, ICatalogLogic catalogLogic)
     {
         this._sellLogic = sellLogic;
+        this._catalogLogic = catalogLogic;
     }
     
     [HttpGet]
@@ -23,6 +27,21 @@ public class BookDBController
         try
         {
             ICollection<BooksAvailableDto> books = await _sellLogic.GetAllAsync();
+            return new OkObjectResult(books);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<BooksForSaleDto>> GetAllBooksForSaleAsync()
+    {
+        try
+        {
+            BooksForSaleDto books = await _catalogLogic.GetAllBooksForSaleAsync();
             return new OkObjectResult(books);
         }
         catch (Exception e)

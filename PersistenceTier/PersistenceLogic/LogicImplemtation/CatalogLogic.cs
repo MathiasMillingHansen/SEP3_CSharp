@@ -1,5 +1,4 @@
-﻿using BusinessWebAPI.Application.DaoInterface;
-using EFC_DataAccess.DAOs;
+﻿using EFC_DataAccess.DAOs;
 using Logic.Interfaces;
 using Shared.Domain;
 using Shared.DTOs;
@@ -8,14 +7,11 @@ namespace Application.Logic;
 
 public class CatalogLogic : ICatalogLogic
 {
-    private readonly ICatalogDao _catalogDao;
+    IEfcBookForSaleDao _bookForSaleDao;
 
-    private IEfcBookForSaleDao _bookForSaleDao;
-
-    public CatalogLogic(ICatalogDao catalogDao, IEfcBookForSaleDao efcBookForSaleDao)
+    public CatalogLogic(IEfcBookForSaleDao bookDao)
     {
-        _catalogDao = catalogDao;
-        _bookForSaleDao = efcBookForSaleDao;
+        this._bookForSaleDao = bookDao;
     }
     
     public Task<ICollection<BookCourseDto>> GetByCourseAsync()
@@ -31,6 +27,6 @@ public class CatalogLogic : ICatalogLogic
     public IEnumerable<BooksAvailableDto> SearchBooks(Book searchModel)
     {
         //TODO Implement the logic to search books in the database using the DAO
-        return _catalogDao.SearchBooks(searchModel);
+        return null;  //_catalogDao.SearchBooks(searchModel);
     }
 }

@@ -6,10 +6,10 @@ public class BookCourseDto
 {
     public Book book { get; set; }
     
-    public string Category { get; set; }
+    public string Course { get; set; }
 
-    public BookCourseDto(string category)
+    public BookCourseDto(string course)
     {
-        Category = category;
+        Course = course;
     }
 }

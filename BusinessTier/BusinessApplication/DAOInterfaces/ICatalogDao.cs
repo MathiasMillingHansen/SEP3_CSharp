@@ -5,9 +5,9 @@ namespace BusinessWebAPI.Application.DaoInterface;
 
 public interface ICatalogDao
 {
-    Task<BookCourseDto> GetByCourseAsync(string course);
+    Task<ICollection<BookCourseDto>> GetByCourseAsync(string course);
     
-    Task<ICollection<BooksAvailableDto>> GetAllAsync();
+    Task<BooksForSaleDto> GetAllBooksForSaleAsync();
     
     IEnumerable<BooksAvailableDto> SearchBooks(Book searchModel);
     

@@ -14,7 +14,8 @@ public class CatalogDao : ICatalogDao
         this.client = client;
     }
     
-    public async Task<BookCourseDto> GetByCourseAsync(string course)
+
+    public async Task<ICollection<BookCourseDto>> GetByCourseAsync(string course)
     {
         HttpResponseMessage response = await client.GetAsync("/BookDB/" + course);
         string result = response.Content.ReadAsStringAsync().Result;
@@ -29,10 +30,10 @@ public class CatalogDao : ICatalogDao
             PropertyNameCaseInsensitive = true
         })!;
         
-        return bookCourseDto;
+        return null;
     }
 
-    public async Task<ICollection<BooksAvailableDto>> GetAllAsync()
+    public async Task<BooksForSaleDto> GetAllBooksForSaleAsync()
     {
         HttpResponseMessage response = await client.GetAsync("/BookDB");
         string result = await response.Content.ReadAsStringAsync();
@@ -42,7 +43,7 @@ public class CatalogDao : ICatalogDao
             throw new Exception(result);
         }
         
-        ICollection<BooksAvailableDto> books = JsonSerializer.Deserialize<ICollection<BooksAvailableDto>>(result, new JsonSerializerOptions
+        BooksForSaleDto books = JsonSerializer.Deserialize<BooksForSaleDto>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
