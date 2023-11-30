@@ -1,7 +1,8 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Application.Logic;
 using EFC_DataAccess;
 using EFC_DataAccess.DAOs;
-using Logic.Interfaces;
 using Logic.LogicImplemtation;
 using Logic.LogicInterface;
 
@@ -20,6 +21,11 @@ builder.Services.AddScoped<IEfcBookForSaleDao, EfcBookForSaleDao>();
 builder.Services.AddScoped<ICatalogLogic, CatalogLogic>();
 
 
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    });
 
 var app = builder.Build();
 

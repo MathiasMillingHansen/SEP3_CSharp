@@ -11,6 +11,8 @@ public class BookSaleDto
     public string? Comment { get; set; }
     public decimal? Price { get; set; }
     
+    public string Edition { get; set; }
+    
     public BookSaleDto ()
     {
     }
