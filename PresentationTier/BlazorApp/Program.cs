@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
 
@@ -12,9 +13,10 @@ builder.Services.AddScoped(
             BaseAddress = new Uri("https://localhost:7259") 
         }
 );
-builder.Services.AddScoped<IBookService, BookHttpClient>();
 
+builder.Services.AddScoped<IBookService, BookHttpClient>();
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Shared.Domain;
 
 namespace EFC_DataAccess.DAOs;

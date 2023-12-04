@@ -1,19 +1,110 @@
 ﻿@page "/BookCatalog"   
+@using System.Collections
+@using global::Shared.Domain
+@using global::Shared.DTOs
+@using HttpClients.ClientInterfaces
+@inject IBookService bookService
+
 
 <h3>BookCatalog</h3>
 
-//Underline header
-<div class="row">
-    <div class="col-auto">
-        <p>
-            Her kan du se alle de bøger, som er til salg
-        </p>
+<div class="rz-p-0 rz-p-md-12">
+    <p>
+        Here you can see an overview of all the books there is currently for sale
+    </p>
+    <!--Dropdown menu that selects which course the user wants-->
+    <div class="rz-p-sm-12">
+        <RadzenDropDown @bind-Value=@_category Data=@category Style="width: 100%; max-width: 200px;"/>
     </div>
-</div> 
+    
+    @foreach (BookForSale bookForSale in _booksForSale)
+    {
+        <RadzenCard Variant="@Variant.Filled" class="rz-my-12 rz-mx-auto" style="max-width: 420px;">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+                <RadzenRow RowGap="0">
+                    <!-- Left side columns -->
+                    <RadzenColumn SizeSM="4">
 
-//Dropdown menu that selects which category the user wants
+                        <!-- Text in the card -->
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Book Title</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Book.BookTitle)</b>
+                        </RadzenText>
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Isbn</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Book.Isbn)</b>
+                        </RadzenText>
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Author</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Book.Authors.ToString())</b>
+                        </RadzenText>
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Edition</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Book.Edition)</b>
+                        </RadzenText>
+                    </RadzenColumn>
+
+                    <!-- Right side columns -->
+                    <RadzenColumn SizeSM="8">
+
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Condition</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Condition)</b>
+                        </RadzenText>
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Comment</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Comment)</b>
+                        </RadzenText>
+
+                    </RadzenColumn>
+                    <RadzenColumn Visible=informationVisible>
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Owner</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Owner)</b>
+                        </RadzenText>
+                    </RadzenColumn>
+                </RadzenRow>
+                <RadzenButton Variant="Variant.Text" Text="Show Owner Info" Click="() => setInformationVisible()"></RadzenButton>
+            </RadzenStack>
+        </RadzenCard>
+    }
+</div>
 
 
 @code {
-    
+    IEnumerable<string> category;
+
+    //private BooksForSaleDto _booksForSaleDto = new BooksForSaleDto(booksForSale: );
+
+    private BooksForSaleDto _books;
+    private ICollection<BookForSale> _booksForSale;
+
+
+    protected override void OnInitialized()
+    {
+        _booksForSale = bookService.GetAllBooksForSaleAsync();
+    }
+
+    private Boolean informationVisible = false;
+
+    private string _category = "";
+
+
+    private void setInformationVisible()
+    {
+        if (informationVisible == false)
+        {
+            informationVisible = true;
+        }
+        else
+        {
+            informationVisible = false;
+        }
+    }
+
 }

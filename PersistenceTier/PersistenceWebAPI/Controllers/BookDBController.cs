@@ -15,6 +15,7 @@ public class BookDBController
     public BookDBController(ISellLogic sellLogic)
     {
         this._sellLogic = sellLogic;
+        this._catalogLogic = catalogLogic;
     }
     
     [HttpPost]
@@ -30,6 +31,21 @@ public class BookDBController
         {
             ICollection<BooksAvailableDto> books = await _sellLogic.GetAllAsync();
             return new OkObjectResult(books);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    [HttpGet("{isbn}")]
+    public async Task<ActionResult<BookWrapperDto>> GetByIsbnAsync(string isbn)
+    {
+        try
+        {
+            BookWrapperDto bookWrapperDto = await _sellLogic.GetByIsbnAsync(isbn);
+            return new OkObjectResult(bookWrapperDto);
         }
         catch (Exception e)
         {

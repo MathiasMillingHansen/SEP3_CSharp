@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Shared.Domain;
+﻿namespace Shared.Domain;
 
 public class Author
 {

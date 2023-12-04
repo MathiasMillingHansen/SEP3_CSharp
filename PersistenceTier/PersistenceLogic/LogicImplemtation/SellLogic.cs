@@ -33,6 +33,11 @@ public class SellLogic : ISellLogic
         return await _bookDao.GetConditionsAsync();
     }
 
+    public async Task<BookWrapperDto> GetByIsbnAsync(string isbn)
+    {
+        return await _bookDao.GetByIsbnAsync(isbn);
+    }
+    
     public async Task<BookForSale> SellBookAsync(BookForSale dto)
     {
         return await _bookForSaleDao.InsertAsync(dto);

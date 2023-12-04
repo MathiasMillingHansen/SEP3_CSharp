@@ -83,7 +83,8 @@
                 BookCondition = new Condition(_condition),
                 Comment = _comment,
                 Price = Convert.ToDecimal(_price), //TODO only allow decimals
-                Owner = _username //TODO get from jwt
+                Owner = _username, //TODO get from jwt
+                Edition = _selectedBook[0].Edition
             };
 
             await bookService.SellBookAsync(bookSaleDto);
@@ -108,7 +109,7 @@
 
         foreach (Condition condition in _conditions)
         {
-            conditionNames.Add(condition.State);
+            conditionNames.Add(condition.condition);
         }
 
         return conditionNames;
