@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CachingConext;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Shared.Domain;
 using Shared.DTOs;
@@ -9,11 +10,13 @@ namespace EFC_DataAccess.DAOs;
 public class EfcBookDao : IEfcBookDao
 {
     private readonly DatabaseContext context;
+    BookCache bookCache;
     
     
     public EfcBookDao(DatabaseContext databaseContext)
     {
         context = databaseContext;
+        bookCache = new BookCache();
     }
     
     
@@ -26,7 +29,16 @@ public class EfcBookDao : IEfcBookDao
 
     public async Task<List<Book>> GetAllAsync()
     {
-        return await context.books.ToListAsync();
+        if(bookCache.CachedBooks.Count > 0)
+        {
+            return bookCache.CachedBooks.ToList();
+        }
+        else
+        {
+            List<Book> books = await context.books.ToListAsync();
+            bookCache.CachedBooks = books;
+            return books;
+        }
     }
 
     public async Task<ICollection<Condition>> GetConditionsAsync()

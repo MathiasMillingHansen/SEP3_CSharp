@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Shared\Shared.csproj" />
+      <ProjectReference Include="..\CachingConext\CachingConext.csproj" />
       <ProjectReference Include="..\EFC_DataAccess\EFC_DataAccess.csproj" />
     </ItemGroup>
 
