@@ -52,4 +52,34 @@ public class BookController
         }
     }
     
+    [HttpGet("/Book/Owner/{owner}")]
+    public async Task<ActionResult<BooksForSaleDto>> GetBooksByOwnerAsync(string owner)
+    {
+        try
+        {
+            BooksForSaleDto booksForSaleDto = await _sellLogic.GetBooksByOwnerAsync(owner);
+            return new OkObjectResult(booksForSaleDto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    [HttpDelete("/Book/{id}")]
+    public async Task<ActionResult> DeleteBookForSaleAsync(int id)
+    {
+        try
+        {
+            await _sellLogic.DeleteBookForSaleAsync(id);
+            return new OkResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
 }

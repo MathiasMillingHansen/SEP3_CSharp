@@ -9,4 +9,6 @@ public interface IBookService
     ICollection<Condition> GetConditionsAsync();
     Task<string> SellBookAsync(BookSaleDto bookSaleDto);
     Task<BooksForSaleDto> GetAllBooksForSaleAsync();
+    Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner);
+    Task DeleteBookForSaleAsync(int bookForSale);
 }

@@ -10,7 +10,9 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped(
     sp => 
         new HttpClient { 
-            BaseAddress = new Uri("https://localhost:7259") 
+            BaseAddress = new Uri("https://localhost:7259"),
+            Timeout = TimeSpan.FromMinutes(3)
+            
         }
 );
 

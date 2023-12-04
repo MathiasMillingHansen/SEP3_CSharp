@@ -47,4 +47,14 @@ public class SellLogic : ISellLogic
     {
         return await _bookForSaleDao.GetAllBooksForSaleAsync();
     }
+
+    public async Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner)
+    {
+        return await _bookDao.GetBooksByOwnerAsync(owner);
+    }
+
+    public async Task DeleteBookForSaleAsync(int id)
+    {
+        await _bookDao.DeleteBookForSaleAsync(id);
+    }
 }

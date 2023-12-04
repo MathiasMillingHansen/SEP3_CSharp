@@ -81,6 +81,26 @@ public class EfcBookDao : IEfcBookDao
         return book;
     }
 
+    public async Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner)
+    {
+        List<BookForSale> books = await context.booksForSale
+            .Where(b => b.Owner == owner)
+            .Include(b => b.Condition)
+            .Include(b => b.Book)
+            .ThenInclude(bb => bb.Authors)
+            .Include(b => b.Book.courses)
+            .ToListAsync();
+        
+        BooksForSaleDto booksForSaleDto = new BooksForSaleDto(books);
+        return booksForSaleDto;
+    }
+
+    public async Task DeleteBookForSaleAsync(int id)
+    {
+        context.booksForSale.Remove(await context.booksForSale.FindAsync(id));
+        await context.SaveChangesAsync();
+    }
+
     public async Task<BookForSale> SellBookAsync(BookForSale bookForSale)
     {
         try
