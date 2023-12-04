@@ -55,10 +55,15 @@
                         <RadzenText TextStyle="TextStyle.Body1">
                             <b>@(bookForSale.Comment)</b>
                         </RadzenText>
-                        
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Price</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Price)</b>
+                        </RadzenText>
+
                         <RadzenColumn SizeSM="8" Style="padding-top: 1em">
                             <RadzenButton Variant="Variant.Text" Text="Show Owner Info" Click="() => setInformationVisible()" Style="background-color: #0c4128; color: white"></RadzenButton>
-                        
+
                             <RadzenColumn Visible=informationVisible Style="padding-top: 1em">
                                 <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Owner</RadzenText>
                                 <RadzenText TextStyle="TextStyle.Body1">
@@ -67,7 +72,7 @@
                             </RadzenColumn>
 
                         </RadzenColumn>
-                        
+
                     </RadzenColumn>
 
                 </RadzenRow>
@@ -79,16 +84,16 @@
 
 @code {
     private List<string> _courses = new();
-    
+
     private string _courseSelected;
-    
+
     private BooksForSaleDto _books;
     private BooksForSaleDto _filteredBooks;
 
     protected override async void OnInitialized()
     {
         _books = await bookService.GetAllBooksForSaleAsync();
-        _filteredBooks = new (_books.BooksForSale);
+        _filteredBooks = new(_books.BooksForSale);
         convertCoursesToString();
     }
 
@@ -98,7 +103,7 @@
         {
             foreach (Course course in bfs.Book.courses)
             {
-                if(_courses.Contains(course.Name) == false)
+                if (_courses.Contains(course.Name) == false)
                     _courses.Add(course.Name);
             }
         }
@@ -121,7 +126,7 @@
         }
     }
 
-    private  void FilterBooksByCourse(object args)
+    private void FilterBooksByCourse(object args)
     {
         string selectedCourse = args as string;
         _filteredBooks.BooksForSale = _books.BooksForSale.Where(bfs => bfs.Book.courses.Any(c => c.Name == selectedCourse)).ToList();
