@@ -12,13 +12,18 @@ namespace PersistenceWebAPI.Controllers;
 public class BookDBController
 {
     private readonly ISellLogic _sellLogic;
-    
     private readonly ICatalogLogic _catalogLogic;
     
     public BookDBController(ISellLogic sellLogic, ICatalogLogic catalogLogic)
     {
         this._sellLogic = sellLogic;
         this._catalogLogic = catalogLogic;
+    }
+    
+    [HttpPost]
+    public async Task<ActionResult<BookForSale>> SellBookAsync(BookForSale dto)
+    {
+        return await _sellLogic.SellBookAsync(dto);
     }
     
     [HttpGet]
@@ -36,28 +41,13 @@ public class BookDBController
         }
     }
     
-    [HttpGet  ("booksForSale")]
-    public async Task<ActionResult<BooksForSaleDto>> GetAllBooksForSaleAsync()
-    {
-        try
-        {
-            BooksForSaleDto books = await _catalogLogic.GetAllBooksForSaleAsync();
-            return new OkObjectResult(books);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
-    
     [HttpGet("{isbn}")]
-    public async Task<ActionResult<BookDto>> GetByIsbnAsync(string isbn)
+    public async Task<ActionResult<Book>> GetByIsbnAsync(string isbn)
     {
         try
         {
-            BookDto bookDto = await _sellLogic.GetByIsbnAsync(isbn);
-            return new OkObjectResult(bookDto);
+            Book book = await _sellLogic.GetByIsbnAsync(isbn);
+            return new OkObjectResult(book);
         }
         catch (Exception e)
         {
@@ -81,13 +71,14 @@ public class BookDBController
         }
     }
     
-    [HttpPost]
-    public async Task<ActionResult<BookForSale>> SellBookAsync(BookForSale bookForSale)
+    
+    [HttpGet("booksForSale")]
+    public async Task<ActionResult<BooksForSaleDto>> GetAllBooksForSaleAsync() 
     {
         try
         {
-            BookForSale result = await _sellLogic.SellBookAsync(bookForSale);
-            return new OkObjectResult(result);
+            BooksForSaleDto books = await _catalogLogic.GetAllBooksForSaleAsync();
+            return new OkObjectResult(books);
         }
         catch (Exception e)
         {
@@ -95,4 +86,6 @@ public class BookDBController
             throw;
         }
     }
+    
+    
 }

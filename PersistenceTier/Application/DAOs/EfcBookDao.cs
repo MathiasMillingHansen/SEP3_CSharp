@@ -1,18 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CachingConext;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Shared.Domain;
 using Shared.DTOs;
+using SQLitePCL;
 
 namespace EFC_DataAccess.DAOs;
 
 public class EfcBookDao : IEfcBookDao
 {
     private readonly DatabaseContext context;
+    BookCache bookCache;
     
     
     public EfcBookDao(DatabaseContext databaseContext)
     {
         context = databaseContext;
+        bookCache = new BookCache();
     }
     
     
@@ -25,7 +29,16 @@ public class EfcBookDao : IEfcBookDao
 
     public async Task<List<Book>> GetAllAsync()
     {
-        return await context.books.ToListAsync();
+        if(bookCache.CachedBooks.Count > 0)
+        {
+            return bookCache.CachedBooks.ToList();
+        }
+        else
+        {
+            List<Book> books = await context.books.ToListAsync();
+            bookCache.CachedBooks = books;
+            return books;
+        }
     }
 
     public async Task<ICollection<Condition>> GetConditionsAsync()
@@ -33,7 +46,7 @@ public class EfcBookDao : IEfcBookDao
         return await context.conditions.ToListAsync();
     }
 
-    public async Task<BookDto> GetByIsbnAsync(string isbn)
+    public async Task<Book> GetByIsbnAsync(string isbn)
     {
         
         // Fetch the book with the specified ISBN
@@ -65,7 +78,7 @@ public class EfcBookDao : IEfcBookDao
             Courses = courses
         };
 
-        return bookDto;
+        return book;
     }
 
     public async Task<BookForSale> SellBookAsync(BookForSale bookForSale)
@@ -83,24 +96,5 @@ public class EfcBookDao : IEfcBookDao
         }
 
     }
-
-    public void AttachAuthor(Author author)
-    {
-        context.authors.Attach(author);
-    }
-
-    public void AttachCourse(Course course)
-    {
-        context.courses.Attach(course);
-    }
-
-    public void AttachBook(Book book)
-    {
-        context.books.Attach(book);
-    }
-
-    public void AttachCondition(Condition condition)
-    {
-        context.conditions.Attach(condition);
-    }
+    
 }

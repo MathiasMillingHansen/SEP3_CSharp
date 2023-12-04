@@ -1,32 +1,19 @@
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Shared.Domain;
 
 public class Course
 {
     [Key]
-    public string CourseName { get; set; }
+    public string Name { get; set; }
     
-    public ICollection<Book>? Books { get; set; }
+    public ICollection<Book> Books { get; set; }
 
     public Course(string course)
     {
-        this.CourseName = course;
-    }
-
-    public Course(string course, ICollection<Book> books)
-    {
-        CourseName = course;
-        Books = books;
-    }
-
-    public Course()
-    {
-        
+        this.Name = course;
     }
     
-    
-    
-    
+    public Course(){}
 }

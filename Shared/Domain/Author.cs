@@ -4,7 +4,8 @@ public class Author
 {
     public string Name { get; set; }
     public int Id { get; set; }
-    public ICollection<Book>? books { get; set; }
+    
+    public ICollection<Book> books { get; set; }
     
     public Author(string name)
     {
@@ -13,5 +14,10 @@ public class Author
     
     private Author()
     {
+    }
+
+    public String toString()
+    {
+        return Name;
     }
 }
