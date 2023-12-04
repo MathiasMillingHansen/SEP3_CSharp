@@ -16,60 +16,61 @@
     <div class="rz-p-sm-12">
         <RadzenDropDown @bind-Value=@_category Data=@category Style="width: 100%; max-width: 200px;"/>
     </div>
-    
+
     @foreach (BookForSale bookForSale in _books.BooksForSale)
     {
-        <RadzenCard Variant="@Variant.Filled" class="rz-my-12 rz-mx-auto" style="max-width: 420px;">
-            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
-                <RadzenRow RowGap="0">
+        <RadzenCard Variant="@Variant.Filled" class="rz-my-12 rz-mx-auto">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-12">
+                <RadzenRow RowGap="1">
                     <!-- Left side columns -->
-                    <RadzenColumn SizeSM="4">
+                    <RadzenColumn SizeSM="8">
 
                         <!-- Text in the card -->
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Book Title</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
+                        <RadzenText TextStyle="TextStyle.H4" class="rz-display-flex rz-mt-2 rz-my-0">Book Title</RadzenText>
+                        <RadzenText TextStyle="TextStyle.DisplayH4">
                             <b>@(bookForSale.Book.BookTitle)</b>
                         </RadzenText>
 
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Isbn</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Isbn</RadzenText>
                         <RadzenText TextStyle="TextStyle.Body1">
                             <b>@(bookForSale.Book.Isbn)</b>
                         </RadzenText>
 
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Author</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Author</RadzenText>
                         <RadzenText TextStyle="TextStyle.Body1">
                             <b>@(bookForSale.Book.GetAuthorsAsString())</b>
                         </RadzenText>
 
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Edition</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Edition</RadzenText>
                         <RadzenText TextStyle="TextStyle.Body1">
                             <b>@(bookForSale.Book.Edition)</b>
                         </RadzenText>
-                    </RadzenColumn>
 
-                    <!-- Right side columns -->
-                    <RadzenColumn SizeSM="8">
-
-
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Condition</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Condition</RadzenText>
                         <RadzenText TextStyle="TextStyle.Body1">
                             <b>@(bookForSale.Condition.State)</b>
                         </RadzenText>
 
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Comment</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Comment</RadzenText>
                         <RadzenText TextStyle="TextStyle.Body1">
                             <b>@(bookForSale.Comment)</b>
                         </RadzenText>
+                        
+                        <RadzenColumn SizeSM="8" Style="padding-top: 1em">
+                            <RadzenButton Variant="Variant.Text" Text="Show Owner Info" Click="() => setInformationVisible()" Style="background-color: #0c4128; color: white"></RadzenButton>
+                        
+                            <RadzenColumn Visible=informationVisible Style="padding-top: 1em">
+                                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Owner</RadzenText>
+                                <RadzenText TextStyle="TextStyle.Body1">
+                                    <b>@(bookForSale.Owner)</b>
+                                </RadzenText>
+                            </RadzenColumn>
 
+                        </RadzenColumn>
+                        
                     </RadzenColumn>
-                    <RadzenColumn Visible=informationVisible>
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Owner</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Owner)</b>
-                        </RadzenText>
-                    </RadzenColumn>
+
                 </RadzenRow>
-                <RadzenButton Variant="Variant.Text" Text="Show Owner Info" Click="() => setInformationVisible()"></RadzenButton>
             </RadzenStack>
         </RadzenCard>
     }

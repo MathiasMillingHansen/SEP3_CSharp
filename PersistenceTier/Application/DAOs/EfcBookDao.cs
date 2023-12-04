@@ -96,24 +96,5 @@ public class EfcBookDao : IEfcBookDao
         }
 
     }
-
-    public void AttachAuthor(Author author)
-    {
-        context.authors.Attach(author);
-    }
-
-    public void AttachCourse(Course course)
-    {
-        context.courses.Attach(course);
-    }
-
-    public void AttachBook(Book book)
-    {
-        context.books.Attach(book);
-    }
-
-    public void AttachCondition(Condition condition)
-    {
-        context.conditions.Attach(condition);
-    }
+    
 }

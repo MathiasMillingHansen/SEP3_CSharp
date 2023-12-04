@@ -21,7 +21,6 @@ builder.Services.AddScoped<ISellLogic, SellLogic>();
 builder.Services.AddScoped<IEfcBookForSaleDao, EfcBookForSaleDao>();
 builder.Services.AddScoped<ICatalogLogic, CatalogLogic>();
 
-
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
