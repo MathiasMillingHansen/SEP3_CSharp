@@ -46,7 +46,7 @@ public class EfcBookDao : IEfcBookDao
         return await context.conditions.ToListAsync();
     }
 
-    public async Task<BookDto> GetByIsbnAsync(string isbn)
+    public async Task<Book> GetByIsbnAsync(string isbn)
     {
         
         // Fetch the book with the specified ISBN
@@ -78,7 +78,7 @@ public class EfcBookDao : IEfcBookDao
             Courses = courses
         };
 
-        return bookDto;
+        return book;
     }
 
     public async Task<BookForSale> SellBookAsync(BookForSale bookForSale)

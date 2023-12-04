@@ -15,4 +15,9 @@ public class Author
     private Author()
     {
     }
+
+    public String toString()
+    {
+        return Name;
+    }
 }

@@ -23,4 +23,23 @@ public class Book
         Edition = edition;
         this.courses = courses;
     }
+
+    public String GetAuthorsAsString()
+    {
+        String allAuthors = new string("");
+        foreach (Author author in Authors)
+        {
+            if (Authors.Count == 1)
+            {
+                allAuthors = author.Name;
+            }
+            else
+            {
+                allAuthors += author.Name + ", ";
+            }
+
+        }
+
+        return allAuthors;
+    }
 }

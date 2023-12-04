@@ -21,7 +21,7 @@ public class CatalogLogic : ICatalogLogic
 
     public async Task<BooksForSaleDto> GetAllBooksForSaleAsync()
     {
-        return await _bookForSaleDao.GetAllAsync();
+        return new BooksForSaleDto(await _bookForSaleDao.GetAllBooksForSaleAsync());
     }
     
     public IEnumerable<BooksAvailableDto> SearchBooks(Book searchModel)

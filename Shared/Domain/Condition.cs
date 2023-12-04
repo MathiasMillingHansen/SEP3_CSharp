@@ -15,4 +15,5 @@ public class Condition
     private Condition()
     {
     }
+    
 }

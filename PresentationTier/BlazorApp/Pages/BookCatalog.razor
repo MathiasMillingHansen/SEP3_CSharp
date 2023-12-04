@@ -17,7 +17,7 @@
         <RadzenDropDown @bind-Value=@_category Data=@category Style="width: 100%; max-width: 200px;"/>
     </div>
     
-    @foreach (BookForSale bookForSale in _booksForSale)
+    @foreach (BookForSale bookForSale in _books.BooksForSale)
     {
         <RadzenCard Variant="@Variant.Filled" class="rz-my-12 rz-mx-auto" style="max-width: 420px;">
             <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
@@ -38,7 +38,7 @@
 
                         <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Author</RadzenText>
                         <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Book.Authors.ToString())</b>
+                            <b>@(bookForSale.Book.GetAuthorsAsString())</b>
                         </RadzenText>
 
                         <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Edition</RadzenText>
@@ -53,7 +53,7 @@
 
                         <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Condition</RadzenText>
                         <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Condition)</b>
+                            <b>@(bookForSale.Condition.State)</b>
                         </RadzenText>
 
                         <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Comment</RadzenText>
@@ -82,12 +82,12 @@
     //private BooksForSaleDto _booksForSaleDto = new BooksForSaleDto(booksForSale: );
 
     private BooksForSaleDto _books;
-    private ICollection<BookForSale> _booksForSale;
+    //private ICollection<BookForSale> _booksForSale;
 
 
-    protected override void OnInitialized()
+    protected async override void OnInitialized()
     {
-        _booksForSale = bookService.GetAllBooksForSaleAsync();
+        _books = await bookService.GetAllBooksForSaleAsync();
     }
 
     private Boolean informationVisible = false;

@@ -15,7 +15,5 @@ public class Course
         this.Name = course;
     }
     
-    private Course()
-    {
-    }
+    public Course(){}
 }

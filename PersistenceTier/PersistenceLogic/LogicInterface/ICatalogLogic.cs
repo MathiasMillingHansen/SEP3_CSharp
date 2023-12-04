@@ -7,6 +7,5 @@ public interface ICatalogLogic
 {
     Task<BooksForSaleDto> GetAllBooksForSaleAsync();
     
-    IEnumerable<BooksAvailableDto> SearchBooks(Book searchModel);
     Task<ICollection<BookCourseDto>> GetByCourseAsync();
 }

@@ -1,3 +1,4 @@
+using Logic.Interfaces;
 using Logic.LogicImplemtation;
 using Logic.LogicInterface;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +12,9 @@ namespace PersistenceWebAPI.Controllers;
 public class BookDBController
 {
     private readonly ISellLogic _sellLogic;
+    private readonly ICatalogLogic _catalogLogic;
     
-    public BookDBController(ISellLogic sellLogic)
+    public BookDBController(ISellLogic sellLogic, ICatalogLogic catalogLogic)
     {
         this._sellLogic = sellLogic;
         this._catalogLogic = catalogLogic;
@@ -40,12 +42,12 @@ public class BookDBController
     }
     
     [HttpGet("{isbn}")]
-    public async Task<ActionResult<BookWrapperDto>> GetByIsbnAsync(string isbn)
+    public async Task<ActionResult<Book>> GetByIsbnAsync(string isbn)
     {
         try
         {
-            BookWrapperDto bookWrapperDto = await _sellLogic.GetByIsbnAsync(isbn);
-            return new OkObjectResult(bookWrapperDto);
+            Book book = await _sellLogic.GetByIsbnAsync(isbn);
+            return new OkObjectResult(book);
         }
         catch (Exception e)
         {
@@ -70,12 +72,12 @@ public class BookDBController
     }
     
     
-    [HttpGet("test")]
-    public async Task<ActionResult<ICollection<BookForSale>>> testGetAll() //TODO remove
+    [HttpGet("booksForSale")]
+    public async Task<ActionResult<BooksForSaleDto>> GetAllBooksForSaleAsync() 
     {
         try
         {
-            ICollection<BookForSale> books = await _sellLogic.testGetAll();
+            BooksForSaleDto books = await _catalogLogic.GetAllBooksForSaleAsync();
             return new OkObjectResult(books);
         }
         catch (Exception e)
@@ -84,4 +86,6 @@ public class BookDBController
             throw;
         }
     }
+    
+    
 }

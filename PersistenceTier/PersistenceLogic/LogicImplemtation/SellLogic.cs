@@ -33,7 +33,7 @@ public class SellLogic : ISellLogic
         return await _bookDao.GetConditionsAsync();
     }
 
-    public async Task<BookWrapperDto> GetByIsbnAsync(string isbn)
+    public async Task<Book> GetByIsbnAsync(string isbn)
     {
         return await _bookDao.GetByIsbnAsync(isbn);
     }
@@ -43,8 +43,8 @@ public class SellLogic : ISellLogic
         return await _bookForSaleDao.InsertAsync(dto);
     }
     
-    public async Task<ICollection<BookForSale>> testGetAll() //TODO remove
+    public async Task<ICollection<BookForSale>> GetAllBooksForSaleAsync() 
     {
-        return await _bookForSaleDao.testGetAll();
+        return await _bookForSaleDao.GetAllBooksForSaleAsync();
     }
 }
