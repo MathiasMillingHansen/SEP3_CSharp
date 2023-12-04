@@ -1,0 +1,40 @@
+﻿@page "/Login"
+@inject NavigationManager NavManager
+<h3>Login</h3>
+
+
+<div class="form-group mb-3">
+    <label for="username">Username:</label>
+    <RadzenTextBox @bind-Value="username" style="width: 20%" />
+</div>
+
+<div class="form-group mb-3">
+    <label for="password">Password:</label>
+    <RadzenPassword @bind-Value="password" style="width: 20%" />
+</div>
+
+<div class="mb-3">
+   <RadzenButton Text="Login" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="Cancel" Style="background-color: RGB(60, 128, 67)" />
+    
+    <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="Cancel" Style="background-color: RGB(60, 128, 67)" />
+</div>
+
+<div class="mb-3">
+    <p>If you don't have an account, <a href="/register">register here</a>.</p>
+</div>
+
+@code {
+    private string username;
+    private string password;
+
+    // private void Login()
+    // {
+    // }
+
+    private void Cancel()
+    {
+        NavManager.NavigateTo("/Home");
+    }
+    
+
+}
