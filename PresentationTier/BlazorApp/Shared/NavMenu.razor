@@ -17,29 +17,32 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="SellBook">
-                <span class="oi oi-plus" aria-hidden="true"></span> Sell Book
+                <RadzenIcon Icon="add_shopping_cart" style="margin-right: 5px;"/>
+                <span>Sell book</span>
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="BookCatalog">
-                <span class="oi oi-plus" aria-hidden="true"></span> Bog katalog
-            </NavLink>
-        </div>
+       <div class="nav-item px-3">
+           <NavLink class="nav-link" href="BookCatalog">
+               <RadzenIcon Icon="chrome_reader_mode" style="margin-right: 5px;" />
+               <span>Book catalog</span>
+           </NavLink>
+       </div>
         <div class="nav-item px-3 nav-item dropdown show">
             <NavLink class="nav-link dropdown-toggle" @onclick="() => expandSubNavSettings = !expandSubNavSettings" id="navbarDropdown" >
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Min profil
+                 <RadzenIcon Icon="account_circle" style="margin-right: 5px;" />
+                 <span>My profile</span>
             </NavLink>
             @if (expandSubNavSettings)
             {
-                <div class="dropdown-menu show" aria-labelledby="navbarDropdown" style="background-color: RGB(60, 128, 67);" @onclick="() => expandSubNavSettings = !expandSubNavSettings ">
+                <div class="dropdown-menu show" aria-labelledby="navbarDropdown" style="background-color: RGB(150, 203, 134);" @onclick="() => expandSubNavSettings = !expandSubNavSettings ">
                     <div class="nav-item">
-                        <NavLink class="nav-link text-dark" href="redigerprofil">
-                            <span class="oi oi-fork" aria-hidden="true"></span> Rediger profil
+                        <NavLink class="nav-link text-white" href="redigerprofil">
+                            <span class="oi oi-fork" aria-hidden="true"></span> Edit profile
                         </NavLink>
                     </div>
                     <div class="nav-item">
-                        <NavLink class="nav-link text-dark" href="minebøger">
-                            <span class="oi oi-command" aria-hidden="true"></span> Mine bøger
+                        <NavLink class="nav-link text-white" href="minebøger">
+                            <span class="oi oi-command" aria-hidden="true"></span> My books
                         </NavLink>
                     </div>
                 </div>
