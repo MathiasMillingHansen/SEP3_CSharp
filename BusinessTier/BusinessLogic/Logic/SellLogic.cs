@@ -17,8 +17,15 @@ public class SellLogic : ISellLogic
     
     public async Task<BookForSale> SellBookAsync(BookSaleDto dto)
     {
-        
-        string owner = await BusinessSender.SendMessage(dto.Owner);
+        string owner;
+        try
+        {
+            owner = await BusinessSender.SendMessage(dto.Owner);
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
 
         BookForSale bookForSale = new BookForSale()
         {

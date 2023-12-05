@@ -51,6 +51,13 @@
                 </RadzenFormField>
 
                 <RadzenButton Text="Save Changes" Click="SaveChanges" Icon="save" Style="background-color: #0c4128"></RadzenButton>
+                
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @errorMessage
+                    </div>
+                }
 
             </RadzenStack>
         </RadzenColumn>
@@ -69,6 +76,7 @@
     private string _condition;
     private ICollection<BooksAvailableDto> _booksAvailable;
     private IList<BooksAvailableDto> _selectedBook;
+    string errorMessage = "";
 
 
     Variant variant = Variant.Outlined;
@@ -89,10 +97,10 @@
 
             await bookService.SellBookAsync(bookSaleDto);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
-            throw;
+            errorMessage = ex.Message;
+            StateHasChanged();
         }
     }
 

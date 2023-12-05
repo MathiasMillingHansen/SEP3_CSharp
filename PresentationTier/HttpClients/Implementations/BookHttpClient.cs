@@ -9,7 +9,7 @@ namespace HttpClients.Implementations;
 public class BookHttpClient : IBookService
 {
     private readonly HttpClient _httpClient;
-    
+
     public BookHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
@@ -19,17 +19,18 @@ public class BookHttpClient : IBookService
     {
         HttpResponseMessage response = _httpClient.GetAsync("/book").Result;
         string result = response.Content.ReadAsStringAsync().Result;
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(result);
         }
-        
-        ICollection<BooksAvailableDto> books = JsonSerializer.Deserialize<ICollection<BooksAvailableDto>>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-        
+
+        ICollection<BooksAvailableDto> books = JsonSerializer.Deserialize<ICollection<BooksAvailableDto>>(result,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
         return books;
     }
 
@@ -37,48 +38,49 @@ public class BookHttpClient : IBookService
     {
         HttpResponseMessage response = _httpClient.GetAsync("/book/conditions").Result;
         string result = response.Content.ReadAsStringAsync().Result;
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(result);
         }
-        
-        ICollection<Condition> conditions = JsonSerializer.Deserialize<ICollection<Condition>>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-        
+
+        ICollection<Condition> conditions = JsonSerializer.Deserialize<ICollection<Condition>>(result,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
         return conditions;
     }
 
     public async Task<string> SellBookAsync(BookSaleDto bookSaleDto)
     {
         HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/book", bookSaleDto);
-        string result = await response.Content.ReadAsStringAsync();
-        
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(result);
+            var errorResponse = await response.Content.ReadAsStringAsync();
+            throw new Exception(errorResponse);
         }
-        
+
+        string result = await response.Content.ReadAsStringAsync();
         return result;
     }
-    
+
     public async Task<BooksForSaleDto> GetAllBooksForSaleAsync()
     {
         HttpResponseMessage response = _httpClient.GetAsync("/Catalog").Result;
         string result = response.Content.ReadAsStringAsync().Result;
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(result);
         }
-        
+
         BooksForSaleDto books = JsonSerializer.Deserialize<BooksForSaleDto>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
-        
+
         return books;
     }
 
@@ -86,17 +88,17 @@ public class BookHttpClient : IBookService
     {
         HttpResponseMessage response = _httpClient.GetAsync("/book/owner/" + owner).Result;
         string result = await response.Content.ReadAsStringAsync();
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(result);
         }
-        
+
         BooksForSaleDto books = JsonSerializer.Deserialize<BooksForSaleDto>(result, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
-        
+
         return books;
     }
 
@@ -104,12 +106,12 @@ public class BookHttpClient : IBookService
     {
         HttpResponseMessage response = _httpClient.DeleteAsync("/Book/" + id).Result;
         string result = await response.Content.ReadAsStringAsync();
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(result);
         }
-        
+
         return;
     }
 }

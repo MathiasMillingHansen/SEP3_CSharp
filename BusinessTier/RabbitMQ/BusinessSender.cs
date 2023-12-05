@@ -1,11 +1,7 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
-using Shared.DTOs;
-using System.Threading;
-
 namespace RabbitMQ;
 
 public static class BusinessSender
@@ -62,7 +58,7 @@ public static class BusinessSender
 
             if (response.Task.Result.Equals("NotValidUser"))
             {
-                throw new Exception("NotValidUser");
+                throw new Exception("User is not valid");
             }
         }
         
