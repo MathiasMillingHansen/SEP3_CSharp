@@ -8,7 +8,7 @@
     </button>
 </div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -17,18 +17,36 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="SellBook">
-                <span class="oi oi-plus" aria-hidden="true"></span> Sell Book
+                <RadzenIcon Icon="add_shopping_cart" style="margin-right: 5px;"/>
+                <span>Sell book</span>
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="BookCatalog">
-                <span class="oi oi-plus" aria-hidden="true"></span> Book Catalogue
+       <div class="nav-item px-3">
+           <NavLink class="nav-link" href="BookCatalog">
+               <RadzenIcon Icon="chrome_reader_mode" style="margin-right: 5px;" />
+               <span>Book catalog</span>
+           </NavLink>
+       </div>
+        <div class="nav-item px-3 nav-item dropdown show">
+            <NavLink class="nav-link dropdown-toggle" @onclick="() => expandSubNavSettings = !expandSubNavSettings" id="navbarDropdown" >
+                 <RadzenIcon Icon="account_circle" style="margin-right: 5px;" />
+                 <span>My profile</span>
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="MyBooks">
-                <span class="oi oi-plus" aria-hidden="true"></span> My Books
-            </NavLink>
+            @if (expandSubNavSettings)
+            {
+                <div class="dropdown-menu show" aria-labelledby="navbarDropdown" style="background-color: RGB(150, 203, 134);" @onclick="() => expandSubNavSettings = !expandSubNavSettings ">
+                    <div class="nav-item">
+                        <NavLink class="nav-link text-white" href="redigerprofil">
+                            <span class="oi oi-fork" aria-hidden="true"></span> Edit profile
+                        </NavLink>
+                    </div>
+                    <div class="nav-item">
+                        <NavLink class="nav-link text-white" href="minebøger">
+                            <span class="oi oi-command" aria-hidden="true"></span> My books
+                        </NavLink>
+                    </div>
+                </div>
+            }
         </div>
     </nav>
 </div>
@@ -36,11 +54,21 @@
 @code {
     private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    string NavMenuCssClass => baseMenuClass + (collapseNavMenu ? " collapse" : "");
 
-    private void ToggleNavMenu()
+    void ToggleNavMenu()
     {
-        collapseNavMenu = !collapseNavMenu;
+        if(!expandSubNavSettings)
+        {
+            collapseNavMenu = !collapseNavMenu;
+        }
     }
+
+    private bool expandSubNavSettings;
+
+
+    string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
+    
+    
 
 }
