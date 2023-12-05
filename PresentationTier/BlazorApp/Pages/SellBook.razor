@@ -51,6 +51,10 @@
                 </RadzenFormField>
 
                 <RadzenButton Text="Save Changes" Click="SaveChanges" Icon="save" Style="background-color: #0c4128"></RadzenButton>
+                        @if (!string.IsNullOrEmpty(_resultMsg))
+                        {
+                            <label style="color: @_resultMsgColor">@_resultMsg</label>
+                        }
 
             </RadzenStack>
         </RadzenColumn>
@@ -69,6 +73,9 @@
     private string _condition;
     private ICollection<BooksAvailableDto> _booksAvailable;
     private IList<BooksAvailableDto> _selectedBook;
+    
+    private string _resultMsg = "";
+    private string _resultMsgColor = "";
 
 
     Variant variant = Variant.Outlined;
@@ -86,11 +93,14 @@
                 Owner = _username, //TODO get from jwt
                 Edition = _selectedBook[0].Edition
             };
-
+            
             await bookService.SellBookAsync(bookSaleDto);
+            _resultMsg = "Book successfully set for sale!";
+            _resultMsgColor = "green";
         }
         catch (Exception e)
         {
+            _resultMsg = e.Message;
             Console.WriteLine(e);
             throw;
         }

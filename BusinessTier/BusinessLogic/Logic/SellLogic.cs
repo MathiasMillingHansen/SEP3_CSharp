@@ -26,6 +26,7 @@ public class SellLogic : ISellLogic
             BookIsbn = dto.Isbn
         };
         
+        ValidateBook(bookForSale);
         return await _sellDao.SellBookAsync(bookForSale);
     }
 
@@ -33,13 +34,6 @@ public class SellLogic : ISellLogic
     {
         return await _sellDao.GetAllAsync();
     }
-
-    // TODO Simones template.
-    // private async Task<BookWrapperDto> GetByIsbnAsync(string isbn)
-    // {
-    //     BookWrapperDto bookWrapperDto = await _sellDao.GetByIsbnAsync(isbn);
-    //     return bookWrapperDto;
-    // }
 
     public async Task<ICollection<Condition>> GetConditionsAsync()
     {
@@ -57,10 +51,12 @@ public class SellLogic : ISellLogic
         await _sellDao.DeleteBookForSaleAsync(id);
     }
 
-    private void ValidateBook(Book dto)
+    private void ValidateBook(BookForSale dto)
     {
-        // TODO : Change this to validate a JWT token START -------
-        // Change this to validate a JWT token END ----------------
+        if (string.IsNullOrWhiteSpace(dto.BookIsbn))
+        {
+            throw new Exception("Please select a book to sell");
+        }
     }
 
 }
