@@ -1,17 +1,5 @@
-﻿@page "/Register"
-@inject NavigationManager NavManager
-
-<h3>Register</h3>
-
-  <p>Welcome! If you don't have an account yet, you can register here:</p>
-
-<div style="margin-bottom: 10px;">
-    <RadzenFormField Style="width: 40%;" Text="Username" Variant="@variant">
-        <ChildContent>
-            <RadzenTextBox @bind-Value="@username"/>
-        </ChildContent>
-    </RadzenFormField>
-</div>
+﻿@page "/EditProfile"
+<h3>Edit profile</h3>
 
 <div style="margin-bottom: 10px;">
     <RadzenFormField Style="width: 40%;" Text="Password" Variant="@variant">
@@ -38,22 +26,13 @@
 </div>
 
 <div class="mb-3">
-   <RadzenButton Text="Create" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Style="background-color: RGB(60, 128, 67)" />
-    
-    <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)" />
+    <RadzenButton Text="Save" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Style="background-color: RGB(60, 128, 67)" />
 </div>
 
 @code {
-    private string username;
     private string password;
     private string phonenumber;
     private string _email;
     
     Variant variant = Variant.Outlined;
-    
-    private void Cancel()
-    {
-        NavManager.NavigateTo("");
-    }
-
 }
