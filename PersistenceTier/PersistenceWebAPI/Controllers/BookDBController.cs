@@ -9,7 +9,7 @@ namespace PersistenceWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BookDBController
+public class BookDBController : ControllerBase
 {
     private readonly ISellLogic _sellLogic;
     private readonly ICatalogLogic _catalogLogic;
