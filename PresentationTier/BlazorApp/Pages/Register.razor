@@ -1,4 +1,6 @@
 ﻿@page "/Register"
+@inject NavigationManager NavManager
+
 <h3>Register</h3>
 
   <p>Welcome! If you don't have an account yet, you can register here:</p>
@@ -51,6 +53,11 @@
     </RadzenFormField>
 </div>
 
+<div class="mb-3">
+   <RadzenButton Text="Create" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Style="background-color: RGB(60, 128, 67)" />
+    
+    <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)" />
+</div>
 
 @code {
     private string username;
@@ -61,4 +68,10 @@
     private string _email;
     
     Variant variant = Variant.Outlined;
+    
+    private void Cancel()
+    {
+        NavManager.NavigateTo("");
+    }
+
 }
