@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using HttpClients.ClientInterfaces;
+using Microsoft.AspNetCore.Http;
 using Shared.Domain;
 using Shared.DTOs;
 
@@ -53,15 +54,27 @@ public class BookHttpClient : IBookService
 
     public async Task<string> SellBookAsync(BookSaleDto bookSaleDto)
     {
-        HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/book", bookSaleDto);
-        string result = await response.Content.ReadAsStringAsync();
-        
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            throw new Exception(result);
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/book", bookSaleDto);
+            response.EnsureSuccessStatusCode();  // This will throw an exception if the status code is not success.
+            string result = await response.Content.ReadAsStringAsync();
+            return result;
         }
-        
-        return result;
+        catch (HttpRequestException ex)
+        {
+            // HttpRequestException might contain more detailed information about the failure.
+            throw new Exception("Something went wrong: " + ex.Message, ex);
+        }
+        // HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/book", bookSaleDto);
+        // string result = await response.Content.ReadAsStringAsync();
+        //
+        // if (!response.IsSuccessStatusCode)
+        // {
+        //     throw new Exception(result);
+        // }
+        //
+        // return result;
     }
     
     public async Task<BooksForSaleDto> GetAllBooksForSaleAsync()

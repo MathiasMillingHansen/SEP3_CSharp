@@ -14,7 +14,7 @@ public class SellLogic : ISellLogic
         _sellDao = sellDao;
     }
     
-    public async Task<BookForSale> SellBookAsync(BookSaleDto dto)
+    public async Task<string> SellBookAsync(BookSaleDto dto)
     {
         
         BookForSale bookForSale = new BookForSale()
@@ -53,9 +53,14 @@ public class SellLogic : ISellLogic
 
     private void ValidateBook(BookForSale dto)
     {
-        if (string.IsNullOrWhiteSpace(dto.BookIsbn))
+        if (dto.Price < 0)
         {
-            throw new Exception("Please select a book to sell");
+            throw new Exception("Price cannot be negative");
+        }
+
+        if (dto.Comment.Length > 500)
+        {
+            throw new Exception("Comment cannot be longer than 500 characters");
         }
     }
 

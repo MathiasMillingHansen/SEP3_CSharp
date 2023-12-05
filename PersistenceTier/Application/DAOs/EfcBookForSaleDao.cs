@@ -14,13 +14,13 @@ public class EfcBookForSaleDao : IEfcBookForSaleDao
         DatabaseInitializer.Initialize(context); //TODO: Might be fishy
     }
     
-    public async Task<BookForSale> InsertAsync(BookForSale bookForSale)
+    public async Task<string> InsertAsync(BookForSale bookForSale)
     {
         EntityEntry<BookForSale> newBookForSale = await context
             .booksForSale
             .AddAsync(bookForSale);
         await context.SaveChangesAsync();
-        return newBookForSale.Entity;
+        return "Book successfully listed!";
     }
     
     public async Task<ICollection<BookForSale>> GetAllBooksForSaleAsync()

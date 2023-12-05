@@ -21,7 +21,7 @@ public class BookDBController
     }
     
     [HttpPost]
-    public async Task<ActionResult<BookForSale>> SellBookAsync(BookForSale dto)
+    public async Task<ActionResult<string>> SellBookAsync(BookForSale dto)
     {
         return await _sellLogic.SellBookAsync(dto);
     }
