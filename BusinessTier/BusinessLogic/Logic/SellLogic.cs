@@ -1,5 +1,6 @@
 using BusinessWebAPI.Application.DaoInterface;
 using Logic.Interfaces;
+using RabbitMQ;
 using Shared.Domain;
 using Shared.DTOs;
 
@@ -17,15 +18,17 @@ public class SellLogic : ISellLogic
     public async Task<BookForSale> SellBookAsync(BookSaleDto dto)
     {
         
+        string owner = await BusinessSender.SendMessage(dto.Owner);
+
         BookForSale bookForSale = new BookForSale()
         {
-            Owner = dto.Owner,
+            Owner = owner,
             Price = dto.Price,
             Comment = dto.Comment!,
             ConditionState = dto.BookCondition.State,
             BookIsbn = dto.Isbn
         };
-        
+
         return await _sellDao.SellBookAsync(bookForSale);
     }
 

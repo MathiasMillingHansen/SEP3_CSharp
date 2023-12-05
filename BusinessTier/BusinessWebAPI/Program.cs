@@ -2,6 +2,7 @@ using Application.Logic;
 using BusinessWebAPI.Application.DaoImplementation;
 using BusinessWebAPI.Application.DaoInterface;
 using Logic.Interfaces;
+using RabbitMQ;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,4 +48,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//Task.Run(BusinessConsumer.Main);
+
 app.Run();
+

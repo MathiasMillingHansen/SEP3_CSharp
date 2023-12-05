@@ -11,6 +11,7 @@
       <ProjectReference Include="..\..\PersistenceTier\Application\Application.csproj" />
       <ProjectReference Include="..\..\Shared\Shared.csproj" />
       <ProjectReference Include="..\BusinessApplication\BusinessApplication.csproj" />
+      <ProjectReference Include="..\RabbitMQ\RabbitMQ.csproj" />
     </ItemGroup>
 
     <ItemGroup>

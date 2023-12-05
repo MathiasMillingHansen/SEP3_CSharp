@@ -36,7 +36,7 @@
 
                 <RadzenFormField Style="width: 60%" Text="Price" Variant="@variant">
                     <ChildContent>
-                        <RadzenTextBox @bind-Value="@_price"/>
+                        <RadzenNumeric ShowUpDown="false" @bind-Value="@_price"/>
                     </ChildContent>
                 </RadzenFormField>
             </RadzenStack>
@@ -64,7 +64,7 @@
 @code {
     private string _price = "";
     private ICollection<Condition> _conditions;
-    private string _username = "Test"; //TODO: Get username from auth
+    private string _username = "Ikke Mathias"; //TODO: Get username from auth
     private string _comment = "";
     private string _condition;
     private ICollection<BooksAvailableDto> _booksAvailable;
@@ -118,6 +118,7 @@
     private void ClearSelection()
     {
         _selectedBook = null;
+        
     }
 
 }
