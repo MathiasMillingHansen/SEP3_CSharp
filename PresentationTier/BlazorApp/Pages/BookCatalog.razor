@@ -14,10 +14,10 @@
     </p>
     <!--Dropdown menu that selects which course the user wants-->
     <div class="rz-p-sm-12">
-        <RadzenDropDown @bind-Value=@_category Data=@category Style="width: 100%; max-width: 200px;"/>
+        <RadzenDropDown @bind-Value=@_courseSelected Data=@_courses Style="width: 100%; max-width: 200px;" Change="@(args => FilterBooksByCourse(args))"/>
     </div>
 
-    @foreach (BookForSale bookForSale in _books.BooksForSale)
+    @foreach (BookForSale bookForSale in _filteredBooks.BooksForSale)
     {
         <RadzenCard Variant="@Variant.Filled" class="rz-my-12 rz-mx-auto">
             <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-12">
@@ -55,10 +55,15 @@
                         <RadzenText TextStyle="TextStyle.Body1">
                             <b>@(bookForSale.Comment)</b>
                         </RadzenText>
-                        
+
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Price</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Price)</b>
+                        </RadzenText>
+
                         <RadzenColumn SizeSM="8" Style="padding-top: 1em">
                             <RadzenButton Variant="Variant.Text" Text="Show Owner Info" Click="() => setInformationVisible()" Style="background-color: #0c4128; color: white"></RadzenButton>
-                        
+
                             <RadzenColumn Visible=informationVisible Style="padding-top: 1em">
                                 <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Owner</RadzenText>
                                 <RadzenText TextStyle="TextStyle.Body1">
@@ -67,7 +72,7 @@
                             </RadzenColumn>
 
                         </RadzenColumn>
-                        
+
                     </RadzenColumn>
 
                 </RadzenRow>
@@ -78,17 +83,30 @@
 
 
 @code {
-    IEnumerable<string> category;
+    private List<string> _courses = new();
 
-    //private BooksForSaleDto _booksForSaleDto = new BooksForSaleDto(booksForSale: );
+    private string _courseSelected;
 
     private BooksForSaleDto _books;
-    //private ICollection<BookForSale> _booksForSale;
+    private BooksForSaleDto _filteredBooks;
 
-
-    protected async override void OnInitialized()
+    protected override async void OnInitialized()
     {
         _books = await bookService.GetAllBooksForSaleAsync();
+        _filteredBooks = new(_books.BooksForSale);
+        convertCoursesToString();
+    }
+
+    private void convertCoursesToString()
+    {
+        foreach (BookForSale bfs in _books.BooksForSale)
+        {
+            foreach (Course course in bfs.Book.courses)
+            {
+                if (_courses.Contains(course.Name) == false)
+                    _courses.Add(course.Name);
+            }
+        }
     }
 
     private Boolean informationVisible = false;
@@ -106,6 +124,12 @@
         {
             informationVisible = false;
         }
+    }
+
+    private void FilterBooksByCourse(object args)
+    {
+        string selectedCourse = args as string;
+        _filteredBooks.BooksForSale = _books.BooksForSale.Where(bfs => bfs.Book.courses.Any(c => c.Name == selectedCourse)).ToList();
     }
 
 }

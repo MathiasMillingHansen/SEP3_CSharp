@@ -9,4 +9,6 @@ public interface IEfcBookDao
     Task<List<Book>> GetAllAsync();
     Task<ICollection<Condition>> GetConditionsAsync();
     Task<Book> GetByIsbnAsync(string isbn);
+    Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner);
+    Task DeleteBookForSaleAsync(int bookForSale);
 }

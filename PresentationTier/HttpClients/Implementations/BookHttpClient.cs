@@ -66,7 +66,7 @@ public class BookHttpClient : IBookService
     
     public async Task<BooksForSaleDto> GetAllBooksForSaleAsync()
     {
-        HttpResponseMessage response = _httpClient.GetAsync("/catalog").Result;
+        HttpResponseMessage response = _httpClient.GetAsync("/Catalog").Result;
         string result = response.Content.ReadAsStringAsync().Result;
         
         if (!response.IsSuccessStatusCode)
@@ -80,5 +80,36 @@ public class BookHttpClient : IBookService
         })!;
         
         return books;
+    }
+
+    public async Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner)
+    {
+        HttpResponseMessage response = _httpClient.GetAsync("/book/owner/" + owner).Result;
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        BooksForSaleDto books = JsonSerializer.Deserialize<BooksForSaleDto>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return books;
+    }
+
+    public async Task DeleteBookForSaleAsync(int id)
+    {
+        HttpResponseMessage response = _httpClient.DeleteAsync("/Book/" + id).Result;
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        return;
     }
 }

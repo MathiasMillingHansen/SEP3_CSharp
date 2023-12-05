@@ -47,6 +47,16 @@ public class SellLogic : ISellLogic
         return conditions;
     }
 
+    public async Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner)
+    {
+        return await _sellDao.GetBooksByOwnerAsync(owner);
+    }
+
+    public async Task DeleteBookForSaleAsync(int id)
+    {
+        await _sellDao.DeleteBookForSaleAsync(id);
+    }
+
     private void ValidateBook(Book dto)
     {
         // TODO : Change this to validate a JWT token START -------

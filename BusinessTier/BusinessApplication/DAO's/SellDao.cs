@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 using System.Security.AccessControl;
 using System.Text.Json;
@@ -89,5 +90,36 @@ public class SellDao : ISellDao
         })!;
         
         return book;
+    }
+
+    public async Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner)
+    {
+        HttpResponseMessage response = await client.GetAsync("/BookDB/Owner/" + owner);
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        BooksForSaleDto books = JsonSerializer.Deserialize<BooksForSaleDto>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return books;
+    }
+
+    public async Task DeleteBookForSaleAsync(int id)
+    {
+        HttpResponseMessage response = client.DeleteAsync("/BookDB/" + id).Result;
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        return;
     }
 }
