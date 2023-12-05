@@ -1,5 +1,6 @@
 using BusinessWebAPI.Application.DaoInterface;
 using Logic.Interfaces;
+using RabbitMQ;
 using Shared.Domain;
 using Shared.DTOs;
 
@@ -16,7 +17,6 @@ public class SellLogic : ISellLogic
     
     public async Task<string> SellBookAsync(BookSaleDto dto)
     {
-        
         BookForSale bookForSale = new BookForSale()
         {
             Owner = dto.Owner,
@@ -25,8 +25,9 @@ public class SellLogic : ISellLogic
             ConditionState = dto.BookCondition.State,
             BookIsbn = dto.Isbn
         };
+
+        await ValidateBook(bookForSale);
         
-        ValidateBook(bookForSale);
         return await _sellDao.SellBookAsync(bookForSale);
     }
 
@@ -51,7 +52,7 @@ public class SellLogic : ISellLogic
         await _sellDao.DeleteBookForSaleAsync(id);
     }
 
-    private void ValidateBook(BookForSale dto)
+    private async Task ValidateBook(BookForSale dto)
     {
         if (dto.Price < 0)
         {
@@ -62,6 +63,12 @@ public class SellLogic : ISellLogic
         {
             throw new Exception("Comment cannot be longer than 500 characters");
         }
+
+   
+        await BusinessSender.SendMessage(dto.Owner);
+        
+        
+        
     }
 
 }
