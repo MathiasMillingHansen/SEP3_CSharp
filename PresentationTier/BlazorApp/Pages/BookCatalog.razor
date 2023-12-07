@@ -18,7 +18,7 @@
                 </p>
             </RadzenRow>
             <RadzenRow JustifyContent="JustifyContent.Center" class="rz-my-6 rz-mx-auto">
-                <RadzenTextBox @bind-Value="@_searchInput" Change="@(args => FilterBooksByName(args))" Placeholder="Search by book name..." Style="width: 100%; max-width: 300px;"/>
+                <RadzenTextBox @bind-Value="@_searchInput" Change="@(args => FilterBooksByName(args))" Placeholder="Search by book name" Style="width: 100%; max-width: 300px;"/>
             </RadzenRow>
             <RadzenRow JustifyContent="JustifyContent.Center" class="rz-my-6 rz-mx-auto">
                 <RadzenDropDown @bind-Value=@_courseSelected Data=@_courses Style="width: 100%; max-width: 300px;" Change="@(args => FilterBooksByCourse(args))"/>
@@ -69,12 +69,20 @@
                             </RadzenText>
 
                             <RadzenColumn SizeSM="8" Style="padding-top: 1em">
-                                <RadzenButton Variant="Variant.Text" Text="Show Owner Info" Click="() => setInformationVisible()" Style="background-color: #0c4128; color: white"></RadzenButton>
+                                <RadzenButton Variant="Variant.Text" Text="Show Owner Info" Click="() => setInformationVisible(bookForSale)" Style="background-color: #0c4128; color: white"></RadzenButton>
 
-                                <RadzenColumn Visible=informationVisible Style="padding-top: 1em">
+                                <RadzenColumn Visible=@(_informationVisiblePerBook.ContainsKey(bookForSale.Id) && _informationVisiblePerBook[bookForSale.Id]) Style="padding-top: 1em">
                                     <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Owner</RadzenText>
                                     <RadzenText TextStyle="TextStyle.Body1">
-                                        <b>@(bookForSale.Owner)</b>
+                                        <b>@(_ownerInfoPerBook.ContainsKey(bookForSale.Id) ? _ownerInfoPerBook[bookForSale.Id].username : "")</b>
+                                    </RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Email</RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Body1">
+                                        <b>@(_ownerInfoPerBook.ContainsKey(bookForSale.Id) ? _ownerInfoPerBook[bookForSale.Id].email : "")</b>
+                                    </RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Phone</RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Body1">
+                                        <b>@(_ownerInfoPerBook.ContainsKey(bookForSale.Id) ? _ownerInfoPerBook[bookForSale.Id].phoneNumber : "")</b>
                                     </RadzenText>
                                 </RadzenColumn>
 
@@ -97,9 +105,20 @@
 
     private string _selectedBook;
 
+    private UserInfoDto _ownerInfo;
+
     private BooksForSaleDto _books;
     private BooksForSaleDto _filteredBooks;
 
+
+    private Boolean informationVisible = false;
+
+    private string _category = "";
+    private string? _searchInput;
+
+    private Dictionary<int, UserInfoDto> _ownerInfoPerBook = new();
+    private Dictionary<int, bool> _informationVisiblePerBook = new();
+    
     protected override async void OnInitialized()
     {
         _books = await bookService.GetAllBooksForSaleAsync();
@@ -119,21 +138,17 @@
         }
     }
 
-    private Boolean informationVisible = false;
 
-    private string _category = "";
-    private string? _searchInput;
-
-
-    private void setInformationVisible()
+    private async Task setInformationVisible(BookForSale bookForSale)
     {
-        if (informationVisible == false)
+        if (!_informationVisiblePerBook.ContainsKey(bookForSale.Id) || !_informationVisiblePerBook[bookForSale.Id])
         {
-            informationVisible = true;
+            _ownerInfoPerBook[bookForSale.Id] = await bookService.GetUserInfoAsync(bookForSale.Owner);
+            _informationVisiblePerBook[bookForSale.Id] = true;
         }
         else
         {
-            informationVisible = false;
+            _informationVisiblePerBook[bookForSale.Id] = false;
         }
     }
 

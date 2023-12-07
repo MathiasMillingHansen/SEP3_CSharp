@@ -88,4 +88,19 @@ public class BookController : ControllerBase
         }
     }
     
+    [HttpGet("/BookOwnerInfo{username}")]
+    public async Task<ActionResult<UserInfoDto>> GetUserInfoAsync(string username)
+    {
+        try
+        {
+            UserInfoDto userInfoDto = await _sellLogic.GetUserInfoAsync(username);
+            return new OkObjectResult(userInfoDto);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
 }

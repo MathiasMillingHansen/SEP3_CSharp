@@ -52,6 +52,12 @@ public class SellLogic : ISellLogic
         await _sellDao.DeleteBookForSaleAsync(id);
     }
 
+    public async Task<UserInfoDto> GetUserInfoAsync(string username)
+    {
+        UserInfoDto userInfoDto = await BusinessSender.GetUserInfoAsync(username);
+        return userInfoDto;
+    }
+
     private async Task ValidateBook(BookForSale dto)
     {
         if (dto.Price < 0)

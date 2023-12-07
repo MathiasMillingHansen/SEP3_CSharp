@@ -10,4 +10,5 @@ public interface ISellLogic
     Task<ICollection<Condition>> GetConditionsAsync();
     Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner);
     Task DeleteBookForSaleAsync(int bookForSale);
+    Task<UserInfoDto> GetUserInfoAsync(string username);
 }
