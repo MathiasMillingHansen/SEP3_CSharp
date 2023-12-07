@@ -1,0 +1,43 @@
+﻿@page "/EditProfile"
+
+<RadzenRow class="rz-text-align-center" Gap="0.25rem" Style="margin-top: 80px;">
+    <RadzenColumn>
+        <h3>Edit profile</h3>
+
+        <div style="margin-bottom: 10px;">
+            <RadzenFormField Style="width: 40%;" Text="Password" Variant="@variant">
+                <ChildContent>
+                    <RadzenTextBox @bind-Value="@password"/>
+                </ChildContent>
+            </RadzenFormField>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <RadzenFormField Style="width: 40%;" Text="Phone number" Variant="@variant">
+                <ChildContent>
+                    <RadzenTextBox @bind-Value="@phonenumber"/>
+                </ChildContent>
+            </RadzenFormField>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <RadzenFormField Style="width: 40%;" Text="Email" Variant="@variant">
+                <ChildContent>
+                    <RadzenTextBox @bind-Value="@_email"/>
+                </ChildContent>
+            </RadzenFormField>
+        </div>
+
+        <div class="mb-3">
+            <RadzenButton Text="Save" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Style="background-color: RGB(60, 128, 67)"/>
+        </div>
+    </RadzenColumn>
+</RadzenRow>
+
+@code {
+    private string password;
+    private string phonenumber;
+    private string _email;
+    
+    Variant variant = Variant.Outlined;
+}

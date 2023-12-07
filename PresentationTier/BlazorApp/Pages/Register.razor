@@ -22,22 +22,6 @@
 </div>
 
 <div style="margin-bottom: 10px;">
-    <RadzenFormField Style="width: 40%;" Text="First name" Variant="@variant">
-        <ChildContent>
-            <RadzenTextBox @bind-Value="@name"/>
-        </ChildContent>
-    </RadzenFormField>
-</div>
-
-<div style="margin-bottom: 10px;">
-    <RadzenFormField Style="width: 40%;" Text="Last name" Variant="@variant">
-        <ChildContent>
-            <RadzenTextBox @bind-Value="@lastname"/>
-        </ChildContent>
-    </RadzenFormField>
-</div>
-
-<div style="margin-bottom: 10px;">
     <RadzenFormField Style="width: 40%;" Text="Phone number" Variant="@variant">
         <ChildContent>
             <RadzenTextBox @bind-Value="@phonenumber"/>
@@ -62,8 +46,6 @@
 @code {
     private string username;
     private string password;
-    private string name;
-    private string lastname;
     private string phonenumber;
     private string _email;
     
