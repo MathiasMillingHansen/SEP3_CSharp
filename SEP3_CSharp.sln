@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CachingConext", "Persistenc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ", "BusinessTier\RabbitMQ\RabbitMQ.csproj", "{FD933F39-D20C-4F59-883D-4E7D2523D590}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationShared", "PresentationTier\PresentationShared\PresentationShared.csproj", "{413F1594-BF6F-4834-B3E0-EF132A06147C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,7 @@ Global
 		{9AEC09FC-6451-4E23-85CF-5CAB02DB0670} = {30E7B927-2021-4884-8AEC-63BB597C99AC}
 		{17421A46-83F2-4D37-B178-649E33E010C6} = {30E7B927-2021-4884-8AEC-63BB597C99AC}
 		{FD933F39-D20C-4F59-883D-4E7D2523D590} = {29C92CE6-C19F-4A2F-8C11-A22484B6DEB8}
+		{413F1594-BF6F-4834-B3E0-EF132A06147C} = {561011B0-4CCF-4566-88DD-8A7E33DD2EA7}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B20011F3-0BA3-41DE-B1C4-1F60254277AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -100,5 +103,9 @@ Global
 		{FD933F39-D20C-4F59-883D-4E7D2523D590}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD933F39-D20C-4F59-883D-4E7D2523D590}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD933F39-D20C-4F59-883D-4E7D2523D590}.Release|Any CPU.Build.0 = Release|Any CPU
+		{413F1594-BF6F-4834-B3E0-EF132A06147C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{413F1594-BF6F-4834-B3E0-EF132A06147C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{413F1594-BF6F-4834-B3E0-EF132A06147C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{413F1594-BF6F-4834-B3E0-EF132A06147C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

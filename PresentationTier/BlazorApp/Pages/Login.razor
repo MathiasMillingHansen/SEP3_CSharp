@@ -23,6 +23,20 @@
 
                 <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)"/>
             </div>
+            
+            @if(displayMessage != null && displayMessage != "Login successful, redirecting...")
+            {
+                <div class="alert alert-danger" role="alert">
+                    @displayMessage
+                </div>
+            }
+            
+            @if(displayMessage == "Login successful, redirecting...")
+            {
+                <div class="alert alert-success" role="alert">
+                    @displayMessage
+                </div>
+            }
 
             <div class="mb-3">
                 <p>If you don't have an account, <a href="Register">register here</a>.</p>
@@ -47,13 +61,15 @@
         try
         {
             await _UserService.LoginUser(loginDto);
+            displayMessage = "Login successful, redirecting...";
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            NavManager.NavigateTo("");
         }
         catch (Exception e)
         {
             displayMessage = e.Message;
         }
-
-        NavManager.NavigateTo("Index");
+        
     }
 
     private void Cancel()

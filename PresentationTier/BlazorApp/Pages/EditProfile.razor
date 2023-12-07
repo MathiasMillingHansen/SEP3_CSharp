@@ -1,4 +1,6 @@
 ﻿@page "/EditProfile"
+@using PresentationShared
+@inject NavigationManager NavigationManager
 
 <RadzenRow class="rz-text-align-center" Gap="0.25rem" Style="margin-top: 80px;">
     <RadzenColumn>
@@ -35,9 +37,18 @@
 </RadzenRow>
 
 @code {
-    private string password;
-    private string phonenumber;
-    private string _email;
+    private string password = "";
+    private string phonenumber = "";
+    private string _email = "";
     
     Variant variant = Variant.Outlined;
+
+    protected override void OnInitialized()
+    {
+        if (String.IsNullOrEmpty(CurrentUser.Username))
+        {
+            NavigationManager.NavigateTo("/Login");
+        }
+    }
+
 }

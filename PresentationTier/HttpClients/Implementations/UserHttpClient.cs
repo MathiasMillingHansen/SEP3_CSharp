@@ -1,6 +1,8 @@
 ﻿using System.Net.Http.Json;
 using HttpClients.ClientInterfaces;
+using PresentationShared;
 using Shared.DTOs;
+
 
 namespace HttpClients.Implementations;
 
@@ -36,11 +38,13 @@ public class UserHttpClient : IUserService
         HttpResponseMessage response = _httpClient.SendAsync(request).Result;
         string result = await response.Content.ReadAsStringAsync();
 
-        if (!response.IsSuccessStatusCode)
+        if (!response.IsSuccessStatusCode || result.Equals("false"))
         {
-            throw new Exception(result);
+            throw new Exception("Invalid username or password, try again");
         }
-
+        
+        CurrentUser.Username = loginDto.Username;
+        
         return result;
     }
 }
