@@ -6,47 +6,60 @@
 
 <RadzenRow class="rz-text-align-center" Gap="0.25rem" Style="margin-top: 80px;">
     <RadzenColumn>
-<h3>Login</h3>
+        <h3>Login</h3>
 
+        <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
 
-<div class="form-group mb-3">
-    <label for="username">Username:</label>
-    <RadzenTextBox @bind-Value="username" style="width: 20%" />
-</div>
+            <RadzenFormField Text="Username" Variant="@variant" Style="width: 14em">
+                <RadzenTextBox @bind-Value="username" style="width: 20%"/>
+            </RadzenFormField>
 
-<div class="form-group mb-3">
-    <label for="password">Password:</label>
-    <RadzenPassword @bind-Value="password" style="width: 20%" />
-</div>
+            <RadzenFormField Text="Password" Variant="@variant" Style="width: 14em">
+                <RadzenPassword @bind-Value="password" style="width: 20%"/>
+            </RadzenFormField>
 
-<div class="mb-3">
-   <RadzenButton Text="Login" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => userLogin())" Style="background-color: RGB(60, 128, 67)" />
-    
-    <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)" />
-</div>
+            <div class="mb-3">
+                <RadzenButton Text="Login" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => userLogin())" Style="background-color: RGB(60, 128, 67)"/>
 
-        <div class="mb-3">
-            <p>If you don't have an account, <a href="Register">register here</a>.</p>
-        </div>
-        
+                <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)"/>
+            </div>
+
+            <div class="mb-3">
+                <p>If you don't have an account, <a href="Register">register here</a>.</p>
+            </div>
+        </RadzenStack>
+
     </RadzenColumn>
 </RadzenRow>
 
-    @code {
+@code {
     private string username;
     private string password;
-        
-        private async Task userLogin()
+    private string displayMessage;
+
+    Variant variant = Variant.Outlined;
+
+
+    private async Task userLogin()
+    {
+        LoginDto loginDto = new LoginDto(username, password);
+
+        try
         {
-            LoginDto loginDto = new LoginDto(username, password);
-            
             await _UserService.LoginUser(loginDto);
         }
+        catch (Exception e)
+        {
+            displayMessage = e.Message;
+        }
+
+        NavManager.NavigateTo("Index");
+    }
 
     private void Cancel()
     {
         NavManager.NavigateTo("");
     }
-    
+
 
 }
