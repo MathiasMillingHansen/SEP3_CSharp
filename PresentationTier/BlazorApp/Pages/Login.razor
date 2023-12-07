@@ -1,5 +1,8 @@
 ﻿@page "/Login"
 @inject NavigationManager NavManager
+
+<RadzenRow class="rz-text-align-center" Gap="0.25rem" Style="margin-top: 80px;">
+    <RadzenColumn>
 <h3>Login</h3>
 
 
@@ -19,11 +22,14 @@
     <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)" />
 </div>
 
-<div class="mb-3">
-    <p>If you don't have an account, <a href="Register">register here</a>.</p>
-</div>
+        <div class="mb-3">
+            <p>If you don't have an account, <a href="Register">register here</a>.</p>
+        </div>
+        
+    </RadzenColumn>
+</RadzenRow>
 
-@code {
+    @code {
     private string username;
     private string password;
 
