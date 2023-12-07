@@ -6,7 +6,7 @@ public interface IUserService
 {
     Task<string> RegisterUserAsync(RegisterDto registerDto);
 
-    Task<string> LoginUser(string username, string password);
+    Task<string> LoginUser(LoginDto loginDto);
 
 
 }

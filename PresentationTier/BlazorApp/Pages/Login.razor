@@ -1,5 +1,8 @@
 ﻿@page "/Login"
+@using global::Shared.DTOs
+@using HttpClients.ClientInterfaces
 @inject NavigationManager NavManager
+@inject IUserService _UserService
 
 <RadzenRow class="rz-text-align-center" Gap="0.25rem" Style="margin-top: 80px;">
     <RadzenColumn>
@@ -17,7 +20,7 @@
 </div>
 
 <div class="mb-3">
-   <RadzenButton Text="Login" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Style="background-color: RGB(60, 128, 67)" />
+   <RadzenButton Text="Login" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => userLogin())" Style="background-color: RGB(60, 128, 67)" />
     
     <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)" />
 </div>
@@ -32,10 +35,13 @@
     @code {
     private string username;
     private string password;
-
-    // private void Login()
-    // {
-    // }
+        
+        private async Task userLogin()
+        {
+            LoginDto loginDto = new LoginDto(username, password);
+            
+            await _UserService.LoginUser(loginDto);
+        }
 
     private void Cancel()
     {
