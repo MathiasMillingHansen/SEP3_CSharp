@@ -46,8 +46,22 @@
 
                         <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Comment</RadzenText>
                         <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Comment)</b>
+                            <b>
+                                @if (string.IsNullOrWhiteSpace(bookForSale.Comment))
+                                {
+                                    <RadzenText TextStyle="TextStyle.Body1"><b>No comment available</b></RadzenText>
+                                }
+                                else
+                                {
+                                    <RadzenText TextStyle="TextStyle.Body1"><b>@(bookForSale.Comment)</b></RadzenText>
+                                }
+                            </b>
                         </RadzenText>
+                        
+                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Price</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1">
+                            <b>@(bookForSale.Price + " Kr.")</b>
+                            </RadzenText>
 
                         <RadzenRow Gap="1" Style="padding-top: 1em">
                             <RadzenButton Variant="Variant.Text" Text="Delete Book" Click="() => DeleteBookForSaleAsync(bookForSale.Id)" Style="background-color: #0c4128; color: white"></RadzenButton>
