@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitializeDatabase", "Persi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CachingConext", "PersistenceTier\CachingConext\CachingConext.csproj", "{17421A46-83F2-4D37-B178-649E33E010C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ", "BusinessTier\RabbitMQ\RabbitMQ.csproj", "{FD933F39-D20C-4F59-883D-4E7D2523D590}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,7 @@ Global
 		{7D777AAF-47CA-4ADE-BAF3-DFB3F4A837A9} = {30E7B927-2021-4884-8AEC-63BB597C99AC}
 		{9AEC09FC-6451-4E23-85CF-5CAB02DB0670} = {30E7B927-2021-4884-8AEC-63BB597C99AC}
 		{17421A46-83F2-4D37-B178-649E33E010C6} = {30E7B927-2021-4884-8AEC-63BB597C99AC}
+		{FD933F39-D20C-4F59-883D-4E7D2523D590} = {29C92CE6-C19F-4A2F-8C11-A22484B6DEB8}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B20011F3-0BA3-41DE-B1C4-1F60254277AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -93,5 +96,9 @@ Global
 		{17421A46-83F2-4D37-B178-649E33E010C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17421A46-83F2-4D37-B178-649E33E010C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17421A46-83F2-4D37-B178-649E33E010C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD933F39-D20C-4F59-883D-4E7D2523D590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD933F39-D20C-4F59-883D-4E7D2523D590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD933F39-D20C-4F59-883D-4E7D2523D590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD933F39-D20C-4F59-883D-4E7D2523D590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

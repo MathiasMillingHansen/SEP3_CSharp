@@ -5,7 +5,7 @@ namespace Logic.Interfaces;
 
 public interface ISellLogic
 {
-    public Task<BookForSale> SellBookAsync(BookSaleDto bookSaleDto);
+    public Task<string> SellBookAsync(BookSaleDto bookSaleDto);
     Task<ICollection<BooksAvailableDto>> GetAllAsync();
     Task<ICollection<Condition>> GetConditionsAsync();
     Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner);

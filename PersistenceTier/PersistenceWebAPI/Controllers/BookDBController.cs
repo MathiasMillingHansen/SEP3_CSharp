@@ -9,7 +9,7 @@ namespace PersistenceWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BookDBController
+public class BookDBController : ControllerBase
 {
     private readonly ISellLogic _sellLogic;
     private readonly ICatalogLogic _catalogLogic;
@@ -21,7 +21,7 @@ public class BookDBController
     }
     
     [HttpPost]
-    public async Task<ActionResult<BookForSale>> SellBookAsync(BookForSale dto)
+    public async Task<ActionResult<string>> SellBookAsync(BookForSale dto)
     {
         return await _sellLogic.SellBookAsync(dto);
     }

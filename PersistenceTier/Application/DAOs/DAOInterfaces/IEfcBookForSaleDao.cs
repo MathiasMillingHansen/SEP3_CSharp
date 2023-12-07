@@ -4,7 +4,7 @@ namespace EFC_DataAccess.DAOs;
 
 public interface IEfcBookForSaleDao
 {
-    Task<BookForSale> InsertAsync(BookForSale bookForSale);
+    Task<string> InsertAsync(BookForSale bookForSale);
 
     Task<ICollection<BookForSale>> GetAllBooksForSaleAsync();
 }

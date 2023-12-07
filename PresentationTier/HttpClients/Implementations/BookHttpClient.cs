@@ -24,12 +24,13 @@ public class BookHttpClient : IBookService
         {
             throw new Exception(result);
         }
-        
-        ICollection<BooksAvailableDto> books = JsonSerializer.Deserialize<ICollection<BooksAvailableDto>>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-        
+
+        ICollection<BooksAvailableDto> books = JsonSerializer.Deserialize<ICollection<BooksAvailableDto>>(result,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
         return books;
     }
 
@@ -42,25 +43,26 @@ public class BookHttpClient : IBookService
         {
             throw new Exception(result);
         }
-        
-        ICollection<Condition> conditions = JsonSerializer.Deserialize<ICollection<Condition>>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-        
+
+        ICollection<Condition> conditions = JsonSerializer.Deserialize<ICollection<Condition>>(result,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
         return conditions;
     }
 
     public async Task<string> SellBookAsync(BookSaleDto bookSaleDto)
     {
         HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/book", bookSaleDto);
-        string result = await response.Content.ReadAsStringAsync();
-        
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception(result);
+            var errorResponse = await response.Content.ReadAsStringAsync();
+            throw new Exception(errorResponse);
         }
-        
+
+        string result = await response.Content.ReadAsStringAsync();
         return result;
     }
     

@@ -1,5 +1,4 @@
 using Logic.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Domain;
 using Shared.DTOs;
@@ -8,7 +7,7 @@ namespace BusinessWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BookController
+public class BookController : ControllerBase
 {
     private readonly ISellLogic _sellLogic;
     
@@ -18,9 +17,16 @@ public class BookController
     }
     
     [HttpPost]
-    public async Task<ActionResult<BookForSale>> SellBookAsync(BookSaleDto dto)
+    public async Task<ActionResult<string>> SellBookAsync(BookSaleDto dto)
     {
-        return await _sellLogic.SellBookAsync(dto);
+        try
+        {
+            return await _sellLogic.SellBookAsync(dto);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
     
     [HttpGet]

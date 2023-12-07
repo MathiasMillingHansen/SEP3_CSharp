@@ -36,7 +36,7 @@
 
                 <RadzenFormField Style="width: 60%" Text="Price" Variant="@variant">
                     <ChildContent>
-                        <RadzenTextBox @bind-Value="@_price"/>
+                        <RadzenNumeric ShowUpDown="false" @bind-Value="@_price"/>
                     </ChildContent>
                 </RadzenFormField>
             </RadzenStack>
@@ -51,7 +51,12 @@
                 </RadzenFormField>
 
                 <RadzenButton Text="Save Changes" Click="SaveChanges" Icon="save" Style="background-color: #0c4128"></RadzenButton>
-
+                <div>
+                    @if (!string.IsNullOrEmpty(_resultMsg))
+                    {
+                        <label style="color: @_resultMsgColor">@_resultMsg</label>
+                    }
+                </div>
             </RadzenStack>
         </RadzenColumn>
     </RadzenRow>
@@ -62,37 +67,61 @@
 </div>
 
 @code {
-    private string _price = "";
+    private string? _price;
     private ICollection<Condition> _conditions;
     private string _username = "Test"; //TODO: Get username from auth
-    private string _comment = "";
+    private string? _comment = "";
     private string _condition;
     private ICollection<BooksAvailableDto> _booksAvailable;
-    private IList<BooksAvailableDto> _selectedBook;
+    private IList<BooksAvailableDto>? _selectedBook = new List<BooksAvailableDto>();
+    
+    private string _resultMsg = "";
+    private string _resultMsgColor = "";
 
 
     Variant variant = Variant.Outlined;
 
-    public async void SaveChanges()
+    public async Task SaveChanges()
     {
         try
         {
+            _resultMsg = "";
+
+            IsAllSelected();
+            
             BookSaleDto bookSaleDto = new BookSaleDto()
             {
                 Isbn = _selectedBook[0].Isbn,
                 BookCondition = new Condition(_condition),
                 Comment = _comment,
-                Price = Convert.ToDecimal(_price), //TODO only allow decimals
+                Price = Convert.ToDecimal(_price),
                 Owner = _username, //TODO get from jwt
                 Edition = _selectedBook[0].Edition
             };
-
-            await bookService.SellBookAsync(bookSaleDto);
+            
+            String result = await bookService.SellBookAsync(bookSaleDto);
+            _resultMsg = result;
+            _resultMsgColor = "green";
+            
+            ClearSelection();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            _resultMsg = e.Message;
+            _resultMsgColor = "red";
+        }
+    }
+
+    private void IsAllSelected()
+    {
+        if (_selectedBook == null || _selectedBook.Count == 0)
+        {
+            throw new Exception("Please select a book");
+        }
+        if (string.IsNullOrEmpty(_condition))
+        {
+            throw new Exception("Please select a condition");
         }
     }
 
@@ -118,6 +147,7 @@
     private void ClearSelection()
     {
         _selectedBook = null;
+        _condition = "";
     }
 
 }

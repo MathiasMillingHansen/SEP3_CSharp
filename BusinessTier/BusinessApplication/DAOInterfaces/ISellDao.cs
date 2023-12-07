@@ -8,7 +8,7 @@ public interface ISellDao
     Task<ICollection<BooksAvailableDto>> GetAllAsync();
     Task<BookWrapperDto> GetByIsbnAsync(string isbn);
     Task<ICollection<Condition>> GetConditionsAsync();
-    Task<BookForSale> SellBookAsync(BookForSale bookForSale);
+    Task<string> SellBookAsync(BookForSale bookForSale);
     Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner);
     Task DeleteBookForSaleAsync(int bookForSale);
 }

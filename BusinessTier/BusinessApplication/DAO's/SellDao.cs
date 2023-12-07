@@ -74,7 +74,7 @@ public class SellDao : ISellDao
         
     }
     
-    public async Task<BookForSale> SellBookAsync(BookForSale bookForSale)
+    public async Task<string> SellBookAsync(BookForSale bookForSale)
     {
         HttpResponseMessage response = await client.PostAsJsonAsync("/BookDB", bookForSale);
         string result = await response.Content.ReadAsStringAsync();
@@ -84,12 +84,7 @@ public class SellDao : ISellDao
             throw new Exception(result);
         }
         
-        BookForSale book = JsonSerializer.Deserialize<BookForSale>(result, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-        
-        return book;
+        return result;
     }
 
     public async Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner)

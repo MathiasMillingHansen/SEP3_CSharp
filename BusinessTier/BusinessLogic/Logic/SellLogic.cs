@@ -1,5 +1,6 @@
 using BusinessWebAPI.Application.DaoInterface;
 using Logic.Interfaces;
+using RabbitMQ;
 using Shared.Domain;
 using Shared.DTOs;
 
@@ -14,9 +15,8 @@ public class SellLogic : ISellLogic
         _sellDao = sellDao;
     }
     
-    public async Task<BookForSale> SellBookAsync(BookSaleDto dto)
+    public async Task<string> SellBookAsync(BookSaleDto dto)
     {
-        
         BookForSale bookForSale = new BookForSale()
         {
             Owner = dto.Owner,
@@ -25,6 +25,8 @@ public class SellLogic : ISellLogic
             ConditionState = dto.BookCondition.State,
             BookIsbn = dto.Isbn
         };
+
+        await ValidateBook(bookForSale);
         
         return await _sellDao.SellBookAsync(bookForSale);
     }
@@ -33,13 +35,6 @@ public class SellLogic : ISellLogic
     {
         return await _sellDao.GetAllAsync();
     }
-
-    // TODO Simones template.
-    // private async Task<BookWrapperDto> GetByIsbnAsync(string isbn)
-    // {
-    //     BookWrapperDto bookWrapperDto = await _sellDao.GetByIsbnAsync(isbn);
-    //     return bookWrapperDto;
-    // }
 
     public async Task<ICollection<Condition>> GetConditionsAsync()
     {
@@ -57,10 +52,23 @@ public class SellLogic : ISellLogic
         await _sellDao.DeleteBookForSaleAsync(id);
     }
 
-    private void ValidateBook(Book dto)
+    private async Task ValidateBook(BookForSale dto)
     {
-        // TODO : Change this to validate a JWT token START -------
-        // Change this to validate a JWT token END ----------------
+        if (dto.Price < 0)
+        {
+            throw new Exception("Price cannot be negative");
+        }
+
+        if (dto.Comment.Length > 500)
+        {
+            throw new Exception("Comment cannot be longer than 500 characters");
+        }
+
+   
+        await BusinessSender.SendMessage(dto.Owner);
+        
+        
+        
     }
 
 }
