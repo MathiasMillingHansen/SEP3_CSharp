@@ -17,7 +17,7 @@ builder.Services.AddScoped(
 
 builder.Services.AddHttpClient("UserHttpClient", c =>
 {
-    c.BaseAddress = new Uri("http://localhost:8080");
+    c.BaseAddress = new Uri("http://localhost:8080/user/");
     c.Timeout = TimeSpan.FromMinutes(3);
 });
 

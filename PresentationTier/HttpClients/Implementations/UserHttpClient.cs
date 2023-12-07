@@ -16,7 +16,7 @@ public class UserHttpClient : IUserService
     
     public async Task<string> RegisterUserAsync(RegisterDto registerDto)
     {
-        HttpResponseMessage response = _httpClient.PostAsJsonAsync("/register", registerDto).Result;
+        HttpResponseMessage response = _httpClient.PostAsJsonAsync("register", registerDto).Result;
         string result = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
