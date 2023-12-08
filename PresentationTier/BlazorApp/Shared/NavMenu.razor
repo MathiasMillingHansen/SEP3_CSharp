@@ -12,9 +12,11 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <RadzenIcon Icon="home" style="margin-right: 5px;" />
+                <span>Home</span>
             </NavLink>
         </div>
+        
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="SellBook">
                 <RadzenIcon Icon="add_shopping_cart" style="margin-right: 5px;"/>
@@ -37,12 +39,7 @@
             {
                 <div class="dropdown-menu show" aria-labelledby="navbarDropdown" style="background-color: RGB(150, 203, 134);" @onclick="() => expandSubNavSettings = !expandSubNavSettings ">
                     <div class="nav-item">
-                        <NavLink class="nav-link text-white" href="EditProfile">
-                            <span class="oi oi-fork" aria-hidden="true"></span> Edit profile
-                        </NavLink>
-                    </div>
-                    <div class="nav-item">
-                        <NavLink class="nav-link text-white" href="MyBooks">
+                        <NavLink class="nav-link text-white" href="mybooks">
                             <span class="oi oi-command" aria-hidden="true"></span> My books
                         </NavLink>
                     </div>

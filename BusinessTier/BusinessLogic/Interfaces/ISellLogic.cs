@@ -11,4 +11,5 @@ public interface ISellLogic
     Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner);
     Task DeleteBookForSaleAsync(int bookForSale);
     Task EditBookForSaleAsync(EditBookForSaleDto dto);
+    Task<UserInfoDto> GetUserInfoAsync(string username);
 }

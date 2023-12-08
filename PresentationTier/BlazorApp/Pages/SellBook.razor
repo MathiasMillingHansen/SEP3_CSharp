@@ -3,7 +3,9 @@
 @using HttpClients.ClientInterfaces
 @using global::Shared.Domain
 @using System.Collections
+@using PresentationShared
 @inject IBookService bookService
+@inject NavigationManager NavigationManager
 
 <div Class="rz-p-0 rz-p-md-12">
     <RadzenRow class="rz-text-align-center" Gap="0.25rem">
@@ -30,7 +32,7 @@
                 </div>
                 <RadzenFormField Style="width: 60%" Text="Condition" Variant="@variant">
                     <ChildContent>
-                        <RadzenDropDown @bind-Value=@_condition Data=@GetConditions(_conditions)></RadzenDropDown>
+                        <RadzenDropDown @bind-Value=@_condition Data=@_conditionNames></RadzenDropDown>
                     </ChildContent>
                 </RadzenFormField>
 
@@ -69,7 +71,7 @@
 @code {
     private string? _price;
     private ICollection<Condition> _conditions;
-    private string _username = "Test"; //TODO: Get username from auth
+    private ICollection<string> _conditionNames = new List<string>();
     private string? _comment = "";
     private string _condition;
     private ICollection<BooksAvailableDto> _booksAvailable;
@@ -95,7 +97,7 @@
                 BookCondition = new Condition(_condition),
                 Comment = _comment,
                 Price = Convert.ToDecimal(_price),
-                Owner = _username, //TODO get from jwt
+                Owner = CurrentUser.Username, 
                 Edition = _selectedBook[0].Edition
             };
             
@@ -127,21 +129,27 @@
 
     protected override void OnInitialized()
     {
-        _booksAvailable = bookService.GetAvailableBooksAsync();
-        _conditions = bookService.GetConditionsAsync();
+
+        if (string.IsNullOrEmpty(CurrentUser.Username))
+        {
+            NavigationManager.NavigateTo("Login");
+        }
+        else
+        {
+            _booksAvailable = bookService.GetAvailableBooksAsync();
+            _conditions = bookService.GetConditionsAsync(); 
+            GetConditions();
+        }
     }
 
 
-    private IEnumerable GetConditions(ICollection<Condition> conditions)
+    private void GetConditions()
     {
-        List<string> conditionNames = new List<string>();
-
+        
         foreach (Condition condition in _conditions)
         {
-            conditionNames.Add(condition.State);
+            _conditionNames.Add(condition.State);
         }
-
-        return conditionNames;
     }
 
     private void ClearSelection()

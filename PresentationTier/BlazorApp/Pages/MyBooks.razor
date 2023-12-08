@@ -2,87 +2,100 @@
 @using global::Shared.Domain
 @using global::Shared.DTOs
 @using HttpClients.ClientInterfaces
+@using PresentationShared
 @inject IBookService bookService
 @inject DialogService DialogService
 @inject CurrentlySelectedBookForSale CurrentlySelectedBookForSale
+@inject NavigationManager NavigationManager
 
-<h3>My Books</h3>
-<div class="rz-p-0 rz-p-md-12">
-    <p>
-        Here is all the books you currently have listed for sale
-    </p>
+<RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" Gap="1rem" Class="rz-p-12">
 
-    @foreach (BookForSale bookForSale in _booksForSaleDto.BooksForSale)
-    {
-        <RadzenCard Variant="@Variant.Filled" class="rz-my-12 rz-mx-auto">
-            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-12">
-                <RadzenRow RowGap="1">
-                    <!-- Left side columns -->
-                    <RadzenColumn SizeSM="8">
-
-                        <!-- Text in the card -->
-                        <RadzenText TextStyle="TextStyle.H4" class="rz-display-flex rz-mt-2 rz-my-0">Book Title</RadzenText>
-                        <RadzenText TextStyle="TextStyle.DisplayH4">
-                            <b>@(bookForSale.Book.BookTitle)</b>
-                        </RadzenText>
-
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Isbn</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Book.Isbn)</b>
-                        </RadzenText>
-
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Author</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Book.GetAuthorsAsString())</b>
-                        </RadzenText>
-
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Edition</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Book.Edition)</b>
-                        </RadzenText>
-
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Condition</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Condition.State)</b>
-                        </RadzenText>
-
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Comment</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>
-                                @if (string.IsNullOrWhiteSpace(bookForSale.Comment))
-                                {
-                                    <RadzenText TextStyle="TextStyle.Body1"><b>No comment available</b></RadzenText>
-                                }
-                                else
-                                {
-                                    <RadzenText TextStyle="TextStyle.Body1"><b>@(bookForSale.Comment)</b></RadzenText>
-                                }
-                            </b>
-                        </RadzenText>
-                        
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Price</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Price + " Kr.")</b>
-                            </RadzenText>
-
-                        <RadzenRow Gap="1" Style="padding-top: 1em">
-                            <RadzenButton Variant="Variant.Text" Text="Edit" Click="() => OpenEdit(bookForSale)" Style="background-color: #0c4128; color: white"></RadzenButton>
-                            <RadzenButton Variant="Variant.Text" Text="Delete Book" Click="() => DeleteBookForSaleAsync(bookForSale.Id)" Style="background-color: #0c4128; color: white"></RadzenButton>
-                        </RadzenRow>
-                    </RadzenColumn>
-
-                </RadzenRow>
-            </RadzenStack>
-        </RadzenCard>
-    }
     
+    <div class="rz-mx-auto" style="width: 80%">
+        <h2>My Books</h2>
+        @if (_booksForSaleDto == null || _booksForSaleDto.BooksForSale.Count == 0)
+        {
+            <RadzenText TextStyle="TextStyle.Caption"> You have no books for sale</RadzenText>
+        }
+
+        else
+        {
+
+            <RadzenText TextStyle="TextStyle.H4">Amount of books you have listed: @(_booksForSaleDto.BooksForSale.Count) </RadzenText>
+
+            @foreach (BookForSale bookForSale in _booksForSaleDto.BooksForSale)
+            {
+                <RadzenCard Variant="@Variant.Filled" class="rz-my-12 rz-mx-auto">
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-12">
+                        <RadzenRow RowGap="1">
+                            <!-- Left side columns -->
+                            <RadzenColumn SizeSM="8">
+
+                                <!-- Text in the card -->
+                                <RadzenText TextStyle="TextStyle.H4" class="rz-display-flex rz-mt-2 rz-my-0">Book Title</RadzenText>
+                                <RadzenText TextStyle="TextStyle.DisplayH4">
+                                    <b>@(bookForSale.Book.BookTitle)</b>
+                                </RadzenText>
+
+                                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Isbn</RadzenText>
+                                <RadzenText TextStyle="TextStyle.Body1">
+                                    <b>@(bookForSale.Book.Isbn)</b>
+                                </RadzenText>
+
+                                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Author</RadzenText>
+                                <RadzenText TextStyle="TextStyle.Body1">
+                                    <b>@(bookForSale.Book.GetAuthorsAsString())</b>
+                                </RadzenText>
+
+                                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Edition</RadzenText>
+                                <RadzenText TextStyle="TextStyle.Body1">
+                                    <b>@(bookForSale.Book.Edition)</b>
+                                </RadzenText>
+
+                                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Condition</RadzenText>
+                                <RadzenText TextStyle="TextStyle.Body1">
+                                    <b>@(bookForSale.Condition.State)</b>
+                                </RadzenText>
+
+                                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Comment</RadzenText>
+                                <RadzenText TextStyle="TextStyle.Body1">
+                                    <b>
+                                        @if (string.IsNullOrWhiteSpace(bookForSale.Comment))
+                                        {
+                                            <RadzenText TextStyle="TextStyle.Body1"><b>No comment available</b></RadzenText>
+                                        }
+                                        else
+                                        {
+                                            <RadzenText TextStyle="TextStyle.Body1"><b>@(bookForSale.Comment)</b></RadzenText>
+                                        }
+                                    </b>
+                                </RadzenText>
+
+                                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Price</RadzenText>
+                                <RadzenText TextStyle="TextStyle.Body1">
+                                    <b>@(bookForSale.Price + " Kr.")</b>
+                                </RadzenText>
+
+                                <RadzenRow Gap="1" Style="padding-top: 1em">
+                                    <RadzenButton Variant="Variant.Text" Text="Edit" Click="() => OpenEdit(bookForSale)" Style="background-color: #0c4128; color: white"></RadzenButton>
+                                    <RadzenButton Variant="Variant.Text" Text="Delete Book" Click="() => DeleteBookForSaleAsync(bookForSale.Id)" Style="background-color: #0c4128; color: white"></RadzenButton>
+                                </RadzenRow>
+                            </RadzenColumn>
+
+                        </RadzenRow>
+                    </RadzenStack>
+                </RadzenCard>
+            }
+        }
+        </div>
+    </RadzenStack>
+                
     @if (_isEditing)
     {
         <div class="overlay">
             <EditingCard OnClose="HandleClose"/>
         </div>
     }
-</div>
 
 @code {
 
@@ -98,20 +111,27 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
+        if (String.IsNullOrEmpty(CurrentUser.Username))
         {
-            _booksForSaleDto = await bookService.GetBooksByOwnerAsync(_owner);
+            NavigationManager.NavigateTo("Login");
         }
-        catch (Exception ex)
+        else
         {
-            Console.WriteLine(ex);
+            try
+            {
+                _booksForSaleDto = await bookService.GetBooksByOwnerAsync(CurrentUser.Username);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 
     private async Task DeleteBookForSaleAsync(int id)
     {
         await bookService.DeleteBookForSaleAsync(id);
-        _booksForSaleDto = await bookService.GetBooksByOwnerAsync(_owner);
+        _booksForSaleDto = await bookService.GetBooksByOwnerAsync(CurrentUser.Username);
         StateHasChanged();
     }
     

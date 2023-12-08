@@ -6,50 +6,57 @@
 @inject IBookService bookService
 
 
-<h3>BookCatalog</h3>
+<RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center" Gap="0.25rem" Wrap="FlexWrap.Wrap">
+    <h2 style="margin-top: 1rem"> BookCatalog</h2>
 
-<div class="rz-p-0 rz-p-md-12">
-    <p>
-        Here you can see an overview of all the books there is currently for sale
-    </p>
-    <!--Dropdown menu that selects which course the user wants-->
-    <div class="rz-p-sm-12">
-        <RadzenDropDown @bind-Value=@_courseSelected Data=@_courses Style="width: 100%; max-width: 200px;" Change="@(args => FilterBooksByCourse(args))"/>
-    </div>
 
-    @foreach (BookForSale bookForSale in _filteredBooks.BooksForSale)
-    {
-        <RadzenCard Variant="@Variant.Filled" class="rz-my-12 rz-mx-auto">
-            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-12">
-                <RadzenRow RowGap="1">
-                    <!-- Left side columns -->
-                    <RadzenColumn SizeSM="8">
+    <div class="rz-p-0 rz-p-md-3 rz-justify-content-center" style="padding: 0.5rem">
+        <RadzenColumn class="rz-justify-content-center">
+            <RadzenRow JustifyContent="JustifyContent.Center" class="rz-my-3 rz-mx-auto">
+                <p>
+                    Here you can see an overview of all the books there is currently for sale
+                </p>
+            </RadzenRow>
+            <RadzenRow JustifyContent="JustifyContent.Center" class="rz-my-6 rz-mx-auto">
+                <RadzenTextBox @bind-Value="@_searchInput" Change="@(args => FilterBooksByName(args))" Placeholder="Search by book name" Style="width: 100%; max-width: 300px;"/>
+            </RadzenRow>
+            <RadzenRow JustifyContent="JustifyContent.Center" class="rz-my-6 rz-mx-auto">
+                <RadzenDropDown @bind-Value=@_courseSelected Data=@_courses Style="width: 100%; max-width: 300px;" Change="@(args => FilterBooksByCourse(args))"/>
+            </RadzenRow>
+        </RadzenColumn>
+        @foreach (BookForSale bookForSale in _filteredBooks.BooksForSale)
+        {
+            <RadzenCard Variant="@Variant.Filled" class="rz-my-12 rz-mx-auto">
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-12">
+                    <RadzenRow RowGap="1">
+                        <!-- Left side columns -->
+                        <RadzenColumn SizeSM="8">
 
-                        <!-- Text in the card -->
-                        <RadzenText TextStyle="TextStyle.H4" class="rz-display-flex rz-mt-2 rz-my-0">Book Title</RadzenText>
-                        <RadzenText TextStyle="TextStyle.DisplayH4">
-                            <b>@(bookForSale.Book.BookTitle)</b>
-                        </RadzenText>
+                            <!-- Text in the card -->
+                            <RadzenText TextStyle="TextStyle.H4" class="rz-display-flex rz-mt-2 rz-my-0">Book Title</RadzenText>
+                            <RadzenText TextStyle="TextStyle.DisplayH4">
+                                <b>@(bookForSale.Book.BookTitle)</b>
+                            </RadzenText>
 
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Isbn</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Book.Isbn)</b>
-                        </RadzenText>
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Isbn</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1">
+                                <b>@(bookForSale.Book.Isbn)</b>
+                            </RadzenText>
 
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Author</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Book.GetAuthorsAsString())</b>
-                        </RadzenText>
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Author</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1">
+                                <b>@(bookForSale.Book.GetAuthorsAsString())</b>
+                            </RadzenText>
 
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Edition</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Book.Edition)</b>
-                        </RadzenText>
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Edition</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1">
+                                <b>@(bookForSale.Book.Edition)</b>
+                            </RadzenText>
 
-                        <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Condition</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1">
-                            <b>@(bookForSale.Condition.State)</b>
-                        </RadzenText>
+                            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Condition</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Body1">
+                                <b>@(bookForSale.Condition.State)</b>
+                            </RadzenText>
 
                         <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Comment</RadzenText>
                         <RadzenText TextStyle="TextStyle.Body1">
@@ -70,35 +77,55 @@
                             <b>@(bookForSale.Price + " Kr.")</b>
                         </RadzenText>
 
-                        <RadzenColumn SizeSM="8" Style="padding-top: 1em">
-                            <RadzenButton Variant="Variant.Text" Text="Show Owner Info" Click="() => setInformationVisible()" Style="background-color: #0c4128; color: white"></RadzenButton>
+                            <RadzenColumn SizeSM="8" Style="padding-top: 1em">
+                                <RadzenButton Variant="Variant.Text" Text="Show Owner Info" Click="() => setInformationVisible(bookForSale)" Style="background-color: #0c4128; color: white"></RadzenButton>
 
-                            <RadzenColumn Visible=informationVisible Style="padding-top: 1em">
-                                <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Owner</RadzenText>
-                                <RadzenText TextStyle="TextStyle.Body1">
-                                    <b>@(bookForSale.Owner)</b>
-                                </RadzenText>
+                                <RadzenColumn Visible=@(_informationVisiblePerBook.ContainsKey(bookForSale.Id) && _informationVisiblePerBook[bookForSale.Id]) Style="padding-top: 1em">
+                                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Owner</RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Body1">
+                                        <b>@(_ownerInfoPerBook.ContainsKey(bookForSale.Id) ? _ownerInfoPerBook[bookForSale.Id].username : "")</b>
+                                    </RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Email</RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Body1">
+                                        <b>@(_ownerInfoPerBook.ContainsKey(bookForSale.Id) ? _ownerInfoPerBook[bookForSale.Id].email : "")</b>
+                                    </RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-mb-0">Phone</RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Body1">
+                                        <b>@(_ownerInfoPerBook.ContainsKey(bookForSale.Id) ? _ownerInfoPerBook[bookForSale.Id].phoneNumber : "")</b>
+                                    </RadzenText>
+                                </RadzenColumn>
+
                             </RadzenColumn>
 
                         </RadzenColumn>
 
-                    </RadzenColumn>
-
-                </RadzenRow>
-            </RadzenStack>
-        </RadzenCard>
-    }
-</div>
+                    </RadzenRow>
+                </RadzenStack>
+            </RadzenCard>
+        }
+    </div>
+</RadzenStack>
 
 
 @code {
     private List<string> _courses = new();
-
     private string _courseSelected;
+
+    private string _selectedBook;
+    private UserInfoDto _ownerInfo;
 
     private BooksForSaleDto _books;
     private BooksForSaleDto _filteredBooks;
 
+
+    private Boolean informationVisible = false;
+
+    private string _category = "";
+    private string? _searchInput;
+
+    private Dictionary<int, UserInfoDto> _ownerInfoPerBook = new();
+    private Dictionary<int, bool> _informationVisiblePerBook = new();
+    
     protected override async void OnInitialized()
     {
         _books = await bookService.GetAllBooksForSaleAsync();
@@ -118,20 +145,16 @@
         }
     }
 
-    private Boolean informationVisible = false;
-
-    private string _category = "";
-
-
-    private void setInformationVisible()
+    private async Task setInformationVisible(BookForSale bookForSale)
     {
-        if (informationVisible == false)
+        if (!_informationVisiblePerBook.ContainsKey(bookForSale.Id) || !_informationVisiblePerBook[bookForSale.Id])
         {
-            informationVisible = true;
+            _ownerInfoPerBook[bookForSale.Id] = await bookService.GetUserInfoAsync(bookForSale.Owner);
+            _informationVisiblePerBook[bookForSale.Id] = true;
         }
         else
         {
-            informationVisible = false;
+            _informationVisiblePerBook[bookForSale.Id] = false;
         }
     }
 
@@ -139,6 +162,12 @@
     {
         string selectedCourse = args as string;
         _filteredBooks.BooksForSale = _books.BooksForSale.Where(bfs => bfs.Book.courses.Any(c => c.Name == selectedCourse)).ToList();
+    }
+
+    private void FilterBooksByName(object args)
+    {
+        string searchInput = args as string;
+        _filteredBooks.BooksForSale = _books.BooksForSale.Where(bfs => bfs.Book.BookTitle.Contains(searchInput, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
 }

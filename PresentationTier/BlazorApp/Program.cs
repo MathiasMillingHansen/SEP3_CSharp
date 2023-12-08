@@ -14,10 +14,18 @@ builder.Services.AddScoped(
         new HttpClient { 
             BaseAddress = new Uri("https://localhost:7259"),
             Timeout = TimeSpan.FromMinutes(3)
+            
         }
 );
 
+builder.Services.AddHttpClient("UserHttpClient", c =>
+{
+    c.BaseAddress = new Uri("http://localhost:8080/user/");
+    c.Timeout = TimeSpan.FromMinutes(3);
+});
+
 builder.Services.AddScoped<IBookService, BookHttpClient>();
+builder.Services.AddScoped<IUserService, UserHttpClient>();
 builder.Services.AddScoped<Radzen.DialogService>();
 builder.Services.AddScoped<EditingCard>();
 builder.Services.AddScoped<CurrentlySelectedBookForSale>();

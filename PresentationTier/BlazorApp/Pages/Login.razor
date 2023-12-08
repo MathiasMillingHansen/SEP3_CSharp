@@ -1,46 +1,81 @@
 ﻿@page "/Login"
+@using global::Shared.DTOs
+@using HttpClients.ClientInterfaces
 @inject NavigationManager NavManager
+@inject IUserService _UserService
 
 <RadzenRow class="rz-text-align-center" Gap="0.25rem" Style="margin-top: 80px;">
     <RadzenColumn>
-<h3>Login</h3>
+        <h3>Login</h3>
 
+        <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
 
-<div class="form-group mb-3">
-    <label for="username">Username:</label>
-    <RadzenTextBox @bind-Value="username" style="width: 20%" />
-</div>
+            <RadzenFormField Text="Username" Variant="@variant" Style="width: 14em">
+                <RadzenTextBox @bind-Value="username" style="width: 20%"/>
+            </RadzenFormField>
 
-<div class="form-group mb-3">
-    <label for="password">Password:</label>
-    <RadzenPassword @bind-Value="password" style="width: 20%" />
-</div>
+            <RadzenFormField Text="Password" Variant="@variant" Style="width: 14em">
+                <RadzenPassword @bind-Value="password" style="width: 20%"/>
+            </RadzenFormField>
 
-<div class="mb-3">
-   <RadzenButton Text="Login" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Style="background-color: RGB(60, 128, 67)" />
-    
-    <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)" />
-</div>
+            <div class="mb-3">
+                <RadzenButton Text="Login" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => userLogin())" Style="background-color: RGB(60, 128, 67)"/>
 
-        <div class="mb-3">
-            <p>If you don't have an account, <a href="Register">register here</a>.</p>
-        </div>
-        
+                <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)"/>
+            </div>
+            
+            @if(displayMessage != null && displayMessage != "Login successful, redirecting...")
+            {
+                <div class="alert alert-danger" role="alert">
+                    @displayMessage
+                </div>
+            }
+            
+            @if(displayMessage == "Login successful, redirecting...")
+            {
+                <div class="alert alert-success" role="alert">
+                    @displayMessage
+                </div>
+            }
+
+            <div class="mb-3">
+                <p>If you don't have an account, <a href="Register">register here</a>.</p>
+            </div>
+        </RadzenStack>
+
     </RadzenColumn>
 </RadzenRow>
 
-    @code {
+@code {
     private string username;
     private string password;
+    private string displayMessage;
 
-    // private void Login()
-    // {
-    // }
+    Variant variant = Variant.Outlined;
+
+
+    private async Task userLogin()
+    {
+        LoginDto loginDto = new LoginDto(username, password);
+
+        try
+        {
+            await _UserService.LoginUser(loginDto);
+            displayMessage = "Login successful, redirecting...";
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            NavManager.NavigateTo("");
+        }
+        catch (Exception e)
+        {
+            displayMessage = e.Message;
+        }
+        
+    }
 
     private void Cancel()
     {
         NavManager.NavigateTo("");
     }
-    
+
 
 }

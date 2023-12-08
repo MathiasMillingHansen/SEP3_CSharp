@@ -125,4 +125,22 @@ public class BookHttpClient : IBookService
             throw new Exception(result);
         }
     }
+    
+    public Task<UserInfoDto> GetUserInfoAsync(string username)
+    {
+        HttpResponseMessage response = _httpClient.GetAsync("/BookOwnerInfo" + username).Result;
+        string result = response.Content.ReadAsStringAsync().Result;
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+        
+        UserInfoDto userInfo = JsonSerializer.Deserialize<UserInfoDto>(result, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return Task.FromResult(userInfo);
+    }
 }

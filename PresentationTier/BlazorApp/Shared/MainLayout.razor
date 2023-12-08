@@ -1,28 +1,55 @@
-﻿@inherits LayoutComponentBase
+﻿@using PresentationShared
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
 
 <PageTitle>BlazorApp1</PageTitle>
 
 
 <div class="page">
-    
+
     <!-- side nav bar lodret -->
     <div class="sidebar">
         <NavMenu/>
     </div>
 
     <!-- top nav bar vandret -->
-    <main>
-        <div class="top-row px-4" style="background-color: RGB(0, 70, 32)">
-         <div class="nav-item px-3">
-                    <NavLink class="nav-link text-white" style="padding-top: 0.25rem; padding-bottom: 0.25rem; background-color: RGB(60, 128, 67)"  href="Login">
-                        <span aria-hidden="true"></span> Login
-                    </NavLink>
-         </div>
-        </div>
 
+    <main>
+
+        <div class="top-row px-4" style="background-color: RGB(0, 70, 32); border-bottom: none">
+            @if (String.IsNullOrEmpty(CurrentUser.Username))
+            {
+                <RadzenButton Text="Login" Icon="open_in_browser" Click="Login" Style="background-color: RGB(60, 128, 67); color: white "></RadzenButton>
+            }
+
+            @if (!String.IsNullOrEmpty(CurrentUser.Username))
+            {
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center">
+                    <RadzenText Text="@($"Hello {PresentationShared.CurrentUser.Username}")" TextStyle="TextStyle.DisplayH6" TextAlign="TextAlign.Center" Style="color: white; margin: 0"> </RadzenText>
+                    <RadzenButton Icon="exit_to_app" Text="Logout" Click="Logout" Style="background-color: RGB(60, 128, 67); color: white "></RadzenButton>
+                </RadzenStack>
+            }
+
+        </div>
         <!-- Body (page) -->
         <article>
             @Body
         </article>
     </main>
 </div>
+
+@code {
+
+    private void Logout()
+    {
+        CurrentUser.Username = "";
+        NavigationManager.NavigateTo("");
+    }
+
+    private void Login()
+    {
+        NavigationManager.NavigateTo("Login");
+    }
+
+}
