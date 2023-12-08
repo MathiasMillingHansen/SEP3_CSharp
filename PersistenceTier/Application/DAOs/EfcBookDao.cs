@@ -101,21 +101,4 @@ public class EfcBookDao : IEfcBookDao
         await context.SaveChangesAsync();
     }
     
-    // TODO - Remove this method if it does nothing
-    // public async Task<BookForSale> SellBookAsync(BookForSale bookForSale)
-    // {
-    //     try
-    //     {
-    //         context.booksForSale.AddAsync(bookForSale);
-    //         Console.WriteLine("BookForSale added to context");
-    //         return bookForSale;
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         Console.WriteLine(e);
-    //         throw;
-    //     }
-    //
-    // }
-    
 }
