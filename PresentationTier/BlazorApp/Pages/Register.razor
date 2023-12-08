@@ -1,60 +1,67 @@
 ﻿@page "/Register"
-@using Microsoft.AspNetCore.Http.HttpResults
-@using HttpClients.ClientInterfaces
 @using global::Shared.DTOs
+@using HttpClients.ClientInterfaces
 @inject NavigationManager NavManager
 @inject IUserService _UserService
 
-<h3>Register</h3>
+<RadzenRow class="rz-text-align-center" Gap="0.25rem" Style="margin-top: 80px;">
+    <RadzenColumn>
+        <h3>Register</h3>
 
-  <p>Welcome! If you don't have an account yet, you can register here:</p>
+        <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
 
-<div style="margin-bottom: 10px;">
-    <RadzenFormField Style="width: 40%;" Text="Username" Variant="@variant">
-        <ChildContent>
-            <RadzenTextBox @bind-Value="@username"/>
-        </ChildContent>
-    </RadzenFormField>
-</div>
+            <RadzenFormField Text="Username" Variant="@variant" Style="width: 14em">
+                <RadzenTextBox @bind-Value="username" style="width: 20%"/>
+            </RadzenFormField>
 
-<div style="margin-bottom: 10px;">
-    <RadzenFormField Style="width: 40%;" Text="Password" Variant="@variant">
-        <ChildContent>
-            <RadzenTextBox @bind-Value="@password"/>
-        </ChildContent>
-    </RadzenFormField>
-</div>
+            <RadzenFormField Text="Password" Variant="@variant" Style="width: 14em">
+                <RadzenPassword @bind-Value="password" style="width: 20%"/>
+            </RadzenFormField>
 
-<div style="margin-bottom: 10px;">
-    <RadzenFormField Style="width: 40%;" Text="Phone number" Variant="@variant">
-        <ChildContent>
-            <RadzenTextBox @bind-Value="@phonenumber"/>
-        </ChildContent>
-    </RadzenFormField>
-</div>
+            <RadzenFormField Text="Phone number" Variant="@variant" Style="width: 14em">
+                <RadzenTextBox @bind-Value="phonenumber" style="width: 20%"/>
+            </RadzenFormField>
 
-<div style="margin-bottom: 10px;">
-    <RadzenFormField Style="width: 40%;" Text="Email" Variant="@variant">
-        <ChildContent>
-            <RadzenTextBox @bind-Value="@_email"/>
-        </ChildContent>
-    </RadzenFormField>
-</div>
+            <RadzenFormField Text="Email" Variant="@variant" Style="width: 14em">
+                <RadzenTextBox @bind-Value="_email" style="width: 20%"/>
+            </RadzenFormField>
 
-<div class="mb-3">
-   <RadzenButton Text="Create" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Create())" Style="background-color: RGB(60, 128, 67)" />
-    
-    <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)" />
-</div>
+            <div class="mb-3">
+                <RadzenButton Text="Create" Icon="lock_open" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Create())" Style="background-color: RGB(60, 128, 67)"/>
+
+                <RadzenButton Text="Cancel" Icon="exit_to_app" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Medium" Click="@(() => Cancel())" Style="background-color: RGB(60, 128, 67)"/>
+            </div>
+
+            @if(displayMessage is "Registration successful, redirecting...")
+            {
+                <div class="alert alert-success" role="alert">
+                    @displayMessage
+                </div>
+            }
+            else if(displayMessage != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @displayMessage
+                </div>
+            }
+
+            <div class="mb-3">
+                <p>If you already have an account, <a href="Login">login here</a>.</p>
+            </div>
+        </RadzenStack>
+
+    </RadzenColumn>
+</RadzenRow>
 
 @code {
     private string username;
     private string password;
     private string phonenumber;
     private string _email;
-    
+    private string displayMessage;
+
     Variant variant = Variant.Outlined;
-    
+
     private void Cancel()
     {
         NavManager.NavigateTo("");
@@ -64,7 +71,16 @@
     {
         RegisterDto registerDto = new RegisterDto(username, password, phonenumber, _email);
 
-        await _UserService.RegisterUserAsync(registerDto);
+        try
+        {
+            await _UserService.RegisterUserAsync(registerDto);
+            displayMessage = "Registration successful, redirecting...";
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            NavManager.NavigateTo("Login");
+        }
+        catch (Exception e)
+        {
+            displayMessage = e.Message;
+        }
     }
-
 }
