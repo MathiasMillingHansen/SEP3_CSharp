@@ -100,21 +100,22 @@ public class EfcBookDao : IEfcBookDao
         context.booksForSale.Remove(await context.booksForSale.FindAsync(id));
         await context.SaveChangesAsync();
     }
-
-    public async Task<BookForSale> SellBookAsync(BookForSale bookForSale)
-    {
-        try
-        {
-            context.booksForSale.AddAsync(bookForSale);
-            Console.WriteLine("BookForSale added to context");
-            return bookForSale;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
-    }
+    
+    // TODO - Remove this method if it does nothing
+    // public async Task<BookForSale> SellBookAsync(BookForSale bookForSale)
+    // {
+    //     try
+    //     {
+    //         context.booksForSale.AddAsync(bookForSale);
+    //         Console.WriteLine("BookForSale added to context");
+    //         return bookForSale;
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Console.WriteLine(e);
+    //         throw;
+    //     }
+    //
+    // }
     
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Shared.Domain;
+using Shared.DTOs;
 
 namespace EFC_DataAccess.DAOs;
 
@@ -32,5 +33,15 @@ public class EfcBookForSaleDao : IEfcBookForSaleDao
             .ToListAsync();
 
         return booksForSale;
+    }
+    
+    public async Task EditBookForSaleAsync(EditBookForSaleDto dto)
+    {
+        BookForSale bookToEdit = await context.booksForSale.FindAsync(dto.Id);
+        bookToEdit.Price = dto.Price;
+        bookToEdit.Comment = dto.Comment;
+        bookToEdit.Condition = dto.Condition;
+        context.Entry(bookToEdit).State = EntityState.Modified;
+        await context.SaveChangesAsync();
     }
 }

@@ -1,4 +1,6 @@
 using System.Text.Json.Serialization;
+using BlazorApp.Pages;
+using BlazorApp.Shared;
 using HttpClients.ClientInterfaces;
 using HttpClients.Implementations;
 
@@ -12,11 +14,13 @@ builder.Services.AddScoped(
         new HttpClient { 
             BaseAddress = new Uri("https://localhost:7259"),
             Timeout = TimeSpan.FromMinutes(3)
-            
         }
 );
 
 builder.Services.AddScoped<IBookService, BookHttpClient>();
+builder.Services.AddScoped<Radzen.DialogService>();
+builder.Services.AddScoped<EditingCard>();
+builder.Services.AddScoped<CurrentlySelectedBookForSale>();
 var app = builder.Build();
 
 

@@ -88,4 +88,18 @@ public class BookController : ControllerBase
         }
     }
     
+    [HttpPatch("/editBook")]
+    public async Task<ActionResult> EditBookForSaleAsync(EditBookForSaleDto dto)
+    {
+        try
+        {
+            await _sellLogic.EditBookForSaleAsync(dto);
+            return new OkResult();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

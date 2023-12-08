@@ -52,6 +52,12 @@ public class SellLogic : ISellLogic
         await _sellDao.DeleteBookForSaleAsync(id);
     }
 
+    public async Task EditBookForSaleAsync(EditBookForSaleDto dto)
+    {
+        ValidateBook(dto);
+        await _sellDao.EditBookForSaleAsync(dto);
+    }
+
     private async Task ValidateBook(BookForSale dto)
     {
         if (dto.Price < 0)
@@ -63,12 +69,21 @@ public class SellLogic : ISellLogic
         {
             throw new Exception("Comment cannot be longer than 500 characters");
         }
-
-   
+        
         await BusinessSender.SendMessage(dto.Owner);
-        
-        
-        
+    }
+    
+    private async Task ValidateBook(EditBookForSaleDto dto)
+    {
+        if (dto.Price < 0)
+        {
+            throw new Exception("Price cannot be negative");
+        }
+
+        if (dto.Comment.Length > 500)
+        {
+            throw new Exception("Comment cannot be longer than 500 characters");
+        }
     }
 
 }

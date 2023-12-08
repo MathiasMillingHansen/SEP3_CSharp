@@ -57,4 +57,9 @@ public class SellLogic : ISellLogic
     {
         await _bookDao.DeleteBookForSaleAsync(id);
     }
+
+    public async Task EditBookForSaleAsync(EditBookForSaleDto dto)
+    {
+        await _bookForSaleDao.EditBookForSaleAsync(dto);
+    }
 }

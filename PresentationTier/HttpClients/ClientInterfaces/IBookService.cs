@@ -11,4 +11,5 @@ public interface IBookService
     Task<BooksForSaleDto> GetAllBooksForSaleAsync();
     Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner);
     Task DeleteBookForSaleAsync(int bookForSale);
+    Task EditBookForSaleAsync(EditBookForSaleDto dto);
 }

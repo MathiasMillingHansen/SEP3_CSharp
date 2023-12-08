@@ -3,6 +3,8 @@
 @using global::Shared.DTOs
 @using HttpClients.ClientInterfaces
 @inject IBookService bookService
+@inject DialogService DialogService
+@inject CurrentlySelectedBookForSale CurrentlySelectedBookForSale
 
 <h3>My Books</h3>
 <div class="rz-p-0 rz-p-md-12">
@@ -64,6 +66,7 @@
                             </RadzenText>
 
                         <RadzenRow Gap="1" Style="padding-top: 1em">
+                            <RadzenButton Variant="Variant.Text" Text="Edit" Click="() => OpenEdit(bookForSale)" Style="background-color: #0c4128; color: white"></RadzenButton>
                             <RadzenButton Variant="Variant.Text" Text="Delete Book" Click="() => DeleteBookForSaleAsync(bookForSale.Id)" Style="background-color: #0c4128; color: white"></RadzenButton>
                         </RadzenRow>
                     </RadzenColumn>
@@ -72,12 +75,26 @@
             </RadzenStack>
         </RadzenCard>
     }
+    
+    @if (_isEditing)
+    {
+        <div class="overlay">
+            <EditingCard OnClose="HandleClose"/>
+        </div>
+    }
 </div>
 
 @code {
 
     private BooksForSaleDto _booksForSaleDto;
     private string _owner = "Test"; //TODO implement with jwt or java login database
+    public bool _isEditing = false;
+    private BookForSale _currentlySelected;
+    
+    private void HandleClose()
+    {
+        _isEditing = false;
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -97,5 +114,19 @@
         _booksForSaleDto = await bookService.GetBooksByOwnerAsync(_owner);
         StateHasChanged();
     }
-
+    
+    private async void OpenEdit(BookForSale bookForSale)
+    {
+        CurrentlySelectedBookForSale.CurrentlySelected = bookForSale;
+        _isEditing = true;
+        await DialogService.OpenAsync<EditingCard>("Edit Book", 
+            new Dictionary<string, object>()
+            {
+                {"BookForSale", _currentlySelected}
+            },
+            new DialogOptions()
+            {
+                Width = "50%", Height = "50%"
+            });
+    }
 }

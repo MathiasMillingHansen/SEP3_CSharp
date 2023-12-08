@@ -114,4 +114,15 @@ public class BookHttpClient : IBookService
         
         return;
     }
+    
+    public async Task EditBookForSaleAsync(EditBookForSaleDto dto)
+    {
+        HttpResponseMessage response = await _httpClient.PatchAsJsonAsync("/editBook", dto);
+        string result = await response.Content.ReadAsStringAsync();
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+    }
 }

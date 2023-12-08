@@ -11,4 +11,5 @@ public interface ISellDao
     Task<string> SellBookAsync(BookForSale bookForSale);
     Task<BooksForSaleDto> GetBooksByOwnerAsync(string owner);
     Task DeleteBookForSaleAsync(int bookForSale);
+    Task EditBookForSaleAsync(EditBookForSaleDto dto);
 }

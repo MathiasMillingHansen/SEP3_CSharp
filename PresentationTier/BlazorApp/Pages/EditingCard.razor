@@ -1,0 +1,98 @@
+﻿@using global::Shared.Domain
+@using HttpClients.ClientInterfaces
+@using System.Collections
+@using global::Shared.DTOs
+@inject IBookService bookService
+@inject CurrentlySelectedBookForSale currentlySelectedBookForSale
+
+<div Class="rz-p-0 rz-p-md-12">
+    <RadzenCard Class="rz-my-12 rz-mx-auto" Style="max-width: 420px; background-color: white; opacity: 0.95">
+        <RadzenRow class="rz-text-align-center" Gap="0.25rem">
+            <RadzenColumn>
+                <h3>Sell Book</h3>
+                <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
+
+                    <RadzenFormField Style="width: 60%" Text="Condition" Variant="@variant">
+                        <ChildContent>
+                            <RadzenDropDown @bind-Value=@BookForSale.Condition.State Data=@GetConditions(_conditions)></RadzenDropDown>
+                        </ChildContent>
+                    </RadzenFormField>
+
+                    <RadzenFormField Style="width: 60%" Text="Price" Variant="@variant">
+                        <ChildContent>
+                            <RadzenNumeric ShowUpDown="false" @bind-Value="@BookForSale.Price"/>
+                        </ChildContent>
+                    </RadzenFormField>
+                </RadzenStack>
+            </RadzenColumn>
+
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-6">
+                    <RadzenFormField Style="width: 60%" Text="Comment" Variant="@variant">
+                        <ChildContent>
+                            <RadzenTextArea Style="resize: unset; min-height: 20em" @bind-Value="@BookForSale.Comment"/>
+                        </ChildContent>
+                    </RadzenFormField>
+
+                    <RadzenButton Text="Save Changes" Click="SaveChanges" Icon="save" Style="background-color: #0c4128"></RadzenButton>
+                    <RadzenButton Text="Close" Click="Close" Icon="save" Style="background-color: #0c4128"></RadzenButton>
+
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenCard>
+</div>
+
+<div class="rz-p-0 rz-p-md-6">
+
+</div>
+
+@code {
+
+    [Parameter]
+    public BookForSale? BookForSale { get; set; }
+    
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+    
+    Variant variant = Variant.Outlined;
+
+    private ICollection<Condition> _conditions;
+
+    protected override void OnInitialized()
+    {
+        _conditions = bookService.GetConditionsAsync();
+        BookForSale = CurrentlySelectedBookForSale.CurrentlySelected;
+    }
+
+    private async Task SaveChanges()
+    {
+        EditBookForSaleDto dto = new EditBookForSaleDto()
+        {
+            Id = BookForSale.Id,
+            Condition = BookForSale.Condition,
+            Price = BookForSale.Price.Value,
+            Comment = BookForSale.Comment
+        };
+        
+        await bookService.EditBookForSaleAsync(dto);
+    }
+    
+    private async Task Close()
+    {
+        CurrentlySelectedBookForSale.CurrentlySelected = null;
+        await OnClose.InvokeAsync();
+    }
+    
+    private IEnumerable GetConditions(ICollection<Condition> conditions)
+    {
+        List<string> conditionNames = new List<string>();
+
+        foreach (Condition condition in _conditions)
+        {
+            conditionNames.Add(condition.State);
+        }
+
+        return conditionNames;
+    }
+}

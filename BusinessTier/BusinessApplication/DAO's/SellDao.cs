@@ -117,4 +117,16 @@ public class SellDao : ISellDao
         
         return;
     }
+
+    public async Task EditBookForSaleAsync(EditBookForSaleDto dto)
+    {
+        HttpResponseMessage response = await client.PatchAsJsonAsync("/BookDB/editBook", dto);
+        string result = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(response.StatusCode);
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(result);
+        }
+    }
 }
