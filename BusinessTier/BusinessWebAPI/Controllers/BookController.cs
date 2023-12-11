@@ -36,10 +36,13 @@ public class BookController : ControllerBase
         {
             return new OkObjectResult(await _sellLogic.GetAllAsync());
         }
+        catch (HttpRequestException e)
+        {
+            return StatusCode(404, e.Message);
+        }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return StatusCode(500, e.Message);
         }
     }
     
